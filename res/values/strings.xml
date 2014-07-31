@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ComicBox</string>
+    
+    <!-- 사이드 드로어 -->
+    <string name="title_section_sdcard">SD Card</string>
+    <string name="title_section_dropbox">Dropbox</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="progress_title">잠시만</string>
+    <string name="progress_loading">로딩중</string>
+    <string name="action_settings">설정</string>
+    
+    <!-- 공통 -->
+    <string name="press_back_key_again">뒤로 버튼은 한번 더 누르면 앱이 종료됩니다.</string>
+    <string name="title_warning">잠시만요!</string>
+    
+	<!-- 공통 설정 -->    
+    <string name="title_read_direction">읽기방향</string>
+    
+    
+    <!-- 폴더 설정 -->
+    <string name="action_read_direction_setting">읽기방향 설정</string>
+    <string name="action_recreate_thumbnail">커버 재생성</string>
+    <string name="warning_message_data_download">데이터 네트워크를 사용하고 있습니다. 만화책 스트리밍시 데이터 요금이 부과됩니다. 계속하시겠습니까?</string>
+
+    <!-- 뷰어 -->
+    <string name="cannot_read_file">파일을 읽을 수 없습니다.</string>
+    <string name="will_read_next_comics">마지막 페이지입니다. 다음권으로 이동하시겠습니까?</string>
+    
+    
+    
+    <!-- 뷰어 설정 -->
+	<string name="title_activity_settings">설정</string>    
+
+</resources>

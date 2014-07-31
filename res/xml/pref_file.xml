@@ -1,0 +1,35 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <ListPreference
+        android:defaultValue="2"
+        android:entries="@array/pref_read_direction_list_titles"
+        android:entryValues="@array/pref_read_direction_list_values"
+        android:key="read_direction"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_title_read_direction" />
+    
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="two_pages"
+        android:summary="@string/pref_description_two_pages"
+        android:title="@string/pref_title_two_pages" />
+    
+<!--     <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="autocrop"
+        android:summary="@string/pref_description_margin_autocrop"
+        android:title="@string/pref_title_margin_autocrop" />    
+ -->    
+<!--     <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="@string/pref_default_display_name"
+        android:inputType="textCapWords"
+        android:key="example_text"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_display_name" />
+ -->
+
+</PreferenceScreen>

@@ -1,0 +1,129 @@
+package com.reneponette.comicbox.model;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.reneponette.comicbox.utils.StringUtils;
+
+public class FileMeta implements Parcelable {
+
+	public static enum FileType {
+		ZIP, PDF, JPG, DIRECTORY, AD, UNKNOWN;
+	}
+
+	public static enum ReadDirection {
+		LTR, RTL, NOTSET;
+	}
+	
+	public FileType type;
+	public int pagesPerScan = 0; //0은 한번도 읽은적 없는 경우
+	public int lastPagesPerScan = 0;
+	public String cachePath;
+	public String coverPath;
+	public int coverAvgColor = -1;
+	public int lastReadPage = -1; // -1은 한번도 읽은적 없는 경우
+	public ReadDirection lastReadDirection = ReadDirection.NOTSET;
+	public ReadDirection readDirection = ReadDirection.NOTSET;
+	public boolean autocrop;
+
+	public static FileMeta createFromJSONString(String jsonString) {
+		if (StringUtils.isBlank(jsonString))
+			return null;
+
+		try {
+			JSONObject obj = new JSONObject(jsonString);
+			return createFromJSON(obj);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	public static FileMeta createFromJSON(JSONObject obj) {
+
+		if (obj == null)
+			return null;
+
+		FileMeta result = new FileMeta();
+		result.type = FileType.valueOf(obj.optString("type", FileType.UNKNOWN.name()));
+		result.pagesPerScan = obj.optInt("pagesPerScan");
+		result.lastPagesPerScan = obj.optInt("lastPagesPerScan");
+		result.cachePath = obj.optString("cachePath");
+		result.coverPath = obj.optString("coverPath");
+		result.coverAvgColor = obj.optInt("coverAvgColor");
+		result.lastReadPage = obj.optInt("lastReadPage", -1);
+		result.lastReadDirection = ReadDirection
+				.valueOf(obj.optString("lastReadDirection", ReadDirection.NOTSET.name()));
+		result.readDirection = ReadDirection.valueOf(obj.optString("readDirection", ReadDirection.NOTSET.name()));
+		result.autocrop = obj.optBoolean("autocrop");
+
+		return result;
+	}
+
+	public String toJSONString() {
+		JSONObject obj = new JSONObject();
+		try {
+			obj.put("type", type.name());
+			obj.put("pagesPerScan", pagesPerScan);
+			obj.put("lastPagesPerScan", lastPagesPerScan);
+			if(cachePath != null)
+				obj.put("cachePath", cachePath);
+			if(coverPath != null)
+				obj.put("coverPath", coverPath);
+			obj.put("coverAvgColor", coverAvgColor);
+			obj.put("lastReadPage", lastReadPage);
+			obj.put("lastReadDirection", lastReadDirection.name());
+			obj.put("readDirection", readDirection.name());
+			obj.put("autocrop", autocrop);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		return obj.toString();
+	}
+
+	// //////////////parcelable///////////////////
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(type.name());
+		dest.writeInt(pagesPerScan);
+		dest.writeInt(lastPagesPerScan);
+		dest.writeString(coverPath);
+		dest.writeInt(coverAvgColor);
+		dest.writeInt(lastReadPage);
+		dest.writeString(lastReadDirection.name());
+		dest.writeString(readDirection.name());
+		dest.writeString(Boolean.toString(autocrop));
+	}
+
+	public static final Parcelable.Creator<FileMeta> CREATOR = new Parcelable.Creator<FileMeta>() {
+		public FileMeta createFromParcel(Parcel source) {
+			FileMeta obj = new FileMeta();
+			obj.type = FileType.valueOf(source.readString());
+			obj.pagesPerScan = source.readInt();
+			obj.lastPagesPerScan = source.readInt();
+			obj.coverPath = source.readString();
+			obj.coverAvgColor = source.readInt();
+			obj.lastReadPage = source.readInt();
+			obj.lastReadDirection = ReadDirection.valueOf(source.readString());
+			obj.readDirection = ReadDirection.valueOf(source.readString());
+			obj.autocrop = Boolean.parseBoolean(source.readString());
+			return obj;
+		}
+
+		public FileMeta[] newArray(int size) {
+			return new FileMeta[size];
+		}
+	};
+
+}

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string-array name="select_read_direction_items">
+    <item>왼쪽에서 오른쪽으로</item>
+    <item>오른쪽에서 왼쪽으로</item>
+</string-array>    
+</resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 헤더 -->
+    <string name="pref_header_general">일반</string>
+    <string name="pref_header_file">파일</string>
+    <string name="pref_header_viewer">뷰어</string>
+    <string name="pref_header_explorer">탐색기</string>
+    <string name="pref_header_accounts">계정</string>
+    
+    <!-- 탐색기 -->
+    <string name="pref_title_num_of_column">열 개수</string>
+    <string name="pref_description_num_of_column">한줄에 보여줄 파일 개수를 설정합니다.</string>
+    
+	<!-- 파일 -->
+    <string name="title_activity_file_settings">설정</string>
+    
+	<string name="pref_title_read_direction">읽기방향</string>
+    <string-array name="pref_read_direction_list_titles">
+        <item>왼쪽에서 오른쪽으로</item>
+        <item>오른쪽에서 왼쪽으로</item>
+        <item>폴더설정을 따름</item>
+    </string-array>
+    <string-array name="pref_read_direction_list_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    
+    <string name="pref_title_two_pages">화면분할</string>
+    <string name="pref_description_two_pages">이미지 파일에 두 페이지씩 스캔되어 있습니다.</string>	
+	
+	<!-- 뷰어 -->
+    <string name="pref_title_use_volume_key">볼륨키 사용</string>
+    <string name="pref_description_use_volume_key">볼륨키를 사용하여 페이지를 이동합니다.</string>
+    <string name="pref_title_use_3_fingers">화면밝기 조정</string>
+    <string name="pref_description_use_3_fingers">세 손가락을 사용하여 화면 밝기를 조절합니다.</string>
+    <string name="pref_title_margin_autocrop">여백 자동크롭</string>
+    <string name="pref_description_margin_autocrop">이미지의 여백을 자동으로 없앱니다.</string>	
+    
+    <!-- 계정 -->
+    <string name="pref_title_dropbox_logout">Dropbox 로그아웃</string>
+    <string name="pref_description_dropbox_logout">Dropbox 연동을 끊습니다.</string>
+	
+	
+	
+</resources>

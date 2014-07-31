@@ -1,0 +1,19 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="viewer_use_volume_key"
+        android:summary="@string/pref_description_use_volume_key"
+        android:title="@string/pref_title_use_volume_key" />
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="viewer_use_3_fingers"
+        android:summary="@string/pref_description_use_3_fingers"
+        android:title="@string/pref_title_use_3_fingers" />
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="viewer_use_autocrop"
+        android:summary="@string/pref_description_margin_autocrop"
+        android:title="@string/pref_title_margin_autocrop" />
+
+</PreferenceScreen>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!-- Drop Shadow Stack -->
+    <item>
+        <shape>
+            <padding
+                android:bottom="0dp"
+                android:left="0dp"
+                android:right="0dp"
+                android:top="1dp" />
+
+            <solid android:color="#10666666" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <padding
+                android:bottom="0dp"
+                android:left="0dp"
+                android:right="0dp"
+                android:top="1dp" />
+
+            <solid android:color="#20666666" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <padding
+                android:bottom="0dp"
+                android:left="0dp"
+                android:right="0dp"
+                android:top="1dp" />
+
+            <solid android:color="#30666666" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <padding
+                android:bottom="0dp"
+                android:left="0dp"
+                android:right="0dp"
+                android:top="1dp" />
+
+            <solid android:color="#40666666" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <padding
+                android:bottom="0dp"
+                android:left="0dp"
+                android:right="0dp"
+                android:top="1dp" />
+
+            <solid android:color="#50666666" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <padding
+                android:bottom="0dp"
+                android:left="0dp"
+                android:right="0dp"
+                android:top="1px" />
+            <stroke android:width="1px" android:color="#ee222222"/>
+        </shape>
+    </item>
+
+    <!-- Background -->
+    <item android:id="@+id/folder_info_bg">
+        <shape>
+            <solid android:color="#11000000" />
+        </shape>
+    </item>
+</layer-list>

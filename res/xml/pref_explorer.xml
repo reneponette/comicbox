@@ -1,0 +1,9 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <com.reneponette.comicbox.ui.NumberPickerPreference
+        android:defaultValue="2"
+        android:key="explorer_num_of_column"
+        android:summary="@string/pref_description_num_of_column"
+        android:title="@string/pref_title_num_of_column" />
+
+</PreferenceScreen>
