@@ -13,5 +13,9 @@
     <color name="activity_bg">#ffe3e3e3</color>
     
     
+    <color name="text_primary">#ff6e6e6e</color>
+    <color name="text_primary_lighter">#ff888888</color>
+    
+    
 
 </resources>
