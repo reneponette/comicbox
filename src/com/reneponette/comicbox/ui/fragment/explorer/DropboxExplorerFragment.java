@@ -40,6 +40,7 @@ import com.reneponette.comicbox.model.FileMeta.FileType;
 import com.reneponette.comicbox.ui.MainActivity;
 import com.reneponette.comicbox.utils.DialogHelper;
 import com.reneponette.comicbox.utils.MessageUtils;
+import com.reneponette.comicbox.utils.MetricUtils;
 import com.reneponette.comicbox.utils.StringUtils;
 
 /**
@@ -112,7 +113,7 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_explorer_local, container, false);
+		View rootView = inflater.inflate(R.layout.fragment_explorer, container, false);
 
 		gridView = (GridView) rootView.findViewById(R.id.gridView1);
 		gridView.setAdapter(adapter);
@@ -166,8 +167,7 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 				Log.i(TAG, "Error authenticating", e);
 			}
 		}
-		
-		
+
 		numOfColumn = 2;
 		// numOfColumn = getResources().getConfiguration().orientation ==
 		// Configuration.ORIENTATION_PORTRAIT ? 2 : 4;
@@ -177,10 +177,8 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 		} catch (NumberFormatException e) {
 
 		}
-		gridView.setNumColumns(numOfColumn);		
-		
-		
-		
+		gridView.setNumColumns(numOfColumn);
+
 		enumerate();
 	}
 
@@ -257,9 +255,9 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 
 	private void enumerate() {
 
-		if(runningThread != null)
+		if (runningThread != null)
 			runningThread.interrupt();
-		
+
 		showWaitingDialog();
 		infoList.clear();
 		gridView.setAdapter(null);
@@ -298,14 +296,13 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 								parentEntry.path = entry.parentPath();
 								parentInfo = new FileInfo(LocationType.DROPBOX);
 								parentInfo.setEntry(parentEntry);
-								parentInfo.setParentDir(true);
 								infoList.add(parentInfo);
 							}
 
 							curInfo.setEntry(entry);
-							
+
 							String name = curInfo.getName();
-							if(StringUtils.isBlank(name))
+							if (StringUtils.isBlank(name))
 								name = "/";
 							((MainActivity) getActivity()).onSectionAttached(name);
 
@@ -352,7 +349,6 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 				Holder holder = new Holder();
 				holder.itemImage = (ImageView) v.findViewById(R.id.itemImage);
 				holder.itemName = (TextView) v.findViewById(R.id.itemName);
-				holder.itemImageTitle = (TextView) v.findViewById(R.id.itemImageTitle);
 				holder.itemImage.setTag(holder.itemName);
 				v.setTag(holder);
 			}
@@ -361,20 +357,18 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 
 			GridView.LayoutParams lp;
 
-			int itemSpacing = 10;
+			int itemSpacing = MetricUtils.dpToPixel(7);
 			int itemWidth = (gridView.getWidth() - itemSpacing * (numOfColumn - 1)) / numOfColumn;
-			int itemHeight = (int) (itemWidth * 1.0);
+			int itemHeight = (int) (itemWidth * 1.0 + MetricUtils.dpToPixel(50));
 
 			lp = new GridView.LayoutParams(GridView.AUTO_FIT, itemHeight);
-
 			v.setLayoutParams(lp);
 
 			holder.itemImage.setScaleType(ScaleType.CENTER_CROP);
 
 			FileInfo info = (FileInfo) getItem(position);
 
-			holder.itemImageTitle.setText(info.isParentDir() ? "상위폴더" : "");
-			holder.itemName.setText(info.isParentDir() ? "../" : info.getEntry().fileName());
+			holder.itemName.setText(info.getEntry().fileName());
 			new DropboxThumbBitmapLoader(info, mApi, holder.itemImage).run();
 
 			return v;
@@ -398,7 +392,6 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 		class Holder {
 			public ImageView itemImage;
 			public TextView itemName;
-			public TextView itemImageTitle;
 		}
 	}
 }

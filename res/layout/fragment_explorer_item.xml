@@ -1,36 +1,20 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_folder_item" >
 
     <ImageView
         android:id="@+id/itemImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
         android:background="#FFeeeeee" />
-
-    <TextView
-        android:id="@+id/itemImageTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:padding="5dp"
-        android:shadowColor="@android:color/black"
-        android:shadowDx="5"
-        android:shadowDy="5"
-        android:shadowRadius="5"
-        android:text="folder"
-        android:textColor="@android:color/white"
-        android:textStyle="bold" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="-1px"
-        android:layout_marginRight="-1px"
-        android:background="#99000000"
         android:paddingLeft="10dp"
         android:paddingRight="10dp" >
 
@@ -39,10 +23,10 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="20dp"
-            android:gravity="center_vertical"
-            android:shadowColor="@android:color/black"
             android:text="title"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/darker_gray"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/itemCount"
@@ -50,9 +34,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:shadowColor="@android:color/black"
             android:text="32"
-            android:textColor="@android:color/white" />
+            android:textStyle="bold" />
     </RelativeLayout>
 
 </RelativeLayout>

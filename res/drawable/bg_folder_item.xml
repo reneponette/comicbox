@@ -5,12 +5,16 @@
     <item>
         <shape>
             <padding
-                android:bottom="1px"
-                android:left="1px"
-                android:right="1px"
-                android:top="1px" />
+                android:bottom="2dp"
+                android:left="0px"
+                android:right="0px"
+                android:top="0px" />
 
-            <solid android:color="#ee222222" />
+            <solid android:color="#33222222" />
+
+            <corners
+                android:bottomLeftRadius="3dp"
+                android:bottomRightRadius="3dp" />
         </shape>
     </item>
 
@@ -18,6 +22,10 @@
     <item>
         <shape>
             <solid android:color="#ffffffff" />
+
+            <corners
+                android:bottomLeftRadius="3dp"
+                android:bottomRightRadius="3dp" />
         </shape>
     </item>
 

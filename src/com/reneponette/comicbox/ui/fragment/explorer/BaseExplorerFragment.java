@@ -64,4 +64,8 @@ public class BaseExplorerFragment extends Fragment {
 			mProgressDlg.dismiss();
 		}
 	}
+	
+	public boolean onBackPressed() {
+		return false;
+	}
 }

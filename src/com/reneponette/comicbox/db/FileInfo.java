@@ -1,7 +1,6 @@
 package com.reneponette.comicbox.db;
 
 import java.io.File;
-import java.io.FileOutputStream;
 
 import android.content.ContentValues;
 import android.os.Parcel;
@@ -28,7 +27,6 @@ public class FileInfo implements DatabaseStorable<FileInfo>, Parcelable {
 	//디비에 저장되지 않는정보
 	private File file;
 	private Entry entry;
-	private boolean parentDir;
 	public String focusName;
 	public int indexInParent;
 
@@ -182,14 +180,6 @@ public class FileInfo implements DatabaseStorable<FileInfo>, Parcelable {
 	public void setMeta(FileMeta meta) {
 		this.meta = meta;
 	}
-	
-	public boolean isParentDir() {
-		return parentDir;
-	}
-
-	public void setParentDir(boolean parentDir) {
-		this.parentDir = parentDir;
-	}	
 	
 	////////////////////////////////////////////////////////////////
 	

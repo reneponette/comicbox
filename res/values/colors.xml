@@ -9,5 +9,9 @@
     <color name="accent">#ff0087c3</color>
     
     
+    
+    <color name="activity_bg">#ffe3e3e3</color>
+    
+    
 
 </resources>

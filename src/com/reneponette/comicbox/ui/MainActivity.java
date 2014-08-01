@@ -35,6 +35,7 @@ import com.reneponette.comicbox.db.FileInfoDAO;
 import com.reneponette.comicbox.manager.DropBoxManager;
 import com.reneponette.comicbox.model.FileMeta.FileType;
 import com.reneponette.comicbox.ui.fragment.NavigationDrawerFragment;
+import com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment;
 import com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment.FolderViewFragmentListener;
 import com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment;
 import com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment;
@@ -100,18 +101,26 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 
 		// update the main content by replacing fragments
 		FragmentManager fragmentManager = getFragmentManager();
-		if (position == 0) {
+
+		switch (position) {
+		case 0:
 			fragmentManager
 					.beginTransaction()
 					.replace(R.id.container,
-							LocalExplorerFragment.newInstance(FileInfoDAO.instance().getFileInfo(curDir)),
-							curDir.getAbsolutePath()).commit();
-		} else {
+							LocalExplorerFragment.newInstance(FileInfoDAO.instance().getFileInfo(curDir))).commit();
+			break;
+		case 1:
 			fragmentManager.beginTransaction()
-					.replace(R.id.container, DropboxExplorerFragment.newInstance(curEntry.path), curEntry.path)
-					.commit();
+					.replace(R.id.container, DropboxExplorerFragment.newInstance(curEntry.path)).commit();
+			break;
+		case 2:
+			Intent intent = new Intent();
+			intent.setClass(this, SettingsActivity.class);
+			startActivity(intent);
+			break;
+		default:
+			break;
 		}
-
 	}
 
 	public void onSectionAttached(String name) {
@@ -145,28 +154,34 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		
-		if (id == R.id.action_settings) {
-			Intent intent = new Intent();
-			intent.setClass(this, SettingsActivity.class);
-			startActivity(intent);
-			return true;
-		}
+
+		// if (id == R.id.action_settings) {
+		// Intent intent = new Intent();
+		// intent.setClass(this, SettingsActivity.class);
+		// startActivity(intent);
+		// return true;
+		// }
 
 		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
 	public void onBackPressed() {
-		if (closeFlag == false) {
-			// 안내 메세지를 토스트로 출력한다.
-			MessageUtils.toast(this, getString(R.string.press_back_key_again));
 
-			// 상태값 변경
-			closeFlag = true;
-			closeHandler.sendEmptyMessageDelayed(0, 3000);
-		} else {
-			super.onBackPressed();
+		BaseExplorerFragment f = (BaseExplorerFragment) getFragmentManager().findFragmentById(R.id.container);
+		if (f.onBackPressed())
+			return;
+		else {
+			if (closeFlag == false) {
+				// 안내 메세지를 토스트로 출력한다.
+				MessageUtils.toast(this, getString(R.string.press_back_key_again));
+
+				// 상태값 변경
+				closeFlag = true;
+				closeHandler.sendEmptyMessageDelayed(0, 3000);
+			} else {
+				super.onBackPressed();
+			}
 		}
 	}
 

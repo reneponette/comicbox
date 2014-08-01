@@ -7,8 +7,6 @@ import java.util.Collections;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentManager.BackStackEntry;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.os.Bundle;
@@ -37,7 +35,7 @@ import com.reneponette.comicbox.db.FileInfoDAO;
 import com.reneponette.comicbox.model.FileMeta.FileType;
 import com.reneponette.comicbox.ui.MainActivity;
 import com.reneponette.comicbox.utils.DialogHelper;
-import com.reneponette.comicbox.utils.MessageUtils;
+import com.reneponette.comicbox.utils.MetricUtils;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -83,14 +81,11 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 		super.onCreate(savedInstanceState);
 		infoList = new ArrayList<FileInfo>();
 		adapter = new FolderViewAdapter(infoList);
-		
-//		MessageUtils.toast(getActivity(), curInfo.getPath());
-
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_explorer_local, container, false);
+		View rootView = inflater.inflate(R.layout.fragment_explorer, container, false);
 
 		gridView = (GridView) rootView.findViewById(R.id.gridView1);
 		gridView.setAdapter(adapter);
@@ -127,8 +122,6 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 		super.onResume();
 
 		numOfColumn = 2;
-		// numOfColumn = getResources().getConfiguration().orientation ==
-		// Configuration.ORIENTATION_PORTRAIT ? 2 : 4;
 		try {
 			numOfColumn = PreferenceManager.getDefaultSharedPreferences(getActivity()).getInt("explorer_num_of_column",
 					2);
@@ -139,12 +132,6 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 	}
 
 	@Override
-	public void onPrepareOptionsMenu(Menu menu) {
-		// TODO Auto-generated method stub
-		super.onPrepareOptionsMenu(menu);
-	}
-
-	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
 		if (getActivity() instanceof MainActivity && ((MainActivity) getActivity()).isDrawerOpen()) {
@@ -152,44 +139,14 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 			return;
 		}
 
-		// 같은 메뉴가 중복으로 들어가지 않도록..
-//		if (menu.findItem(R.id.action_read_direction_setting) == null) {
-			inflater.inflate(R.menu.folder, menu);
-//		}
-		
-		if(C.LOCAL_ROOT_PATH.equals(curInfo.getPath())) {
-			menu.removeItem(R.id.action_go_parent_dir);
-		}
-
+		inflater.inflate(R.menu.folder, menu);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
-//		// 현재 보고있는 fragment만 처리하도록
-//		FragmentManager fm = getActivity().getFragmentManager();
-//		if (fm.getBackStackEntryCount() > 0) {
-//			BackStackEntry be = fm.getBackStackEntryAt(fm.getBackStackEntryCount() - 1);
-//			if (curInfo.getPath().equals(be.getName()) == false)
-//				return false;
-//		}
-
 		int id = item.getItemId();
-		
-		if (id == R.id.action_go_parent_dir) {
-			File parentFile = curInfo.getFile().getParentFile();
-			if (parentFile != null) {
-				FileInfo info = new FileInfo(LocationType.LOCAL);
-				info.setFile(parentFile);
-				info.setParentDir(true);
-				info.focusName = curInfo.getName();
-				if (getActivity() instanceof FolderViewFragmentListener) {
-					((FolderViewFragmentListener) getActivity()).onFileClicked(info);
-				}			
-			}
-				
-		}
 
 		if (id == R.id.action_read_direction_setting) {
 			DialogHelper.showReadDirectionSelectDialog(getActivity(), curInfo.getMeta(), new OnDismissListener() {
@@ -215,58 +172,65 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 		return super.onOptionsItemSelected(item);
 	}
 
+	private boolean goParentDirectory() {
+		File parentFile = curInfo.getFile().getParentFile();
+		if (parentFile != null) {
+			FileInfo info = new FileInfo(LocationType.LOCAL);
+			info.setFile(parentFile);
+			info.focusName = curInfo.getName();
+			if (getActivity() instanceof FolderViewFragmentListener) {
+				((FolderViewFragmentListener) getActivity()).onFileClicked(info);
+			}
+			return true;
+		}
+		return false;
+	}
+
 	private void enumerate() {
 		infoList.clear();
-		
-//		int i = 0;
+
+		int i = 0;
 		FileInfo info;
 
-//		//상위폴더 삽입
-//		File parentFile = curInfo.getFile().getParentFile();
-//		if (parentFile != null) {
-//			info = new FileInfo(LocationType.LOCAL);
-//			info.setFile(parentFile);
-//			info.setParentDir(true);
-//			info.focusName = curInfo.getName();
-//			infoList.add(info);
-//			i++;
-//		}
-
 		int indexInParent = 0;
-//		int indexOfFocus = 0;
-		
+		int indexOfFocus = 0;
+
 		List<File> childFileList = Arrays.asList(curInfo.getFile().listFiles());
 		Collections.sort(childFileList);
-		
+
 		for (File f : childFileList) {
 
 			if (f.isHidden())
 				continue;
-			
+
 			info = FileInfoDAO.instance().getFileInfo(f);
-			
+
 			if (info.getMeta().type != FileType.UNKNOWN) {
 				infoList.add(info);
-				
-				if(info.getMeta().type == FileType.JPG) {
+
+				if (info.getMeta().type == FileType.JPG) {
 					info.indexInParent = indexInParent;
 					indexInParent++;
 				}
-				
-//				if(f.getName().equals(curInfo.focusName))
-//					indexOfFocus = i;
-//				
-//				i++;
+
+				if (f.getName().equals(curInfo.focusName))
+					indexOfFocus = i;
+
+				i++;
 			}
 		}
 		adapter.notifyDataSetChanged();
-//		gridView.setSelection(indexOfFocus);
+		gridView.setSelection(indexOfFocus);
 	}
 
-	
-	
-	
-	
+	@Override
+	public boolean onBackPressed() {
+		if (C.LOCAL_ROOT_PATH.equals(curInfo.getPath())) {
+			return false;
+		}
+		return goParentDirectory();
+	}
+
 	public class FolderViewAdapter extends BaseAdapter {
 
 		private List<FileInfo> list;
@@ -283,7 +247,6 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 				v = getActivity().getLayoutInflater().inflate(R.layout.fragment_explorer_item, null);
 				Holder holder = new Holder();
 				holder.itemImage = (ImageView) v.findViewById(R.id.itemImage);
-				holder.itemImageTitle = (TextView) v.findViewById(R.id.itemImageTitle);
 				holder.itemName = (TextView) v.findViewById(R.id.itemName);
 				holder.itemCount = (TextView) v.findViewById(R.id.itemCount);
 				holder.itemImage.setTag(holder.itemName);
@@ -294,27 +257,22 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 
 			GridView.LayoutParams lp;
 
-			int itemSpacing = 10;
+			int itemSpacing = MetricUtils.dpToPixel(7);
 			int itemWidth = (gridView.getWidth() - itemSpacing * (numOfColumn - 1)) / numOfColumn;
-			int itemHeight = (int) (itemWidth * 1.0);
+			int itemHeight = (int) (itemWidth * 1.0 + MetricUtils.dpToPixel(50));			
 
 			lp = new GridView.LayoutParams(GridView.AUTO_FIT, itemHeight);
-
 			v.setLayoutParams(lp);
 
 			holder.itemImage.setScaleType(ScaleType.CENTER_CROP);
 
 			FileInfo info = (FileInfo) getItem(position);
 
-			holder.itemImageTitle.setText(info.isParentDir() ? "상위폴더" : "");
-			holder.itemName.setText(info.isParentDir() ? "../" : info.getFile().getName());
-			if(info.isParentDir())
-				holder.itemImage.setImageBitmap(null);
-			else
-				new LocalThumbBitmapLoader(info, holder.itemImage).run();
-			
+			holder.itemName.setText(info.getFile().getName());
+			new LocalThumbBitmapLoader(info, holder.itemImage).run();
+
 			int itemCount = 0;
-			if(info.getFile().list() != null) {
+			if (info.getFile().list() != null) {
 				itemCount = info.getFile().list().length;
 			}
 			holder.itemCount.setText(itemCount == 0 ? "" : itemCount + "");
@@ -339,10 +297,9 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 
 		class Holder {
 			public ImageView itemImage;
-			public TextView itemImageTitle;
 			public TextView itemName;
 			public TextView itemCount;
 		}
-		
+
 	}
 }
