@@ -30,12 +30,14 @@ import android.widget.TextView;
 import com.reneponette.comicbox.R;
 import com.reneponette.comicbox.cache.BitmapCache;
 import com.reneponette.comicbox.cache.LocalThumbBitmapLoader;
+import com.reneponette.comicbox.constant.C;
 import com.reneponette.comicbox.db.FileInfo;
 import com.reneponette.comicbox.db.FileInfo.LocationType;
 import com.reneponette.comicbox.db.FileInfoDAO;
 import com.reneponette.comicbox.model.FileMeta.FileType;
 import com.reneponette.comicbox.ui.MainActivity;
 import com.reneponette.comicbox.utils.DialogHelper;
+import com.reneponette.comicbox.utils.MessageUtils;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -81,6 +83,8 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 		super.onCreate(savedInstanceState);
 		infoList = new ArrayList<FileInfo>();
 		adapter = new FolderViewAdapter(infoList);
+		
+//		MessageUtils.toast(getActivity(), curInfo.getPath());
 
 	}
 
@@ -149,8 +153,12 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 		}
 
 		// 같은 메뉴가 중복으로 들어가지 않도록..
-		if (menu.findItem(R.id.action_read_direction_setting) == null) {
+//		if (menu.findItem(R.id.action_read_direction_setting) == null) {
 			inflater.inflate(R.menu.folder, menu);
+//		}
+		
+		if(C.LOCAL_ROOT_PATH.equals(curInfo.getPath())) {
+			menu.removeItem(R.id.action_go_parent_dir);
 		}
 
 		super.onCreateOptionsMenu(menu, inflater);
@@ -159,15 +167,29 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
-		// 현재 보고있는 fragment만 처리하도록
-		FragmentManager fm = getActivity().getFragmentManager();
-		if (fm.getBackStackEntryCount() > 0) {
-			BackStackEntry be = fm.getBackStackEntryAt(fm.getBackStackEntryCount() - 1);
-			if (curInfo.getPath().equals(be.getName()) == false)
-				return false;
-		}
+//		// 현재 보고있는 fragment만 처리하도록
+//		FragmentManager fm = getActivity().getFragmentManager();
+//		if (fm.getBackStackEntryCount() > 0) {
+//			BackStackEntry be = fm.getBackStackEntryAt(fm.getBackStackEntryCount() - 1);
+//			if (curInfo.getPath().equals(be.getName()) == false)
+//				return false;
+//		}
 
 		int id = item.getItemId();
+		
+		if (id == R.id.action_go_parent_dir) {
+			File parentFile = curInfo.getFile().getParentFile();
+			if (parentFile != null) {
+				FileInfo info = new FileInfo(LocationType.LOCAL);
+				info.setFile(parentFile);
+				info.setParentDir(true);
+				info.focusName = curInfo.getName();
+				if (getActivity() instanceof FolderViewFragmentListener) {
+					((FolderViewFragmentListener) getActivity()).onFileClicked(info);
+				}			
+			}
+				
+		}
 
 		if (id == R.id.action_read_direction_setting) {
 			DialogHelper.showReadDirectionSelectDialog(getActivity(), curInfo.getMeta(), new OnDismissListener() {
@@ -196,22 +218,22 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 	private void enumerate() {
 		infoList.clear();
 		
-		int i = 0;
+//		int i = 0;
 		FileInfo info;
 
-		//상위폴더 삽입
-		File parentFile = curInfo.getFile().getParentFile();
-		if (parentFile != null) {
-			info = new FileInfo(LocationType.LOCAL);
-			info.setFile(parentFile);
-			info.setParentDir(true);
-			info.focusName = curInfo.getName();
-			infoList.add(info);
-			i++;
-		}
+//		//상위폴더 삽입
+//		File parentFile = curInfo.getFile().getParentFile();
+//		if (parentFile != null) {
+//			info = new FileInfo(LocationType.LOCAL);
+//			info.setFile(parentFile);
+//			info.setParentDir(true);
+//			info.focusName = curInfo.getName();
+//			infoList.add(info);
+//			i++;
+//		}
 
 		int indexInParent = 0;
-		int indexOfFocus = 0;
+//		int indexOfFocus = 0;
 		
 		List<File> childFileList = Arrays.asList(curInfo.getFile().listFiles());
 		Collections.sort(childFileList);
@@ -231,19 +253,16 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 					indexInParent++;
 				}
 				
-				if(f.getName().equals(curInfo.focusName))
-					indexOfFocus = i;
-				
-				i++;
+//				if(f.getName().equals(curInfo.focusName))
+//					indexOfFocus = i;
+//				
+//				i++;
 			}
 		}
 		adapter.notifyDataSetChanged();
-		gridView.setSelection(indexOfFocus);
+//		gridView.setSelection(indexOfFocus);
 	}
 
-	
-	
-	
 	
 	
 	
@@ -324,6 +343,6 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 			public TextView itemName;
 			public TextView itemCount;
 		}
-
+		
 	}
 }

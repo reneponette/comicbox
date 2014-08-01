@@ -2,5 +2,12 @@
 
     <color name="black_overlay">#66000000</color>
     <color name="actionbar_bg">#ffff87c3</color>
+    
+    
+    <color name="primary">#ff1198d4</color>
+    <color name="primary_dark">#ff0087c3</color>
+    <color name="accent">#ff0087c3</color>
+    
+    
 
 </resources>

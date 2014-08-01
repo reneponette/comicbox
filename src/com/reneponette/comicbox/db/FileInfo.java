@@ -75,10 +75,10 @@ public class FileInfo implements DatabaseStorable<FileInfo>, Parcelable {
 		String name = "";
 		switch (type) {
 		case LOCAL:
-			name = file.getName();
+			name = file == null ? "" : file.getName();
 			break;
 		case DROPBOX:
-			name = entry.fileName();
+			name = entry == null ? "" : entry.fileName();
 			break;
 		default:
 			break;
