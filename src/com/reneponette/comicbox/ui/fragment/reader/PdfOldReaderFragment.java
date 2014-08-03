@@ -128,7 +128,7 @@ public class PdfOldReaderFragment extends BaseReaderFragment implements OnDataBu
 		};
 		mDocView.setAdapter(new MuPDFPageAdapter(getActivity(), this, core));
 		mDocView.setBackgroundColor(Color.BLACK);
-		mDocView.setDisplayedViewIndex(fileInfo.getMeta().lastReadPage);
+		mDocView.setDisplayedViewIndex(fileInfo.getMeta().lastReadPageIndex);
 
 		RelativeLayout rootView = new RelativeLayout(getActivity());
 		rootView.addView(mDocView);
@@ -173,7 +173,7 @@ public class PdfOldReaderFragment extends BaseReaderFragment implements OnDataBu
 				seekBar.setProgress(position);
 			}
 		});
-		previewGallery.setSelection(fileInfo.getMeta().lastReadPage);
+		previewGallery.setSelection(fileInfo.getMeta().lastReadPageIndex);
 
 		return rootView;
 	}

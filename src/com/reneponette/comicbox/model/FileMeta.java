@@ -24,7 +24,8 @@ public class FileMeta implements Parcelable {
 	public String cachePath;
 	public String coverPath;
 	public int coverAvgColor = -1;
-	public int lastReadPage = -1; // -1은 한번도 읽은적 없는 경우
+	public int lastTotalPageCount;
+	public int lastReadPageIndex = -1; // -1은 한번도 읽은적 없는 경우
 	public ReadDirection lastReadDirection = ReadDirection.NOTSET;
 	public ReadDirection readDirection = ReadDirection.NOTSET;
 	public boolean autocrop;
@@ -55,7 +56,8 @@ public class FileMeta implements Parcelable {
 		result.cachePath = obj.optString("cachePath");
 		result.coverPath = obj.optString("coverPath");
 		result.coverAvgColor = obj.optInt("coverAvgColor");
-		result.lastReadPage = obj.optInt("lastReadPage", -1);
+		result.lastTotalPageCount = obj.optInt("lastTotalPageCount");
+		result.lastReadPageIndex = obj.optInt("lastReadPageIndex", -1);
 		result.lastReadDirection = ReadDirection
 				.valueOf(obj.optString("lastReadDirection", ReadDirection.NOTSET.name()));
 		result.readDirection = ReadDirection.valueOf(obj.optString("readDirection", ReadDirection.NOTSET.name()));
@@ -75,7 +77,8 @@ public class FileMeta implements Parcelable {
 			if(coverPath != null)
 				obj.put("coverPath", coverPath);
 			obj.put("coverAvgColor", coverAvgColor);
-			obj.put("lastReadPage", lastReadPage);
+			obj.put("lastTotalPageCount", lastTotalPageCount);
+			obj.put("lastReadPageIndex", lastReadPageIndex);
 			obj.put("lastReadDirection", lastReadDirection.name());
 			obj.put("readDirection", readDirection.name());
 			obj.put("autocrop", autocrop);
@@ -100,7 +103,8 @@ public class FileMeta implements Parcelable {
 		dest.writeInt(lastPagesPerScan);
 		dest.writeString(coverPath);
 		dest.writeInt(coverAvgColor);
-		dest.writeInt(lastReadPage);
+		dest.writeInt(lastTotalPageCount);
+		dest.writeInt(lastReadPageIndex);
 		dest.writeString(lastReadDirection.name());
 		dest.writeString(readDirection.name());
 		dest.writeString(Boolean.toString(autocrop));
@@ -114,7 +118,8 @@ public class FileMeta implements Parcelable {
 			obj.lastPagesPerScan = source.readInt();
 			obj.coverPath = source.readString();
 			obj.coverAvgColor = source.readInt();
-			obj.lastReadPage = source.readInt();
+			obj.lastTotalPageCount = source.readInt();
+			obj.lastReadPageIndex = source.readInt();
 			obj.lastReadDirection = ReadDirection.valueOf(source.readString());
 			obj.readDirection = ReadDirection.valueOf(source.readString());
 			obj.autocrop = Boolean.parseBoolean(source.readString());

@@ -91,12 +91,10 @@ public class PdfReaderFragment extends BasePagerReaderFragment implements OnData
 					startActivity(i);
 					getActivity().finish();
 				
-					//광고 보여주기
-					Intent intent = new Intent();
-					intent.setClass(getActivity(), InterstitialActivity.class);
-					startActivity(intent);					
-//					dataController.prepare(next);
-//					dataController.buildPdf();
+//					//광고 보여주기
+//					Intent intent = new Intent();
+//					intent.setClass(getActivity(), InterstitialActivity.class);
+//					startActivity(intent);					
 				}
 			}
 		});

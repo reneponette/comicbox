@@ -19,8 +19,10 @@ import android.widget.ImageView;
 import com.reneponette.comicbox.cache.PageBitmapLoader;
 import com.reneponette.comicbox.controller.DataController.OnDataBuildListener;
 import com.reneponette.comicbox.db.FileInfo;
+import com.reneponette.comicbox.db.FileInfoDAO;
 import com.reneponette.comicbox.model.PageInfo;
 import com.reneponette.comicbox.ui.InterstitialActivity;
+import com.reneponette.comicbox.ui.ReaderActivity;
 import com.reneponette.comicbox.utils.DialogHelper;
 import com.reneponette.comicbox.utils.ImageUtils;
 import com.reneponette.comicbox.utils.MessageUtils;
@@ -76,18 +78,28 @@ public class ZipFileReaderFragment extends BasePagerReaderFragment implements On
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				
-				//광고 보여주기
-				Intent intent = new Intent();
-				intent.setClass(getActivity(), InterstitialActivity.class);
-				startActivity(intent);
-				
 				dataController.saveReadState(0);
 
 				File next = findNextFile();
 				if (next != null) {
-					dataController.prepare(next);
-					dataController.build();
+					FileInfo info = FileInfoDAO.instance().getFileInfo(next);
+					Intent i = ReaderActivity.newIntent(getActivity(), info);
+					startActivity(i);
+					getActivity().finish();
 				}
+				
+//				//광고 보여주기
+//				Intent intent = new Intent();
+//				intent.setClass(getActivity(), InterstitialActivity.class);
+//				startActivity(intent);
+//				
+//				dataController.saveReadState(0);
+//
+//				File next = findNextFile();
+//				if (next != null) {
+//					dataController.prepare(next);
+//					dataController.build();
+//				}
 			}
 		});
 	}

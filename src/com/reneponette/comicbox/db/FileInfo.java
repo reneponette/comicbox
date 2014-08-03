@@ -210,6 +210,14 @@ public class FileInfo implements DatabaseStorable<FileInfo>, Parcelable {
 			obj.focusName = source.readString();
 			obj.indexInParent = source.readInt();
 			
+			if(obj.type == LocationType.LOCAL) {
+				obj.setFile(new File(obj.path));
+			} else {
+				Entry entry = new Entry();
+				entry.path = obj.path;
+				obj.setEntry(entry);
+			}
+			
 			return obj;
 		}
 

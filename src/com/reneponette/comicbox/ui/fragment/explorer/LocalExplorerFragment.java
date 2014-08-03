@@ -11,23 +11,19 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.PopupMenu;
-import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.TextView;
 
 import com.reneponette.comicbox.R;
@@ -37,7 +33,9 @@ import com.reneponette.comicbox.constant.C;
 import com.reneponette.comicbox.db.FileInfo;
 import com.reneponette.comicbox.db.FileInfo.LocationType;
 import com.reneponette.comicbox.db.FileInfoDAO;
+import com.reneponette.comicbox.model.FileMeta;
 import com.reneponette.comicbox.model.FileMeta.FileType;
+import com.reneponette.comicbox.model.FileMeta.ReadDirection;
 import com.reneponette.comicbox.ui.MainActivity;
 import com.reneponette.comicbox.utils.DialogHelper;
 import com.reneponette.comicbox.utils.MetricUtils;
@@ -67,11 +65,13 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 		//
 	}
 
-	private FileInfo curInfo;
-	private List<FileInfo> infoList;
-	private FolderViewAdapter adapter;
-	private GridView gridView;
-	private int numOfColumn;
+	FileInfo curInfo;
+	List<FileInfo> infoList;
+	FolderViewAdapter adapter;
+	GridView gridView;
+	int numOfColumn;
+
+	PopupMenu popupMenu;
 
 	@Override
 	public void onAttach(Activity activity) {
@@ -98,11 +98,12 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				FileInfo info = (FileInfo) parent.getItemAtPosition(position);
 				if (getActivity() instanceof FolderViewFragmentListener) {
+					FileInfo info = (FileInfo) parent.getItemAtPosition(position);
 					((FolderViewFragmentListener) getActivity()).onFileClicked(info);
 				}
 			}
+
 		});
 
 		return rootView;
@@ -255,54 +256,42 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 				holder.itemName = (TextView) v.findViewById(R.id.itemName);
 				holder.itemProgress = (TextView) v.findViewById(R.id.itemProgress);
 				holder.itemCount = (TextView) v.findViewById(R.id.itemCount);
-				holder.itemMenuBtn = (ImageButton) v.findViewById(R.id.itemMenuBtn);
 				holder.itemImage.setTag(holder.itemName);
 				v.setTag(holder);
 			}
 
-			final Holder holder = (Holder) v.getTag();
+			FileInfo info = (FileInfo) getItem(position);
+			Holder holder = (Holder) v.getTag();
 
 			GridView.LayoutParams lp;
 
 			int itemSpacing = MetricUtils.dpToPixel(7);
 			int itemWidth = (gridView.getWidth() - itemSpacing * (numOfColumn - 1)) / numOfColumn;
 			int itemHeight = (int) (itemWidth * 1.0 + MetricUtils.dpToPixel(50));
-
 			lp = new GridView.LayoutParams(GridView.AUTO_FIT, itemHeight);
 			v.setLayoutParams(lp);
 
-			holder.itemImage.setScaleType(ScaleType.CENTER_CROP);
-
-			FileInfo info = (FileInfo) getItem(position);
-
+			// name
 			holder.itemName.setText(info.getFile().getName());
+			// image
+			holder.itemImage.setScaleType(ScaleType.CENTER_CROP);
 			new LocalThumbBitmapLoader(info, holder.itemImage).run();
-
+			// child count
 			int itemCount = 0;
 			if (info.getFile().list() != null) {
 				itemCount = info.getFile().list().length;
 			}
 			holder.itemCount.setText(itemCount == 0 ? "" : itemCount + "");
-			
-			
-			final View vv = v;
-			holder.itemMenuBtn.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					PopupMenu menu = new PopupMenu(getActivity(), vv);
-					menu.inflate(R.menu.folder);
-					menu.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-						
-						@Override
-						public boolean onMenuItemClick(MenuItem item) {
-							return false;
-						}
-					});
-					menu.show();
-				}
-			});
+
+			FileMeta meta = info.getMeta();
+			if ((meta.type == FileType.ZIP || meta.type == FileType.PDF) && meta.lastReadPageIndex != -1) {
+				int readPage = meta.lastReadDirection == ReadDirection.RTL ? meta.lastTotalPageCount
+						- meta.lastReadPageIndex : meta.lastReadPageIndex + 1;
+
+				holder.itemProgress.setText(readPage + "/" + meta.lastTotalPageCount);
+			} else {
+				holder.itemProgress.setText("");
+			}
 
 			return v;
 		}
@@ -323,11 +312,11 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 		}
 
 		class Holder {
+			public FileInfo info;
 			public ImageView itemImage;
 			public TextView itemName;
 			public TextView itemProgress;
 			public TextView itemCount;
-			public ImageButton itemMenuBtn;
 		}
 
 	}

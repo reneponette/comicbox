@@ -176,7 +176,8 @@ public class DataController {
 	 * @param viewingPageIndex
 	 */
 	public void saveReadState(int viewingPageIndex) {
-		fileMeta.lastReadPage = viewingPageIndex;
+		fileMeta.lastReadPageIndex = viewingPageIndex;
+		fileMeta.lastTotalPageCount = pageSize();
 		fileMeta.lastReadDirection = readDirection;
 		fileMeta.lastPagesPerScan = pagesPerScan;
 		FileInfoDAO.instance().insertOrUpdate(fileInfo);

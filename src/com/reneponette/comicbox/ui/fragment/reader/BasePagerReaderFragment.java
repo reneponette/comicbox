@@ -243,7 +243,7 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 		int pagesPerScanComputed = dataController.getPagesPerScan();
 		int pageSize = dataController.pageSize();
 
-		int startPageIndex = meta.lastReadPage;
+		int startPageIndex = meta.lastReadPageIndex;
 		if (startPageIndex == -1) // 처음 보는 경우
 			startPageIndex = readDirection == ReadDirection.RTL ? pageSize - 1 : 0;
 		else {
@@ -251,21 +251,21 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 				if (pagesPerScanComputed != meta.lastPagesPerScan) {
 					if (meta.lastPagesPerScan == 2) {
 						// 2 -> 1
-						startPageIndex = pageSize - 1 - meta.lastReadPage / 2;
+						startPageIndex = pageSize - 1 - meta.lastReadPageIndex / 2;
 					} else {
 						// 1 -> 2
-						startPageIndex = pageSize - 1 - meta.lastReadPage * 2;
+						startPageIndex = pageSize - 1 - meta.lastReadPageIndex * 2;
 					}
 				} else
-					startPageIndex = pageSize - 1 - meta.lastReadPage;
+					startPageIndex = pageSize - 1 - meta.lastReadPageIndex;
 			} else {
 				if (pagesPerScanComputed != meta.lastPagesPerScan) {
 					if (meta.lastPagesPerScan == 2) {
 						// 2 -> 1
-						startPageIndex = meta.lastReadPage / 2;
+						startPageIndex = meta.lastReadPageIndex / 2;
 					} else {
 						// 1 -> 2
-						startPageIndex = meta.lastReadPage * 2;
+						startPageIndex = meta.lastReadPageIndex * 2;
 					}
 				}
 
