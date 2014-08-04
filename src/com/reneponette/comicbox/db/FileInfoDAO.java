@@ -56,6 +56,34 @@ public class FileInfoDAO extends BaseDAO<FileInfo> {
 
 	// /////////////////////////////////////////////
 
+	public FileInfo getFileInfo(String key) {
+		FileInfo info = null;
+		
+		Cursor cursor = getDB().query(tableName, null, getPrimaryColumnName() + "=\"" + key + "\"", null, null, null, null);
+		if (cursor == null) {
+			//기본 객체 반환
+			return null;
+		}
+		
+		cursor.moveToFirst();
+		
+		if (cursor.getCount() == 0) {
+			return null;
+		}
+		
+		try {
+			info = populateObject(cursor);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (cursor != null && !cursor.isClosed()) {
+				cursor.close();
+			}
+		}
+		return info;
+	}
+	
+	
 	public FileInfo getFileInfo(Object obj) {
 		FileInfo info;
 

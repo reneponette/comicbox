@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.reneponette.comicbox.R;
+import com.reneponette.comicbox.manager.FavoriteManager;
 import com.reneponette.comicbox.utils.ImageUtils;
 
 /**
@@ -31,7 +33,7 @@ import com.reneponette.comicbox.utils.ImageUtils;
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
-public class NavigationDrawerFragment extends Fragment {
+public class NavigationDrawerFragment extends Fragment implements OnClickListener {
 
     /**
      * Remember the position of the selected item.
@@ -94,32 +96,39 @@ public class NavigationDrawerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
     	View view = inflater.inflate(R.layout.fragment_navigation_drawer, null);
-        mDrawerListView = (ListView) view.findViewById(R.id.menu_list);
-        mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectItem(position);
-            }
-        });
-        mDrawerListView.setAdapter(new ArrayAdapter<String>(
-                getActionBar().getThemedContext(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                new String[]{
-                        getString(R.string.title_section_sdcard),
-                        getString(R.string.title_section_dropbox),
-                        getString(R.string.title_section_settings),
-                }));
-        mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
-        
+    	
+    	view.findViewById(R.id.sdcard).setOnClickListener(this);
+    	view.findViewById(R.id.dropbox).setOnClickListener(this);
+    	view.findViewById(R.id.settings).setOnClickListener(this);
         
         ImageView iv = (ImageView) view.findViewById(R.id.menu_bg);
         Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.comic_book_faces);
         iv.setImageBitmap(ImageUtils.fastblur(bm, 10));
         
         
+        FavoriteManager.INSTANCE.getList();
+        
+        
         return view;
     }
+    
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.sdcard:
+			selectItem(0);
+			break;
+		case R.id.dropbox:
+			selectItem(1);
+			break;
+		case R.id.settings:
+			selectItem(2);
+			break;
+		default:
+			break;
+		}
+		
+	}    
 
     public boolean isDrawerOpen() {
         return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mFragmentContainerView);
@@ -286,4 +295,5 @@ public class NavigationDrawerFragment extends Fragment {
          */
         void onNavigationDrawerItemSelected(int position);
     }
+
 }

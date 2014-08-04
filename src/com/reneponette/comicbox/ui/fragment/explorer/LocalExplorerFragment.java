@@ -35,11 +35,13 @@ import com.reneponette.comicbox.constant.C;
 import com.reneponette.comicbox.db.FileInfo;
 import com.reneponette.comicbox.db.FileInfo.LocationType;
 import com.reneponette.comicbox.db.FileInfoDAO;
+import com.reneponette.comicbox.manager.FavoriteManager;
 import com.reneponette.comicbox.model.FileMeta;
 import com.reneponette.comicbox.model.FileMeta.FileType;
 import com.reneponette.comicbox.model.FileMeta.ReadDirection;
 import com.reneponette.comicbox.ui.MainActivity;
 import com.reneponette.comicbox.utils.DialogHelper;
+import com.reneponette.comicbox.utils.MessageUtils;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -311,7 +313,7 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 						public boolean onMenuItemClick(MenuItem item) {
 							
 							if(item.getItemId() == R.id.action_add_to_favorite) {
-								
+								FavoriteManager.INSTANCE.add(info.getKey());
 								return true;
 							}
 							if(item.getItemId() == R.id.action_read_direction_setting) {
