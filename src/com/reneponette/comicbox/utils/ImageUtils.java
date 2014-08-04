@@ -100,10 +100,10 @@ public class ImageUtils {
 
 		return getProcessedBitmap(bm, buildType, autocrop);
 	}
-	
-	
+
 	/**
 	 * PDF 파일에서 이미지 가져오기
+	 * 
 	 * @param core
 	 * @param pi
 	 * @param autocrop
@@ -113,21 +113,21 @@ public class ImageUtils {
 	public static Bitmap getBitmap(MuPDFCore core, int pdfIndex, PageBuildType buildType, boolean autocrop,
 			boolean preview) {
 		Bitmap bm = null;
-		
+
 		PointF point = core.getPageSize(pdfIndex);
 		int w = (int) point.x;
 		int h = (int) point.y;
-		
+
 		bm = Bitmap.createBitmap(w, h, Config.ARGB_8888);
 		core.drawPage(bm, pdfIndex, w, h, 0, 0, w, h);
-		
+
 		if (bm == null)
 			return null;
-		
-		if(preview) {
+
+		if (preview) {
 			bm = Bitmap.createScaledBitmap(bm, 200, 300, false);
 		}
-		
+
 		return getProcessedBitmap(bm, buildType, autocrop);
 	}
 
@@ -353,7 +353,7 @@ public class ImageUtils {
 		return null;
 	}
 
-	public static Bitmap extractCoverFromFolder(File src) {
+	public static Bitmap extractCoverFromFolder(File src, boolean multipleCover) {
 		if (src == null)
 			return null;
 
@@ -362,85 +362,87 @@ public class ImageUtils {
 
 		if (src.listFiles() == null)
 			return null;
-		
-		
-		Bitmap cover = null;
-		
-		int length = src.listFiles().length;
-		if(length > 0) {
-			int index = new Random().nextInt(length);
-			File f = src.listFiles()[index];
-			
-			String ext = StringUtils.getExtension(f.getName());
-			if ("zip".equalsIgnoreCase(ext))
-				cover = extractCoverFromZip(f);
-			else if ("pdf".equalsIgnoreCase(ext))
-				cover = extractCoverFromPdf(GlobalApplication.instance(), f);
-			else if ("jpg".equalsIgnoreCase(ext))
-				cover = extractCoverFromJpg(f);
-		}
-		
-		return cover;
-		
 
-//		Bitmap dst = null;
-//		Canvas comboImage = null;
-//		int count = 0;
-//		int jump = src.listFiles().length / 4;
-//		for (int i = 0; i < src.listFiles().length; i++) {
-//			if (i != jump * count)
-//				continue;
-//
-//			File f = src.listFiles()[i];
-//			if (f.isHidden())
-//				continue;
-//			if (f.isDirectory())
-//				continue;
-//
-//			Bitmap cover = null;
-//			String ext = StringUtils.getExtension(f.getName());
-//			if ("zip".equalsIgnoreCase(ext))
-//				cover = extractCoverFromZip(f);
-//			else if ("pdf".equalsIgnoreCase(ext))
-//				cover = extractCoverFromPdf(GlobalApplication.instance(), f);
-//			else if ("jpg".equalsIgnoreCase(ext))
-//				cover = extractCoverFromJpg(f);
-//
-//			if (cover != null) {
-//				count++;
-//
-//				if (dst == null) {
-//					dst = Bitmap.createBitmap(400, 600, Bitmap.Config.ARGB_8888);
-//					comboImage = new Canvas(dst);
-//				}
-//
-//				Rect rect = new Rect();
-//				if (count == 1) {
-//					rect.left = rect.top = 0;
-//					rect.right = 200;
-//					rect.bottom = 300;
-//				} else if (count == 2) {
-//					rect.left = 200;
-//					rect.top = 0;
-//					rect.right = 400;
-//					rect.bottom = 300;
-//				} else if (count == 3) {
-//					rect.left = 0;
-//					rect.top = 300;
-//					rect.right = 200;
-//					rect.bottom = 600;
-//				} else if (count == 4) {
-//					rect.left = 200;
-//					rect.top = 300;
-//					rect.right = 400;
-//					rect.bottom = 600;
-//				} else
-//					break;
-//
-//				comboImage.drawBitmap(cover, null, rect, null);
-//			}
-//		}
-//		return dst;
+		Bitmap cover = null;
+
+		if (multipleCover) {
+
+			Bitmap dst = null;
+			Canvas comboImage = null;
+			int count = 0;
+			int jump = src.listFiles().length / 4;
+			for (int i = 0; i < src.listFiles().length; i++) {
+				if (i != jump * count)
+					continue;
+
+				File f = src.listFiles()[i];
+				if (f.isHidden())
+					continue;
+				if (f.isDirectory())
+					continue;
+
+				String ext = StringUtils.getExtension(f.getName());
+				if ("zip".equalsIgnoreCase(ext))
+					cover = extractCoverFromZip(f);
+				else if ("pdf".equalsIgnoreCase(ext))
+					cover = extractCoverFromPdf(GlobalApplication.instance(), f);
+				else if ("jpg".equalsIgnoreCase(ext))
+					cover = extractCoverFromJpg(f);
+
+				if (cover != null) {
+					count++;
+
+					if (dst == null) {
+						dst = Bitmap.createBitmap(400, 600, Bitmap.Config.ARGB_8888);
+						comboImage = new Canvas(dst);
+					}
+
+					Rect rect = new Rect();
+					if (count == 1) {
+						rect.left = rect.top = 0;
+						rect.right = 200;
+						rect.bottom = 300;
+					} else if (count == 2) {
+						rect.left = 200;
+						rect.top = 0;
+						rect.right = 400;
+						rect.bottom = 300;
+					} else if (count == 3) {
+						rect.left = 0;
+						rect.top = 300;
+						rect.right = 200;
+						rect.bottom = 600;
+					} else if (count == 4) {
+						rect.left = 200;
+						rect.top = 300;
+						rect.right = 400;
+						rect.bottom = 600;
+					} else
+						break;
+
+					comboImage.drawBitmap(cover, null, rect, null);
+				}
+			}
+			return dst;
+			
+			
+		} else {
+			int length = src.listFiles().length;
+			if (length > 0) {
+				int index = new Random().nextInt(length);
+				File f = src.listFiles()[index];
+
+				String ext = StringUtils.getExtension(f.getName());
+				if ("zip".equalsIgnoreCase(ext))
+					cover = extractCoverFromZip(f);
+				else if ("pdf".equalsIgnoreCase(ext))
+					cover = extractCoverFromPdf(GlobalApplication.instance(), f);
+				else if ("jpg".equalsIgnoreCase(ext))
+					cover = extractCoverFromJpg(f);
+			}
+
+			return cover;
+		}
 	}
 
 	public static Bitmap extractCoverFromFolder(DropboxAPI<AndroidAuthSession> api, Entry entry) {

@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -24,6 +25,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.PopupMenu;
+import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.TextView;
 
 import com.reneponette.comicbox.R;
@@ -38,7 +40,6 @@ import com.reneponette.comicbox.model.FileMeta.FileType;
 import com.reneponette.comicbox.model.FileMeta.ReadDirection;
 import com.reneponette.comicbox.ui.MainActivity;
 import com.reneponette.comicbox.utils.DialogHelper;
-import com.reneponette.comicbox.utils.MetricUtils;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -155,21 +156,13 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 		int id = item.getItemId();
 
 		if (id == R.id.action_read_direction_setting) {
-			DialogHelper.showReadDirectionSelectDialog(getActivity(), curInfo.getMeta(), new OnDismissListener() {
-
-				@Override
-				public void onDismiss(DialogInterface dialog) {
-					FileInfoDAO.instance().insertOrUpdate(curInfo);
-				}
-			});
+			setReadDirection(curInfo);
 			return true;
 		}
 
 		if (id == R.id.action_recreate_thumbnail) {
 			for (FileInfo info : infoList) {
-				info.getMeta().coverPath = "";
-				FileInfoDAO.instance().insertOrUpdate(info);
-				BitmapCache.INSTANCE.removeBitmapFromMemCache(info);
+				removeCover(info);
 			}
 			adapter.notifyDataSetInvalidated();
 			return true;
@@ -236,6 +229,22 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 		}
 		return goParentDirectory();
 	}
+	
+	private void removeCover(FileInfo info) {
+		info.getMeta().coverPath = "";
+		FileInfoDAO.instance().insertOrUpdate(info);
+		BitmapCache.INSTANCE.removeBitmapFromMemCache(info);		
+	}
+	
+	private void setReadDirection(final FileInfo info) {
+		DialogHelper.showReadDirectionSelectDialog(getActivity(), info.getMeta(), new OnDismissListener() {
+
+			@Override
+			public void onDismiss(DialogInterface dialog) {
+				FileInfoDAO.instance().insertOrUpdate(info);
+			}
+		});
+	}
 
 	public class FolderViewAdapter extends BaseAdapter {
 
@@ -251,25 +260,19 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 			View v = view;
 			if (v == null) {
 				v = getActivity().getLayoutInflater().inflate(R.layout.fragment_explorer_item, null);
+				
 				Holder holder = new Holder();
 				holder.itemImage = (ImageView) v.findViewById(R.id.itemImage);
 				holder.itemName = (TextView) v.findViewById(R.id.itemName);
 				holder.itemProgress = (TextView) v.findViewById(R.id.itemProgress);
 				holder.itemCount = (TextView) v.findViewById(R.id.itemCount);
+				holder.itemMenuBtn = (ImageView) v.findViewById(R.id.itemMenuBtn);
 				holder.itemImage.setTag(holder.itemName);
 				v.setTag(holder);
 			}
-
-			FileInfo info = (FileInfo) getItem(position);
-			Holder holder = (Holder) v.getTag();
-
-			GridView.LayoutParams lp;
-
-			int itemSpacing = MetricUtils.dpToPixel(7);
-			int itemWidth = (gridView.getWidth() - itemSpacing * (numOfColumn - 1)) / numOfColumn;
-			int itemHeight = (int) (itemWidth * 1.0 + MetricUtils.dpToPixel(50));
-			lp = new GridView.LayoutParams(GridView.AUTO_FIT, itemHeight);
-			v.setLayoutParams(lp);
+			
+			final FileInfo info = (FileInfo) getItem(position);
+			final Holder holder = (Holder) v.getTag();
 
 			// name
 			holder.itemName.setText(info.getFile().getName());
@@ -292,6 +295,42 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 			} else {
 				holder.itemProgress.setText("");
 			}
+			
+			holder.itemMenuBtn.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					PopupMenu popupMenu = new PopupMenu(getActivity(), holder.itemMenuBtn);
+					popupMenu.inflate(R.menu.folder_item);
+					if(info.getMeta().type != FileType.DIRECTORY) {
+						popupMenu.getMenu().removeItem(R.id.action_add_to_favorite);
+					}
+					popupMenu.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+						
+						@Override
+						public boolean onMenuItemClick(MenuItem item) {
+							
+							if(item.getItemId() == R.id.action_add_to_favorite) {
+								
+								return true;
+							}
+							if(item.getItemId() == R.id.action_read_direction_setting) {
+								setReadDirection(info);
+								return true;
+							}
+							if(item.getItemId() == R.id.action_recreate_thumbnail) {
+								removeCover(info);
+								adapter.notifyDataSetInvalidated();
+								
+								return true;
+							}
+							
+							return false;
+						}
+					});
+					popupMenu.show();
+				}
+			});
 
 			return v;
 		}
@@ -312,11 +351,11 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 		}
 
 		class Holder {
-			public FileInfo info;
 			public ImageView itemImage;
 			public TextView itemName;
 			public TextView itemProgress;
 			public TextView itemCount;
+			public ImageView itemMenuBtn;
 		}
 
 	}

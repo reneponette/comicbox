@@ -78,7 +78,7 @@ public class LocalThumbBitmapLoader {
 				// 비트맵 처음 생성일 경우
 				switch (info.getMeta().type) {
 				case DIRECTORY:
-					bitmap = ImageUtils.extractCoverFromFolder(info.getFile());
+					bitmap = ImageUtils.extractCoverFromFolder(info.getFile(), false);
 					break;
 				case ZIP:
 					bitmap = ImageUtils.extractCoverFromZip(info.getFile());

@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -18,9 +20,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.reneponette.comicbox.R;
+import com.reneponette.comicbox.utils.ImageUtils;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -89,8 +93,8 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        mDrawerListView = (ListView) inflater.inflate(
-                R.layout.fragment_navigation_drawer, container, false);
+    	View view = inflater.inflate(R.layout.fragment_navigation_drawer, null);
+        mDrawerListView = (ListView) view.findViewById(R.id.menu_list);
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -107,7 +111,14 @@ public class NavigationDrawerFragment extends Fragment {
                         getString(R.string.title_section_settings),
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
-        return mDrawerListView;
+        
+        
+        ImageView iv = (ImageView) view.findViewById(R.id.menu_bg);
+        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.comic_book_faces);
+        iv.setImageBitmap(ImageUtils.fastblur(bm, 10));
+        
+        
+        return view;
     }
 
     public boolean isDrawerOpen() {
