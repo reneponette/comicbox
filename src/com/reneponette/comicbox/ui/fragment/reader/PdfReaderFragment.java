@@ -82,20 +82,28 @@ public class PdfReaderFragment extends BasePagerReaderFragment implements OnData
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				
-				dataController.saveReadState(0);
+//				dataController.saveReadState(-1);
+//
+//				File next = findNextFile();
+//				if (next != null) {
+//					FileInfo info = FileInfoDAO.instance().getFileInfo(next);
+//					Intent i = ReaderActivity.newIntent(getActivity(), info);
+//					startActivity(i);
+//					getActivity().finish();
+//				
+////					//광고 보여주기
+////					Intent intent = new Intent();
+////					intent.setClass(getActivity(), InterstitialActivity.class);
+////					startActivity(intent);					
+//				}
+				
+				dataController.saveReadState(-1);
 
 				File next = findNextFile();
 				if (next != null) {
-					FileInfo info = FileInfoDAO.instance().getFileInfo(next);
-					Intent i = ReaderActivity.newIntent(getActivity(), info);
-					startActivity(i);
-					getActivity().finish();
-				
-//					//광고 보여주기
-//					Intent intent = new Intent();
-//					intent.setClass(getActivity(), InterstitialActivity.class);
-//					startActivity(intent);					
-				}
+					dataController.prepare(next);
+					dataController.buildPdf();
+				}				
 			}
 		});
 	}
@@ -150,8 +158,13 @@ public class PdfReaderFragment extends BasePagerReaderFragment implements OnData
 	@Override
 	protected Bitmap getPreviewBitmap(ImageView iv, int position) {
 		PageInfo pi = dataController.getPageInfo(position);
-		new PageBitmapLoader(pi, iv, isAutocrop(), true).run();
-		return null;		
+//		new PageBitmapLoader(pi, iv, isAutocrop(), true).run();
+//		return null;
+		
+		if(pi.getPdfCore() == null)
+			return null;
+		
+		return ImageUtils.getBitmap(pi.getPdfCore(), pi.getPdfIndex(), pi.getBuildType(), false, true);		
 	}
 
 }

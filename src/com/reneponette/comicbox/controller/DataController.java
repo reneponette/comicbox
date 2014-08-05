@@ -51,19 +51,16 @@ public class DataController {
 	Thread runningThread;
 	Handler handler;
 
-	
-	///////////////////
+	// /////////////////
 	ZipFile zipFile;
 	MuPDFCore core;
-	///////////////////
-	
-	
+	// /////////////////
 
 	OnDataBuildListener listener;
 
 	public interface OnDataBuildListener {
-//		public FileInfo onPrepareFileInfo();
-		
+		// public FileInfo onPrepareFileInfo();
+
 		public void onStartBuild();
 
 		public void onFailBuild(String errStr);
@@ -98,23 +95,23 @@ public class DataController {
 	 * @return
 	 */
 	public DataController prepare(Object obj) {
-		
+
 		fileInfo = FileInfoDAO.instance().getFileInfo(obj);
 		fileMeta = fileInfo.getMeta();
-		
-		if(fileMeta.type == FileType.ZIP) {
-			if(obj instanceof Entry)
+
+		if (fileMeta.type == FileType.ZIP) {
+			if (obj instanceof Entry)
 				return prepareForZipStreaming();
 			else
 				return prepareForZip();
-		} else if(fileMeta.type == FileType.PDF) {
+		} else if (fileMeta.type == FileType.PDF) {
 			return prepareForZip();
-		} else if(fileMeta.type == FileType.DIRECTORY) {
+		} else if (fileMeta.type == FileType.DIRECTORY) {
 			return prepareForFolder();
 		}
 		return this;
 	}
-	
+
 	private DataController prepareForZip() {
 		// 처음 파일을 보는 경우 자동으로 결정
 		if (fileMeta.pagesPerScan == 0) {
@@ -136,14 +133,13 @@ public class DataController {
 		readDirection = computedDirection;
 		scanDirection = computedDirection;
 
-		return this;		
+		return this;
 	}
-	
+
 	private DataController prepareForFolder() {
 		return prepareForZip();
 	}
-	
-	
+
 	private DataController prepareForZipStreaming() {
 		// 처음 파일을 보는 경우 자동으로 결정
 		if (fileMeta.pagesPerScan == 0) {
@@ -167,10 +163,9 @@ public class DataController {
 		// 그리고 무조건 스트리밍은 왼->오 로 고정!
 		readDirection = ReadDirection.LTR;
 		scanDirection = computedDirection;
-		
+
 		return this;
 	}
-	
 
 	/**
 	 * @param viewingPageIndex
@@ -182,11 +177,11 @@ public class DataController {
 		fileMeta.lastPagesPerScan = pagesPerScan;
 		FileInfoDAO.instance().insertOrUpdate(fileInfo);
 	}
-	
+
 	public List<PageInfo> getPageInfoList() {
 		return pageInfoList;
 	}
- 
+
 	public FileInfo getFileInfo() {
 		return fileInfo;
 	}
@@ -272,15 +267,13 @@ public class DataController {
 						}
 					}
 				}
-				
+
 				fillFinalPagesAndNotify();
 			}
 		});
 		runningThread.start();
 	}
 
-
-	
 	/**
 	 * 압축 되어있지 않은 폴더용
 	 */
@@ -325,8 +318,6 @@ public class DataController {
 		runningThread.start();
 	}
 
-	
-	
 	/**
 	 * PDF 파일용
 	 */
@@ -334,25 +325,24 @@ public class DataController {
 		pageInfoList.clear();
 		if (listener != null)
 			listener.onStartBuild();
-		
+
 		runningThread = new Thread(new Runnable() {
-			
+
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
-				if (core == null) {
-					core = openFile(fileInfo.getPath());
-					if (core != null && core.countPages() == 0) {
-						core = null;
-					}
+
+				core = openFile(fileInfo.getPath());
+				if (core != null && core.countPages() == 0) {
+					core = null;
 				}
+				
 				if (core == null) {
 					if (listener != null)
 						listener.onFailBuild(GlobalApplication.instance().getString(R.string.cannot_read_file));
-					return;			
-				}		
-				
-				for(int i=0 ; i<core.countPages() ; i++) {
+					return;
+				}
+
+				for (int i = 0; i < core.countPages(); i++) {
 					if (getPagesPerScan() == 2) {
 						if (getScanDirection() == ReadDirection.RTL) {
 							addPageInfo(PageBuildType.RIGHT, i, true);
@@ -366,16 +356,15 @@ public class DataController {
 							addPageInfo(PageBuildType.WHOLE, i, true);
 						else
 							addPageInfo(PageBuildType.WHOLE, i, false);
-					}					
+					}
 				}
-				
+
 				fillFinalPagesAndNotify();
 			}
 		});
 		runningThread.start();
 	}
-	
-	
+
 	private MuPDFCore openFile(String path) {
 		System.out.println("Trying to open " + path);
 		try {
@@ -387,11 +376,8 @@ public class DataController {
 			return null;
 		}
 		return core;
-	}	
+	}
 
-
-	
-	
 	/**
 	 * @param api
 	 * @param cacheDir
@@ -427,7 +413,6 @@ public class DataController {
 					ZipArchiveEntry ze;
 					while ((ze = zis.getNextZipEntry()) != null) {
 
-
 						// 파일 엔트리를 하나 읽음
 						ByteArrayOutputStream baos = new ByteArrayOutputStream();
 						byte[] buffer = new byte[1024];
@@ -441,7 +426,7 @@ public class DataController {
 						byte[] bytes = baos.toByteArray();
 						baos.close();
 
-						//이미 디스크에 캐쉬 되어있음 건너뜀
+						// 이미 디스크에 캐쉬 되어있음 건너뜀
 						if (nameSet.contains(filename))
 							continue;
 
@@ -463,7 +448,6 @@ public class DataController {
 							addPageWithBitmap(bitmap, cachedFile);
 						}
 					}
-
 
 				} catch (DropboxException e) {
 					e.printStackTrace();
@@ -503,28 +487,29 @@ public class DataController {
 		PageInfo info = new PageInfo(file);
 		fillPageInfoAndNotify(info, PageType.IMG_FILE, buildType, prepend);
 	}
-	
+
 	private void addPageInfo(PageBuildType buildType, ZipEntry ze, final boolean prepend) {
 		PageInfo info = new PageInfo(zipFile, ze);
 		fillPageInfoAndNotify(info, PageType.IMG_ZIP, buildType, prepend);
 	}
-	
+
 	private void addPageInfo(PageBuildType buildType, int pdfIndex, final boolean prepend) {
 		PageInfo info = new PageInfo(fileInfo.getName(), core, pdfIndex);
 		fillPageInfoAndNotify(info, PageType.IMG_PDF, buildType, prepend);
 	}
-	
+
 	private void addAdPageInfo(boolean prepend) {
 		PageInfo info = new PageInfo();
 		fillPageInfoAndNotify(info, PageType.AD, null, prepend);
 	}
-	
+
 	private void addEndPageInfo(boolean prepend) {
 		PageInfo info = new PageInfo();
 		fillPageInfoAndNotify(info, PageType.END, null, prepend);
 	}
-	
-	private void fillPageInfoAndNotify(final PageInfo info, PageType pageType, PageBuildType buildType, final boolean prepend) {
+
+	private void fillPageInfoAndNotify(final PageInfo info, PageType pageType, PageBuildType buildType,
+			final boolean prepend) {
 		info.setType(pageType);
 		info.setBuildType(buildType);
 
@@ -543,25 +528,25 @@ public class DataController {
 			}
 		});
 	}
-	
+
 	private void fillFinalPagesAndNotify() {
 		// 끝페이지, 광고 페이지 삽입
-//		addAdPageInfo(getReadDirection() == ReadDirection.RTL);
+		// addAdPageInfo(getReadDirection() == ReadDirection.RTL);
 		addEndPageInfo(getReadDirection() == ReadDirection.RTL);
-		
+
 		handler.post(new Runnable() {
 
 			@Override
 			public void run() {
 
 				if (listener != null) {
-					listener.onFinishBuild();;
+					listener.onFinishBuild();
+					;
 				}
 			}
-		});		
+		});
 	}
-	
-	
+
 	public void stopBuilding() {
 		if (runningThread != null) {
 			runningThread.interrupt();
