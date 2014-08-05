@@ -1,5 +1,8 @@
 package com.reneponette.comicbox.ui.fragment.reader;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,6 +11,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,10 +20,6 @@ import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.BaseAdapter;
-import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -44,11 +44,15 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 	protected ExtendedViewPager viewPager;
 	protected PagerAdapter pagerAdapter;
 
-	protected Gallery previewGallery;
-	protected PreviewAdapter previewAdapter;
 	protected View menuContainer;
 	protected TextView filename;
 	protected SeekBar seekBar;
+	
+	View previewBox;
+	TextView previewPageNumTv;
+	ImageView previewIv;
+	
+	Timer previewLoadTimer;
 
 	private boolean use3Fingers;
 
@@ -56,7 +60,6 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		pagerAdapter = new TouchImageAdapter(dataController);
-		previewAdapter = new PreviewAdapter(dataController);
 	}
 
 	@Override
@@ -80,34 +83,57 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 			}
 		});
 
+		previewBox = rootView.findViewById(R.id.preview_box);
+		previewPageNumTv = (TextView) rootView.findViewById(R.id.preview_page_num);
+		previewIv = (ImageView) rootView.findViewById(R.id.preview_image);
+
 		seekBar = (SeekBar) rootView.findViewById(R.id.seekBar1);
 		seekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
-
+				previewBox.setVisibility(View.GONE);
+				int position = seekBar.getProgress();
+				viewPager.setCurrentItem(position);
 			}
 
 			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) {
-
+				previewBox.setVisibility(View.VISIBLE);
 			}
 
 			@Override
-			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-				if (fromUser)
-					previewGallery.setSelection(progress);
-			}
-		});
+			public void onProgressChanged(SeekBar seekBar, final int progress, boolean fromUser) {
+				if (fromUser) {
+					DataController controller = dataController;
+					if (controller.getReadDirection() == ReadDirection.RTL) {
+						previewPageNumTv.setText((controller.pageSize() - progress) + "");
+					} else {
+						previewPageNumTv.setText(progress + 1 + "");
+					}
 
-		previewGallery = (Gallery) rootView.findViewById(R.id.preview_selector);
-		previewGallery.setAdapter(previewAdapter);
-		previewGallery.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				viewPager.setCurrentItem(position);
-				seekBar.setProgress(position);
+					
+					if(previewLoadTimer != null) 
+						previewLoadTimer.cancel();
+					previewLoadTimer = new Timer();
+					previewLoadTimer.schedule(new TimerTask() {
+						
+						@Override
+						public void run() {
+							Log.e(this.getClass().getName(), "previewLoadTimer Fired!");
+							final Bitmap previewBitmap = getPreviewBitmap(previewIv, progress);
+							getActivity().runOnUiThread(new Runnable() {
+								
+								@Override
+								public void run() {
+									if (previewBitmap != null)
+										previewIv.setImageBitmap(previewBitmap);
+								}
+							});
+							previewLoadTimer = null;
+						}
+					}, 500);
+				}
 			}
 		});
 
@@ -121,7 +147,6 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 
 			@Override
 			public void onPageSelected(int position) {
-				previewGallery.setSelection(position);
 				seekBar.setProgress(position);
 
 				PageInfo pi = dataController.getPageInfo(position);
@@ -366,10 +391,8 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 					int curIndex = viewPager.getCurrentItem();
 					if (menuContainer.getVisibility() == View.GONE) {
 						menuContainer.setVisibility(View.VISIBLE);
-						previewGallery.setSelection(curIndex);
 					} else
 						menuContainer.setVisibility(View.GONE);
-					previewAdapter.notifyDataSetChanged();
 
 				}
 			});
@@ -435,73 +458,6 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 			});
 		}
 
-	}
-
-	public class PreviewAdapter extends BaseAdapter {
-
-		DataController controller;
-
-		public PreviewAdapter(DataController controller) {
-			this.controller = controller;
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			View view = convertView;
-			if (view == null) {
-				view = getActivity().getLayoutInflater().inflate(R.layout.preview_item, previewGallery, false);
-				Holder holder = new Holder();
-				holder.previewIv = (ImageView) view.findViewById(R.id.previewImage);
-				holder.pageNumTv = (TextView) view.findViewById(R.id.pageNumber);
-				view.setTag(holder);
-			}
-
-			final Holder holder = (Holder) view.getTag();
-
-			if (controller.getReadDirection() == ReadDirection.RTL) {
-				holder.pageNumTv.setText((controller.pageSize() - position) + "");
-			} else {
-				holder.pageNumTv.setText(position + 1 + "");
-			}
-
-			PageInfo pi = (PageInfo) getItem(position);
-			if (pi == null) {
-				return view;
-			}
-
-			if (pi.getType() == PageType.END) {
-				return new ImageView(getActivity());
-			}
-
-			Bitmap previewBitmap = getPreviewBitmap(holder.previewIv, position);
-			if (previewBitmap != null)
-				holder.previewIv.setImageBitmap(previewBitmap);
-
-			return view;
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return 0;
-		}
-
-		@Override
-		public Object getItem(int position) {
-			if (position >= controller.pageSize())
-				return null;
-
-			return controller.getPageInfo(position);
-		}
-
-		@Override
-		public int getCount() {
-			return controller.pageSize();
-		}
-
-		class Holder {
-			public ImageView previewIv;
-			public TextView pageNumTv;
-		}
 	}
 
 }

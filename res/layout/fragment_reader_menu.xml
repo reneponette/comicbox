@@ -6,7 +6,7 @@
     tools:context="com.reneponette.comicbox.ui.ComicViewActivity$ZipViewFragment" >
 
     <RelativeLayout
-        android:id="@+id/title_box"
+        android:id="@+id/top_box"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="#a0000000"
@@ -33,7 +33,7 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/preview_box"
+        android:id="@+id/below_box"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -75,14 +75,33 @@
                 android:textColor="#FFFFFF"
                 android:textStyle="bold" />
         </LinearLayout>
+    </LinearLayout>
 
-        <Gallery
-            android:id="@+id/preview_selector"
+    <LinearLayout
+        android:id="@+id/preview_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/below_box"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:background="#a0000000"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/preview_page_num"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:paddingBottom="10dp"
-            android:visibility="gone"
-            android:spacing="10dp" />
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="00"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/preview_image"
+            android:layout_width="120dp"
+            android:layout_height="150dp" />
     </LinearLayout>
 
 </RelativeLayout>

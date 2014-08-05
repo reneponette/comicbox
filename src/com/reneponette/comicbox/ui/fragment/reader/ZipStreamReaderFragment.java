@@ -117,7 +117,6 @@ public class ZipStreamReaderFragment extends BasePagerReaderFragment implements 
 	@Override
 	public void onAddPageInfo(PageInfo pageInfo) {
 		pagerAdapter.notifyDataSetChanged();
-		previewAdapter.notifyDataSetChanged();
 
 		seekBar.setMax(dataController.pageSize() - 1);
 		((TextView) getView().findViewById(R.id.pageLeft)).setText("1");

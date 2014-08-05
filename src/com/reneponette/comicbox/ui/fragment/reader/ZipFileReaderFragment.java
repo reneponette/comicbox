@@ -1,14 +1,11 @@
 package com.reneponette.comicbox.ui.fragment.reader;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 import android.app.Activity;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,7 +18,6 @@ import com.reneponette.comicbox.controller.DataController.OnDataBuildListener;
 import com.reneponette.comicbox.db.FileInfo;
 import com.reneponette.comicbox.db.FileInfoDAO;
 import com.reneponette.comicbox.model.PageInfo;
-import com.reneponette.comicbox.ui.InterstitialActivity;
 import com.reneponette.comicbox.ui.ReaderActivity;
 import com.reneponette.comicbox.utils.DialogHelper;
 import com.reneponette.comicbox.utils.ImageUtils;
@@ -109,7 +105,6 @@ public class ZipFileReaderFragment extends BasePagerReaderFragment implements On
 	public void onStartBuild() {
 		showWaitingDialog();
 		viewPager.setAdapter(null);
-		previewGallery.setAdapter(null);
 	}
 
 	@Override
@@ -127,7 +122,6 @@ public class ZipFileReaderFragment extends BasePagerReaderFragment implements On
 	@Override
 	public void onFinishBuild() {
 		viewPager.setAdapter(pagerAdapter);
-		previewGallery.setAdapter(previewAdapter);
 
 		initUI();
 
@@ -144,8 +138,10 @@ public class ZipFileReaderFragment extends BasePagerReaderFragment implements On
 	@Override
 	protected Bitmap getPreviewBitmap(ImageView iv, int position) {
 		PageInfo pi = dataController.getPageInfo(position);
-		new PageBitmapLoader(pi, iv, isAutocrop(), true).run();
-		return null;
+//		new PageBitmapLoader(pi, iv, isAutocrop(), true).run();
+//		return null;
+		
+		return ImageUtils.getBitmap(pi.getZipFile(), pi.getZipEntry(), pi.getBuildType(), false, true);
 	}
 
 }

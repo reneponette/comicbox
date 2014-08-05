@@ -68,7 +68,6 @@ public class FolderReaderFragment extends BasePagerReaderFragment implements OnD
 		showWaitingDialog();
 		
 		viewPager.setAdapter(null);
-		previewGallery.setAdapter(null);
 	}
 
 	@Override
@@ -85,7 +84,6 @@ public class FolderReaderFragment extends BasePagerReaderFragment implements OnD
 	@Override
 	public void onFinishBuild() {
 		viewPager.setAdapter(pagerAdapter);
-		previewGallery.setAdapter(previewAdapter);
 
 		int startPageIndex;
 		if(startIndex > -1 ) {

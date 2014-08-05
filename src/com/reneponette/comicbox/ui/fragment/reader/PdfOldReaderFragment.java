@@ -37,7 +37,8 @@ import com.reneponette.comicbox.db.FileInfo;
 import com.reneponette.comicbox.model.PageInfo;
 
 @SuppressWarnings("deprecation")
-public class PdfOldReaderFragment extends BaseReaderFragment implements OnDataBuildListener, FilePicker.FilePickerSupport {
+public class PdfOldReaderFragment extends BaseReaderFragment implements OnDataBuildListener,
+		FilePicker.FilePickerSupport {
 
 	public static PdfOldReaderFragment newInstance(String folderPath) {
 		PdfOldReaderFragment fragment = new PdfOldReaderFragment();
@@ -52,13 +53,11 @@ public class PdfOldReaderFragment extends BaseReaderFragment implements OnDataBu
 
 	File curFile;
 	FileInfo fileInfo;
-	
+
 	MuPDFCore core;
 	MuPDFReaderView mDocView;
 	EditText mPasswordView;
 
-	Gallery previewGallery;
-	PreviewAdapter previewAdapter;
 	View menuContainer;
 	SeekBar seekBar;
 
@@ -75,7 +74,7 @@ public class PdfOldReaderFragment extends BaseReaderFragment implements OnDataBu
 		super.onCreate(savedInstanceState);
 		dataController.setOnDataBuildListener(this);
 		dataController.prepare(curFile);
-		
+
 		fileInfo = dataController.getFileInfo();
 
 		if (core == null) {
@@ -100,7 +99,6 @@ public class PdfOldReaderFragment extends BaseReaderFragment implements OnDataBu
 			alert.show();
 			return;
 		}
-		previewAdapter = new PreviewAdapter();
 	}
 
 	@Override
@@ -121,9 +119,7 @@ public class PdfOldReaderFragment extends BaseReaderFragment implements OnDataBu
 			@Override
 			protected void onMoveToChild(int i) {
 				super.onMoveToChild(i);
-				if (previewGallery == null)
-					return;
-				previewGallery.setSelection(i);
+
 			}
 		};
 		mDocView.setAdapter(new MuPDFPageAdapter(getActivity(), this, core));
@@ -141,10 +137,10 @@ public class PdfOldReaderFragment extends BaseReaderFragment implements OnDataBu
 		menuContainer = rootView.findViewById(R.id.menu_container);
 		menuContainer.setVisibility(View.GONE);
 
-		rootView.findViewById(R.id.title_box).setVisibility(View.GONE);
+		rootView.findViewById(R.id.top_box).setVisibility(View.GONE);
 
 		seekBar = (SeekBar) rootView.findViewById(R.id.seekBar1);
-		seekBar.setMax(core.countPages()-1);
+		seekBar.setMax(core.countPages() - 1);
 		seekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
 			@Override
@@ -159,21 +155,9 @@ public class PdfOldReaderFragment extends BaseReaderFragment implements OnDataBu
 
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-				previewGallery.setSelection(progress);
+
 			}
 		});
-
-		previewGallery = (Gallery) rootView.findViewById(R.id.preview_selector);
-		previewGallery.setAdapter(previewAdapter);
-		previewGallery.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				mDocView.setDisplayedViewIndex(position);
-				seekBar.setProgress(position);
-			}
-		});
-		previewGallery.setSelection(fileInfo.getMeta().lastReadPageIndex);
 
 		return rootView;
 	}
@@ -183,13 +167,12 @@ public class PdfOldReaderFragment extends BaseReaderFragment implements OnDataBu
 		super.onViewCreated(view, savedInstanceState);
 		updateSeekBarLabel();
 	}
-	
+
 	@Override
 	public void onDestroy() {
 		dataController.saveReadState(mDocView.getDisplayedViewIndex());
 		super.onDestroy();
 	}
-
 
 	@Override
 	public void onStartBuild() {
@@ -274,50 +257,6 @@ public class PdfOldReaderFragment extends BaseReaderFragment implements OnDataBu
 			return true;
 		}
 		return false;
-	}
-
-	// /////////////////////////////////////////////////////////////////////
-
-	private class PreviewAdapter extends BaseAdapter {
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			View view = convertView;
-			if (view == null) {
-				view = getActivity().getLayoutInflater().inflate(R.layout.preview_item, previewGallery, false);
-				Holder holder = new Holder();
-				holder.previewIv = (ImageView) view.findViewById(R.id.previewImage);
-				holder.pageNumTv = (TextView) view.findViewById(R.id.pageNumber);
-				view.setTag(holder);
-			}
-
-			final Holder holder = (Holder) view.getTag();
-			holder.pageNumTv.setText(position + 1 + "");
-			Bitmap bm = Bitmap.createBitmap(200, 300, Config.ARGB_8888);
-			core.drawPage(bm, position, 200, 300, 0, 0, 200, 300);
-			holder.previewIv.setImageBitmap(bm);
-
-			return view;
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return 0;
-		}
-
-		@Override
-		public Object getItem(int position) {
-			return null;
-		}
-
-		@Override
-		public int getCount() {
-			return core.countPages();
-		}
-
-		class Holder {
-			public ImageView previewIv;
-			public TextView pageNumTv;
-		}
 	}
 
 }

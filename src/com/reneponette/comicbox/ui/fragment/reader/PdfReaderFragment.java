@@ -105,7 +105,6 @@ public class PdfReaderFragment extends BasePagerReaderFragment implements OnData
 	public void onStartBuild() {
 		showWaitingDialog();
 		viewPager.setAdapter(null);
-		previewGallery.setAdapter(null);
 	}
 
 	@Override
@@ -130,7 +129,6 @@ public class PdfReaderFragment extends BasePagerReaderFragment implements OnData
 	@Override
 	public void onFinishBuild() {
 		viewPager.setAdapter(pagerAdapter);
-		previewGallery.setAdapter(previewAdapter);
 
 		initUI();
 		hideWaitingDialog();
