@@ -27,6 +27,7 @@
     <!-- 폴더 설정 -->
     <string name="action_go_parent_dir">상위폴더</string>
     <string name="action_add_to_favorite">즐겨찾기에 추가</string>
+    <string name="action_remove_from_favorite">즐겨찾기에서 제거</string>
     <string name="action_read_direction_setting">읽기방향 설정</string>
     <string name="action_recreate_thumbnail">커버 재생성</string>
     <string name="warning_message_data_download">데이터 네트워크를 사용하고 있습니다. 만화책 스트리밍시 데이터 요금이 부과됩니다. 계속하시겠습니까?</string>

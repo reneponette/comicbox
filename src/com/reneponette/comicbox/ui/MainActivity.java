@@ -31,6 +31,7 @@ import com.reneponette.comicbox.cache.DropboxComicsDownloader;
 import com.reneponette.comicbox.cache.DropboxComicsDownloader.OnLoadComicsListener;
 import com.reneponette.comicbox.constant.C;
 import com.reneponette.comicbox.db.FileInfo;
+import com.reneponette.comicbox.db.FileInfo.LocationType;
 import com.reneponette.comicbox.db.FileInfoDAO;
 import com.reneponette.comicbox.manager.DropBoxManager;
 import com.reneponette.comicbox.model.FileMeta.FileType;
@@ -122,6 +123,15 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 			break;
 		}
 	}
+	
+	
+	@Override
+	public void onFavoriteItemSelected(FileInfo info) {
+		if(info.getType() == LocationType.LOCAL)
+			onFileClicked(info);
+		else
+			onEntryClicked(info);
+	}	
 
 	public void onSectionAttached(String name) {
 		mTitle = name;
@@ -357,4 +367,5 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 		pref.edit().putString(C.LAST_LOCAL_PATH, curDir.getAbsolutePath())
 				.putString(C.LAST_DROPBOX_PATH, curEntry.path).commit();
 	}
+
 }

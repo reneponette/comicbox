@@ -41,7 +41,6 @@ import com.reneponette.comicbox.model.FileMeta.FileType;
 import com.reneponette.comicbox.model.FileMeta.ReadDirection;
 import com.reneponette.comicbox.ui.MainActivity;
 import com.reneponette.comicbox.utils.DialogHelper;
-import com.reneponette.comicbox.utils.MessageUtils;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -149,6 +148,13 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 		}
 
 		inflater.inflate(R.menu.folder, menu);
+		
+		if(FavoriteManager.INSTANCE.contains(curInfo)) {
+			menu.removeItem(R.id.action_add_to_favorite);						
+		} else {
+			menu.removeItem(R.id.action_remove_from_favorite);						
+		}		
+		
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
@@ -169,6 +175,16 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 			adapter.notifyDataSetInvalidated();
 			return true;
 		}
+		
+		if(item.getItemId() == R.id.action_add_to_favorite) {
+			FavoriteManager.INSTANCE.add(curInfo);
+			return true;
+		}
+		if(item.getItemId() == R.id.action_remove_from_favorite) {
+			FavoriteManager.INSTANCE.remove(curInfo);;
+			return true;
+		}
+		
 
 		return super.onOptionsItemSelected(item);
 	}
@@ -303,17 +319,29 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 				@Override
 				public void onClick(View v) {
 					PopupMenu popupMenu = new PopupMenu(getActivity(), holder.itemMenuBtn);
-					popupMenu.inflate(R.menu.folder_item);
+					popupMenu.inflate(R.menu.folder);
 					if(info.getMeta().type != FileType.DIRECTORY) {
 						popupMenu.getMenu().removeItem(R.id.action_add_to_favorite);
+						popupMenu.getMenu().removeItem(R.id.action_remove_from_favorite);
 					}
+					
+					if(FavoriteManager.INSTANCE.contains(info)) {
+						popupMenu.getMenu().removeItem(R.id.action_add_to_favorite);						
+					} else {
+						popupMenu.getMenu().removeItem(R.id.action_remove_from_favorite);						
+					}
+					
 					popupMenu.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 						
 						@Override
 						public boolean onMenuItemClick(MenuItem item) {
 							
 							if(item.getItemId() == R.id.action_add_to_favorite) {
-								FavoriteManager.INSTANCE.add(info.getKey());
+								FavoriteManager.INSTANCE.add(info);
+								return true;
+							}
+							if(item.getItemId() == R.id.action_remove_from_favorite) {
+								FavoriteManager.INSTANCE.remove(info);;
 								return true;
 							}
 							if(item.getItemId() == R.id.action_read_direction_setting) {
