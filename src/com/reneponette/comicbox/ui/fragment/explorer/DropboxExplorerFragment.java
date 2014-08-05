@@ -1,6 +1,5 @@
 package com.reneponette.comicbox.ui.fragment.explorer;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,12 +17,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.ImageView.ScaleType;
+import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.TextView;
 
 import com.dropbox.client2.DropboxAPI;
@@ -38,9 +40,9 @@ import com.reneponette.comicbox.db.FileInfo;
 import com.reneponette.comicbox.db.FileInfo.LocationType;
 import com.reneponette.comicbox.db.FileInfoDAO;
 import com.reneponette.comicbox.manager.DropBoxManager;
+import com.reneponette.comicbox.manager.FavoriteManager;
 import com.reneponette.comicbox.model.FileMeta.FileType;
 import com.reneponette.comicbox.ui.MainActivity;
-import com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment.FolderViewFragmentListener;
 import com.reneponette.comicbox.utils.DialogHelper;
 import com.reneponette.comicbox.utils.MessageUtils;
 import com.reneponette.comicbox.utils.MetricUtils;
@@ -385,27 +387,79 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 				Holder holder = new Holder();
 				holder.itemImage = (ImageView) v.findViewById(R.id.itemImage);
 				holder.itemName = (TextView) v.findViewById(R.id.itemName);
-				holder.itemImage.setTag(holder.itemName);
+				holder.itemProgress = (TextView) v.findViewById(R.id.itemProgress);
+				holder.itemCount = (TextView) v.findViewById(R.id.itemCount);
+				holder.itemMenuBtn = (ImageView) v.findViewById(R.id.itemMenuBtn);
 				v.setTag(holder);
 			}
 
 			final Holder holder = (Holder) v.getTag();
-
-			GridView.LayoutParams lp;
-
-			int itemSpacing = MetricUtils.dpToPixel(7);
-			int itemWidth = (gridView.getWidth() - itemSpacing * (numOfColumn - 1)) / numOfColumn;
-			int itemHeight = (int) (itemWidth * 1.0 + MetricUtils.dpToPixel(50));
-
-			lp = new GridView.LayoutParams(GridView.AUTO_FIT, itemHeight);
-			v.setLayoutParams(lp);
-
-			holder.itemImage.setScaleType(ScaleType.CENTER_CROP);
-
-			FileInfo info = (FileInfo) getItem(position);
-
+			final FileInfo info = (FileInfo) getItem(position);
+			
+			// name
 			holder.itemName.setText(info.getEntry().fileName());
+			// image
+			holder.itemImage.setScaleType(ScaleType.CENTER_CROP);
 			new DropboxThumbBitmapLoader(info, mApi, holder.itemImage).run();
+			
+			// child count
+			int itemCount = 0;
+			if (info.getEntry().contents != null) {
+				itemCount = info.getEntry().contents.size();
+			}
+			holder.itemCount.setText(itemCount == 0 ? "" : itemCount + "");
+			
+			// progress
+			holder.itemProgress.setText("");
+			
+			holder.itemMenuBtn.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					PopupMenu popupMenu = new PopupMenu(getActivity(), holder.itemMenuBtn);
+					popupMenu.inflate(R.menu.folder);
+					if(info.getMeta().type != FileType.DIRECTORY) {
+						popupMenu.getMenu().removeItem(R.id.action_add_to_favorite);
+						popupMenu.getMenu().removeItem(R.id.action_remove_from_favorite);
+					}
+					
+					if(FavoriteManager.INSTANCE.contains(info)) {
+						popupMenu.getMenu().removeItem(R.id.action_add_to_favorite);						
+					} else {
+						popupMenu.getMenu().removeItem(R.id.action_remove_from_favorite);						
+					}
+					
+					popupMenu.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+						
+						@Override
+						public boolean onMenuItemClick(MenuItem item) {
+							
+							if(item.getItemId() == R.id.action_add_to_favorite) {
+								FavoriteManager.INSTANCE.add(info);
+								return true;
+							}
+							if(item.getItemId() == R.id.action_remove_from_favorite) {
+								FavoriteManager.INSTANCE.remove(info);;
+								return true;
+							}
+							if(item.getItemId() == R.id.action_read_direction_setting) {
+								setReadDirection(info);
+								return true;
+							}
+							if(item.getItemId() == R.id.action_recreate_thumbnail) {
+								removeCover(info);
+								adapter.notifyDataSetInvalidated();
+								
+								return true;
+							}
+							
+							return false;
+						}
+					});
+					popupMenu.show();
+				}
+			});
+			
 
 			return v;
 		}
@@ -428,6 +482,9 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 		class Holder {
 			public ImageView itemImage;
 			public TextView itemName;
+			public TextView itemProgress;
+			public TextView itemCount;			
+			public ImageView itemMenuBtn;
 		}
 	}
 }

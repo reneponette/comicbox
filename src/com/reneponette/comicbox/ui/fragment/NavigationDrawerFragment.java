@@ -109,9 +109,9 @@ public class NavigationDrawerFragment extends Fragment implements OnClickListene
 		view.findViewById(R.id.dropbox).setOnClickListener(this);
 		view.findViewById(R.id.settings).setOnClickListener(this);
 
-		ImageView iv = (ImageView) view.findViewById(R.id.menu_bg);
-		Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.comic_book_faces);
-		iv.setImageBitmap(ImageUtils.fastblur(bm, 10));
+//		ImageView iv = (ImageView) view.findViewById(R.id.menu_bg);
+//		Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.comic_book_faces);
+//		iv.setImageBitmap(ImageUtils.fastblur(bm, 10));
 
 		final BaseAdapter adapter = new BaseAdapter() {
 

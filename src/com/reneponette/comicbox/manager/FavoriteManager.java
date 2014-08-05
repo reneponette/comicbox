@@ -60,15 +60,6 @@ public enum FavoriteManager {
 			String key = iter.next();
 			FileInfo info = FileInfoDAO.instance().getFileInfo(key);
 
-			if (info.getType() == LocationType.DROPBOX) {
-				Entry entry = new Entry();
-				entry.path = info.getPath();
-				info.setEntry(entry);
-			}
-			if (info.getType() == LocationType.LOCAL) {
-				info.setFile(new File(info.getPath()));
-			}
-
 			if (info != null)
 				list.add(info);
 		}

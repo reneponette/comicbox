@@ -248,21 +248,6 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 		return goParentDirectory();
 	}
 	
-	private void removeCover(FileInfo info) {
-		info.getMeta().coverPath = "";
-		FileInfoDAO.instance().insertOrUpdate(info);
-		BitmapCache.INSTANCE.removeBitmapFromMemCache(info);		
-	}
-	
-	private void setReadDirection(final FileInfo info) {
-		DialogHelper.showReadDirectionSelectDialog(getActivity(), info.getMeta(), new OnDismissListener() {
-
-			@Override
-			public void onDismiss(DialogInterface dialog) {
-				FileInfoDAO.instance().insertOrUpdate(info);
-			}
-		});
-	}
 
 	public class FolderViewAdapter extends BaseAdapter {
 
@@ -285,7 +270,6 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 				holder.itemProgress = (TextView) v.findViewById(R.id.itemProgress);
 				holder.itemCount = (TextView) v.findViewById(R.id.itemCount);
 				holder.itemMenuBtn = (ImageView) v.findViewById(R.id.itemMenuBtn);
-				holder.itemImage.setTag(holder.itemName);
 				v.setTag(holder);
 			}
 			

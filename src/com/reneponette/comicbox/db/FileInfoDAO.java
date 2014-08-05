@@ -73,6 +73,17 @@ public class FileInfoDAO extends BaseDAO<FileInfo> {
 		
 		try {
 			info = populateObject(cursor);
+			
+			if (info.getType() == LocationType.DROPBOX) {
+				Entry entry = new Entry();
+				entry.path = info.getPath();
+				entry.isDir = true;
+				info.setEntry(entry);
+			}
+			if (info.getType() == LocationType.LOCAL) {
+				info.setFile(new File(info.getPath()));
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

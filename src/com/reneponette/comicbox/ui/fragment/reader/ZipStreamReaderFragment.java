@@ -140,8 +140,13 @@ public class ZipStreamReaderFragment extends BasePagerReaderFragment implements 
 	@Override
 	protected Bitmap getPreviewBitmap(ImageView iv, int position) {
 		PageInfo pi = dataController.getPageInfo(position);
-		new PageBitmapLoader(pi, iv, isAutocrop(), true).run();
-		return null;
+//		new PageBitmapLoader(pi, iv, isAutocrop(), true).run();
+//		return null;
+		
+		if(pi.getFile() == null)
+			return null;
+		
+		return ImageUtils.getBitmap(pi.getFile(), pi.getBuildType(), false, true);		
 	}
 
 }
