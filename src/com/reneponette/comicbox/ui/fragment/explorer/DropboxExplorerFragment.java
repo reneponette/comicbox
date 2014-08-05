@@ -1,5 +1,6 @@
 package com.reneponette.comicbox.ui.fragment.explorer;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,12 +33,14 @@ import com.dropbox.client2.exception.DropboxException;
 import com.reneponette.comicbox.R;
 import com.reneponette.comicbox.cache.BitmapCache;
 import com.reneponette.comicbox.cache.DropboxThumbBitmapLoader;
+import com.reneponette.comicbox.constant.C;
 import com.reneponette.comicbox.db.FileInfo;
 import com.reneponette.comicbox.db.FileInfo.LocationType;
 import com.reneponette.comicbox.db.FileInfoDAO;
 import com.reneponette.comicbox.manager.DropBoxManager;
 import com.reneponette.comicbox.model.FileMeta.FileType;
 import com.reneponette.comicbox.ui.MainActivity;
+import com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment.FolderViewFragmentListener;
 import com.reneponette.comicbox.utils.DialogHelper;
 import com.reneponette.comicbox.utils.MessageUtils;
 import com.reneponette.comicbox.utils.MetricUtils;
@@ -249,8 +252,42 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 		mLoggedIn = loggedIn;
 		if (loggedIn) {
 		} else {
-			MessageUtils.toast(getActivity(), "드롭박스 접속안됨");
+//			MessageUtils.toast(getActivity(), "드롭박스 접속안됨");
 		}
+	}
+	
+	
+	private boolean goParentDirectory() {
+//		File parentFile = curInfo.getFile().getParentFile();
+//		if (parentFile != null) {
+//			FileInfo info = new FileInfo(LocationType.LOCAL);
+//			info.setFile(parentFile);
+//			info.focusName = curInfo.getName();
+//			if (getActivity() instanceof FolderViewFragmentListener) {
+//				((FolderViewFragmentListener) getActivity()).onFileClicked(info);
+//			}
+//			return true;
+//		}
+		
+		// 상위 폴더 넣기
+		if (StringUtils.isBlank(curInfo.getEntry().parentPath()) == false) {
+			FileInfo parentInfo;
+			Entry parentEntry = new Entry();
+			parentEntry.isDir = true;
+			parentEntry.path = curInfo.getEntry().parentPath();
+			parentInfo = new FileInfo(LocationType.DROPBOX);
+			parentInfo.setEntry(parentEntry);
+			infoList.add(parentInfo);
+			
+			FileInfo info = new FileInfo(LocationType.DROPBOX);
+			info.setEntry(parentEntry);
+			if (getActivity() instanceof FolderViewFragmentListener) {
+				((FolderViewFragmentListener) getActivity()).onEntryClicked(info);;
+			}
+			return true;			
+		}		
+		
+		return false;
 	}
 
 	private void enumerate() {
@@ -288,17 +325,6 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 						@Override
 						public void run() {
 
-							// 상위 폴더 넣기
-							if (StringUtils.isBlank(entry.parentPath()) == false) {
-								FileInfo parentInfo;
-								Entry parentEntry = new Entry();
-								parentEntry.isDir = true;
-								parentEntry.path = entry.parentPath();
-								parentInfo = new FileInfo(LocationType.DROPBOX);
-								parentInfo.setEntry(parentEntry);
-								infoList.add(parentInfo);
-							}
-
 							curInfo.setEntry(entry);
 
 							String name = curInfo.getName();
@@ -332,6 +358,16 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 
 	}
 
+	
+	@Override
+	public boolean onBackPressed() {
+		if (C.LOCAL_ROOT_PATH.equals(curInfo.getPath())) {
+			return false;
+		}
+		return goParentDirectory();
+	}	
+	
+	
 	public class FolderViewAdapter extends BaseAdapter {
 
 		private List<FileInfo> list;

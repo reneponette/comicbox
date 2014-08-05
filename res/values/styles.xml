@@ -21,6 +21,7 @@
 
     <style name="ComicBox.ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
         <item name="android:titleTextStyle">@style/ComicBox.ActionBar.TitleTextStyle</item>
+        <item name="android:actionOverflowButtonStyle">@android:style/Widget.Holo.ActionButton.Overflow</item>
         <item name="android:background">@color/primary</item>
     </style>
 
