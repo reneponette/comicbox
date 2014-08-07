@@ -1380,33 +1380,35 @@ com.reneponette.comicbox.cache.DropboxThumbBitmapLoader:
 com.reneponette.comicbox.cache.LocalThumbBitmapLoader:
     30:33:public LocalThumbBitmapLoader(com.reneponette.comicbox.db.FileInfo,com.reneponette.comicbox.cache.LocalThumbBitmapLoader$OnLoadBitmapListener)
     43:44:public com.reneponette.comicbox.cache.LocalThumbBitmapLoader lookupCacheFirst(boolean)
-com.reneponette.comicbox.cache.PagePreviewBitmapLoader:
-    29:34:public PagePreviewBitmapLoader(java.util.zip.ZipFile,com.reneponette.comicbox.model.PageInfo,com.reneponette.comicbox.cache.PagePreviewBitmapLoader$OnLoadBitmapListener,boolean)
+com.reneponette.comicbox.cache.PageBitmapLoader:
+    27:33:public PageBitmapLoader(com.reneponette.comicbox.model.PageInfo,com.reneponette.comicbox.cache.PageBitmapLoader$OnLoadBitmapListener,boolean,boolean)
 com.reneponette.comicbox.constant.C:
     public static final java.lang.String LAST_LOCAL_PATH
     public static final java.lang.String LAST_DROPBOX_PATH
     public static final java.lang.String DEFAULT_NAME
+    public static final java.lang.String LOCAL_ROOT_PATH
+    public static final java.lang.String DEFAULT_LOCAL_PATH
     public static final java.lang.String DEFAULT_DROPBOX_PATH
-    10:10:public C()
+    8:8:public C()
 com.reneponette.comicbox.controller.DataController:
     boolean autocrop
-    72:75:public DataController(com.reneponette.comicbox.controller.DataController$OnDataBuildListener)
-    179:179:public java.util.List getPageInfoList()
-    203:203:public boolean isAutocrop()
-    207:208:public void setAutocrop(boolean)
-    451:453:private void addAdPageInfo(boolean)
+    77:80:public DataController(com.reneponette.comicbox.controller.DataController$OnDataBuildListener)
+    182:182:public java.util.List getPageInfoList()
+    206:206:public boolean isAutocrop()
+    210:211:public void setAutocrop(boolean)
+    502:504:private void addAdPageInfo(boolean)
 com.reneponette.comicbox.db.BaseDAO:
     public abstract java.lang.Object populateObject(android.database.Cursor)
-    43:43:public long insert(com.reneponette.comicbox.db.DatabaseStorable)
-    47:47:public long insert(android.content.ContentValues)
-    52:53:public int update(long,android.content.ContentValues)
-    64:65:public int delete(long)
-    70:75:public android.database.Cursor getAll(java.lang.String[])
-    79:84:public android.database.Cursor getAll(java.lang.String[],java.lang.String)
-    89:95:public android.database.Cursor get(java.lang.String[],long)
-    99:104:public android.database.Cursor get(java.lang.String[],java.lang.String)
-    108:113:public android.database.Cursor get(java.lang.String[],java.lang.String,java.lang.String)
-    119:119:public long replace(android.content.ContentValues)
+    44:44:public long insert(com.reneponette.comicbox.db.DatabaseStorable)
+    48:48:public long insert(android.content.ContentValues)
+    53:54:public int update(long,android.content.ContentValues)
+    65:66:public int delete(long)
+    71:76:public android.database.Cursor getAll(java.lang.String[])
+    80:85:public android.database.Cursor getAll(java.lang.String[],java.lang.String)
+    90:96:public android.database.Cursor get(java.lang.String[],long)
+    100:105:public android.database.Cursor get(java.lang.String[],java.lang.String)
+    109:114:public android.database.Cursor get(java.lang.String[],java.lang.String,java.lang.String)
+    120:120:public long replace(android.content.ContentValues)
 com.reneponette.comicbox.db.DBOpenHelper:
     private static final java.lang.String DATABASE_NAME
     private static final int DATABASE_VERSION
@@ -1418,8 +1420,7 @@ com.reneponette.comicbox.db.FileInfo:
     public static final java.lang.String COL_META
 com.reneponette.comicbox.db.FileInfoDAO:
     public static final java.lang.String TABLE_NAME
-    42:46:public com.reneponette.comicbox.db.FileInfo populateObject(android.database.Cursor)
-    97:115:public java.util.List getFileInfos()
+    136:154:public java.util.List getFileInfos()
     1:1:public bridge synthetic java.lang.Object populateObject(android.database.Cursor)
 com.reneponette.comicbox.manager.DropBoxManager:
     private static final java.lang.String APP_KEY
@@ -1447,31 +1448,36 @@ com.reneponette.comicbox.ui.fragment.NavigationDrawerFragment:
     private static final java.lang.String STATE_SELECTED_POSITION
     private static final java.lang.String PREF_USER_LEARNED_DRAWER
 com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment:
-    27:35:private void setInfoBackgroundColor(android.view.View,android.graphics.Bitmap,int)
+    31:39:private void setInfoBackgroundColor(android.view.View,android.graphics.Bitmap,int)
 com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment:
     private static final java.lang.String PATH
     private static final java.lang.String TAG
-    242:248:private void logOut()
+    245:251:private void logOut()
 com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment:
     private static final java.lang.String FILE_INFO
+    android.widget.PopupMenu popupMenu
 com.reneponette.comicbox.ui.fragment.reader.BaseReaderFragment:
     public static final java.lang.String PATH
     public static final int REQ_SETTINGS
-    45:46:public void setAutocrop(boolean)
+    51:52:public void setAutocrop(boolean)
 com.reneponette.comicbox.ui.fragment.reader.FolderReaderFragment:
     private static final java.lang.String START_INDEX
+com.reneponette.comicbox.ui.fragment.reader.PdfReaderFragment:
+    com.reneponette.comicbox.db.FileInfo fileInfo
 com.reneponette.comicbox.utils.DialogHelper:
     13:13:public DialogHelper()
 com.reneponette.comicbox.utils.FileUtils:
     13:13:public FileUtils()
 com.reneponette.comicbox.utils.ImageUtils:
-    41:41:public ImageUtils()
-    142:153:public static int pagesPerScan(java.util.zip.ZipFile,org.apache.commons.compress.archivers.zip.ZipArchiveEntry)
-    494:528:public static int getAverageColor(android.graphics.Bitmap,int,boolean)
-    532:532:public static int getComplementColor(int,int)
-    699:898:public static android.graphics.Bitmap fastblur(android.graphics.Bitmap,int)
+    43:43:public ImageUtils()
+    174:185:public static int pagesPerScan(java.util.zip.ZipFile,org.apache.commons.compress.archivers.zip.ZipArchiveEntry)
+    548:582:public static int getAverageColor(android.graphics.Bitmap,int,boolean)
+    586:586:public static int getComplementColor(int,int)
+    753:952:public static android.graphics.Bitmap fastblur(android.graphics.Bitmap,int)
 com.reneponette.comicbox.utils.MessageUtils:
     6:6:public MessageUtils()
+com.reneponette.comicbox.utils.MetricUtils:
+    7:7:public MetricUtils()
 com.reneponette.comicbox.utils.SimpleCrypto:
     10:10:public SimpleCrypto()
     18:29:public static java.lang.String encrypt(java.lang.String,java.lang.String)

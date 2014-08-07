@@ -1865,9 +1865,16 @@ com.reneponette.comicbox.R$array: int pref_read_direction_list_values
 com.reneponette.comicbox.R$array: int select_read_direction_items
 com.reneponette.comicbox.R$attr: int metaButtonBarButtonStyle
 com.reneponette.comicbox.R$attr: int metaButtonBarStyle
+com.reneponette.comicbox.R$color: int accent
 com.reneponette.comicbox.R$color: int actionbar_bg
+com.reneponette.comicbox.R$color: int activity_bg
 com.reneponette.comicbox.R$color: int black_overlay
+com.reneponette.comicbox.R$color: int primary
+com.reneponette.comicbox.R$color: int primary_dark
+com.reneponette.comicbox.R$color: int text_primary
+com.reneponette.comicbox.R$color: int text_primary_lighter
 com.reneponette.comicbox.R$dimen: int activity_horizontal_margin
+com.reneponette.comicbox.R$dimen: int activity_padding
 com.reneponette.comicbox.R$dimen: int activity_vertical_margin
 com.reneponette.comicbox.R$dimen: int navigation_drawer_width
 com.reneponette.comicbox.R$drawable: int bg_actionbar
@@ -1875,24 +1882,36 @@ com.reneponette.comicbox.R$drawable: int bg_dot
 com.reneponette.comicbox.R$drawable: int bg_dot_pattern
 com.reneponette.comicbox.R$drawable: int bg_folder_info
 com.reneponette.comicbox.R$drawable: int bg_folder_item
+com.reneponette.comicbox.R$drawable: int bg_side_menu_item_bottom
+com.reneponette.comicbox.R$drawable: int bg_side_menu_item_top
+com.reneponette.comicbox.R$drawable: int comic_book_faces
 com.reneponette.comicbox.R$drawable: int drawer_shadow
 com.reneponette.comicbox.R$drawable: int ic_action_settings
 com.reneponette.comicbox.R$drawable: int ic_drawer
 com.reneponette.comicbox.R$drawable: int ic_launcher
+com.reneponette.comicbox.R$drawable: int ic_overflow
 com.reneponette.comicbox.R$drawable: int ico_blue_dropbox
+com.reneponette.comicbox.R$id: int action_add_to_favorite
 com.reneponette.comicbox.R$id: int action_read_direction_setting
 com.reneponette.comicbox.R$id: int action_recreate_thumbnail
-com.reneponette.comicbox.R$id: int action_settings
+com.reneponette.comicbox.R$id: int action_remove_from_favorite
 com.reneponette.comicbox.R$id: int adview
+com.reneponette.comicbox.R$id: int below_box
 com.reneponette.comicbox.R$id: int container
 com.reneponette.comicbox.R$id: int drawer_layout
+com.reneponette.comicbox.R$id: int dropbox
 com.reneponette.comicbox.R$id: int dropboxIcon
+com.reneponette.comicbox.R$id: int favorite_list
 com.reneponette.comicbox.R$id: int filename
 com.reneponette.comicbox.R$id: int folder_info_bg
 com.reneponette.comicbox.R$id: int gridView1
+com.reneponette.comicbox.R$id: int itemCount
 com.reneponette.comicbox.R$id: int itemImage
 com.reneponette.comicbox.R$id: int itemImageTitle
+com.reneponette.comicbox.R$id: int itemMenuBtn
 com.reneponette.comicbox.R$id: int itemName
+com.reneponette.comicbox.R$id: int itemProgress
+com.reneponette.comicbox.R$id: int menu_bg
 com.reneponette.comicbox.R$id: int menu_container
 com.reneponette.comicbox.R$id: int navigation_drawer
 com.reneponette.comicbox.R$id: int number_picker
@@ -1901,16 +1920,21 @@ com.reneponette.comicbox.R$id: int pageNumber
 com.reneponette.comicbox.R$id: int pageRight
 com.reneponette.comicbox.R$id: int previewImage
 com.reneponette.comicbox.R$id: int preview_box
-com.reneponette.comicbox.R$id: int preview_selector
+com.reneponette.comicbox.R$id: int preview_image
+com.reneponette.comicbox.R$id: int preview_page_num
+com.reneponette.comicbox.R$id: int sdcard
 com.reneponette.comicbox.R$id: int seekBar1
 com.reneponette.comicbox.R$id: int setting_btn
-com.reneponette.comicbox.R$id: int title_box
+com.reneponette.comicbox.R$id: int settings
+com.reneponette.comicbox.R$id: int top_box
 com.reneponette.comicbox.R$id: int view_pager
 com.reneponette.comicbox.R$layout: int activity_main
 com.reneponette.comicbox.R$layout: int activity_reader
 com.reneponette.comicbox.R$layout: int dialog_number_picker
+com.reneponette.comicbox.R$layout: int favorite_item
+com.reneponette.comicbox.R$layout: int fragment_explorer
 com.reneponette.comicbox.R$layout: int fragment_explorer_item
-com.reneponette.comicbox.R$layout: int fragment_explorer_local
+com.reneponette.comicbox.R$layout: int fragment_explorer_item_old
 com.reneponette.comicbox.R$layout: int fragment_navigation_drawer
 com.reneponette.comicbox.R$layout: int fragment_reader_menu
 com.reneponette.comicbox.R$layout: int fragment_reader_zip
@@ -1920,8 +1944,11 @@ com.reneponette.comicbox.R$layout: int preview_item
 com.reneponette.comicbox.R$menu: int folder
 com.reneponette.comicbox.R$menu: int global
 com.reneponette.comicbox.R$menu: int main
+com.reneponette.comicbox.R$string: int action_add_to_favorite
+com.reneponette.comicbox.R$string: int action_go_parent_dir
 com.reneponette.comicbox.R$string: int action_read_direction_setting
 com.reneponette.comicbox.R$string: int action_recreate_thumbnail
+com.reneponette.comicbox.R$string: int action_remove_from_favorite
 com.reneponette.comicbox.R$string: int action_settings
 com.reneponette.comicbox.R$string: int app_name
 com.reneponette.comicbox.R$string: int cannot_read_file
@@ -1953,6 +1980,7 @@ com.reneponette.comicbox.R$string: int title_activity_settings
 com.reneponette.comicbox.R$string: int title_read_direction
 com.reneponette.comicbox.R$string: int title_section_dropbox
 com.reneponette.comicbox.R$string: int title_section_sdcard
+com.reneponette.comicbox.R$string: int title_section_settings
 com.reneponette.comicbox.R$string: int title_warning
 com.reneponette.comicbox.R$string: int warning_message_data_download
 com.reneponette.comicbox.R$string: int will_read_next_comics
@@ -1983,6 +2011,8 @@ com.reneponette.comicbox.db.FileInfo$LocationType: com.reneponette.comicbox.db.F
 com.reneponette.comicbox.db.FileInfo$LocationType: com.reneponette.comicbox.db.FileInfo$LocationType valueOf(java.lang.String)
 com.reneponette.comicbox.manager.DropBoxManager: com.reneponette.comicbox.manager.DropBoxManager[] values()
 com.reneponette.comicbox.manager.DropBoxManager: com.reneponette.comicbox.manager.DropBoxManager valueOf(java.lang.String)
+com.reneponette.comicbox.manager.FavoriteManager: com.reneponette.comicbox.manager.FavoriteManager[] values()
+com.reneponette.comicbox.manager.FavoriteManager: com.reneponette.comicbox.manager.FavoriteManager valueOf(java.lang.String)
 com.reneponette.comicbox.manager.PausableThreadPoolExecutor$Type: com.reneponette.comicbox.manager.PausableThreadPoolExecutor$Type[] values()
 com.reneponette.comicbox.manager.PausableThreadPoolExecutor$Type: com.reneponette.comicbox.manager.PausableThreadPoolExecutor$Type valueOf(java.lang.String)
 com.reneponette.comicbox.model.FileMeta
@@ -2014,6 +2044,8 @@ com.reneponette.comicbox.ui.fragment.NavigationDrawerFragment: NavigationDrawerF
 com.reneponette.comicbox.view.ExtendedViewPager
 com.reneponette.comicbox.view.ExtendedViewPager: ExtendedViewPager(android.content.Context)
 com.reneponette.comicbox.view.ExtendedViewPager: ExtendedViewPager(android.content.Context,android.util.AttributeSet)
+com.reneponette.comicbox.view.GridItemLayout
+com.reneponette.comicbox.view.GridItemLayout: GridItemLayout(android.content.Context,android.util.AttributeSet)
 com.reneponette.comicbox.view.TouchImageView: void setOnTouchListener(android.view.View$OnTouchListener)
 com.reneponette.comicbox.view.TouchImageView: void setOnTouchImageViewListener(com.reneponette.comicbox.view.TouchImageView$OnTouchImageViewListener)
 com.reneponette.comicbox.view.TouchImageView: void setOnDoubleTapListener(android.view.GestureDetector$OnDoubleTapListener)
