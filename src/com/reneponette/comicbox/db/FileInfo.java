@@ -113,7 +113,7 @@ public class FileInfo implements DatabaseStorable<FileInfo>, Parcelable {
 			meta.type = FileType.DIRECTORY;
 			return true;
 		} else {
-			return setMetaTypeFromFilename(file.getName());
+			return setMetaTypeFromFilename(file.getName(), false);
 		}
 	}
 
@@ -131,18 +131,18 @@ public class FileInfo implements DatabaseStorable<FileInfo>, Parcelable {
 			meta.type = FileType.DIRECTORY;
 			return true;
 		} else {
-			return setMetaTypeFromFilename(entry.fileName());
+			return setMetaTypeFromFilename(entry.fileName(), true);
 		}
 
 	}
 
-	private boolean setMetaTypeFromFilename(String filename) {
+	private boolean setMetaTypeFromFilename(String filename, boolean isStreaming) {
 		String extension = StringUtils.getExtension(filename);
 		if (extension.equalsIgnoreCase("zip")) {
 			meta.type = FileType.ZIP;
 			return true;
 		}
-		if (extension.equalsIgnoreCase("pdf")) {
+		if (extension.equalsIgnoreCase("pdf") && isStreaming == false) {
 			meta.type = FileType.PDF;
 			return true;
 		}
