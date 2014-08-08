@@ -25,9 +25,8 @@ public class ProgressTextView extends TextView {
 		
 		Paint paint = new Paint(getPaint());
 		RectF rect = new RectF(-getWidth()/2, -getHeight()/2, (float)(1.5*getWidth()), (float)(1.5*getHeight()));
-		paint.setColor(0x88000000);
+		paint.setColor(0x88ffffff);
 		canvas.drawArc(rect, -90 + 360*progress, 360*(1-progress), true, paint);
-//		canvas.drawCircle(centerX, centerY, getWidth() /2, paint);
 		
 		
 		super.onDraw(canvas);
