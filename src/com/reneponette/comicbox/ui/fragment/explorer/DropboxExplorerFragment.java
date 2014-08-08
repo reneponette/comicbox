@@ -1,7 +1,5 @@
 package com.reneponette.comicbox.ui.fragment.explorer;
 
-import java.util.ArrayList;
-
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;

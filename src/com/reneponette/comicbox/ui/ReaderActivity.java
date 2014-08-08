@@ -52,7 +52,7 @@ public class ReaderActivity extends Activity {
 		FileInfo info = getIntent().getExtras().getParcelable(FILE_INFO);
 
 		Fragment f;
-		switch (info.getType()) {
+		switch (info.getLocation()) {
 		case LOCAL:
 			switch (info.getMeta().type) {
 			case PDF:

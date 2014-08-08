@@ -285,29 +285,27 @@ public class BaseExplorerFragment extends Fragment {
 
 			// name
 			holder.itemName.setText(info.getName());
+			
 			// image
 			holder.itemImage.setScaleType(ScaleType.CENTER_CROP);
-			
 			Bitmap thumbnail = getThumbnailBitmap(info, holder.itemImage);
 			if(thumbnail != null)
 				holder.itemImage.setImageBitmap(thumbnail);
-				
 
-//			// child count
-//			int itemCount = 0;
-//			if (info.getFile().list() != null) {
-//				itemCount = info.getFile().list().length;
-//			}
-//			holder.itemCount.setText(itemCount == 0 ? "" : itemCount + "");
+			// child count
+			int itemCount = info.getChildCount();
+			holder.itemCount.setText(itemCount == 0 ? "" : itemCount + "");
 
+			// progress
 			FileMeta meta = info.getMeta();
 			if ((meta.type == FileType.ZIP || meta.type == FileType.PDF) && meta.lastReadPageIndex != -1) {
 				int readPage = meta.lastReadDirection == ReadDirection.RTL ? meta.lastTotalPageCount
 						- meta.lastReadPageIndex : meta.lastReadPageIndex + 1;
 
 				holder.itemProgress.setText(readPage + "/" + meta.lastTotalPageCount);
+				holder.itemProgress.setVisibility(View.VISIBLE);;
 			} else {
-				holder.itemProgress.setText("");
+				holder.itemProgress.setVisibility(View.GONE);;
 			}
 			
 			holder.itemMenuBtn.setOnClickListener(new OnClickListener() {

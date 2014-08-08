@@ -127,7 +127,7 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 	
 	@Override
 	public void onFavoriteItemSelected(FileInfo info) {
-		if(info.getType() == LocationType.LOCAL)
+		if(info.getLocation() == LocationType.LOCAL)
 			onFileClicked(info);
 		else
 			onEntryClicked(info);

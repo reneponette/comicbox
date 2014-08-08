@@ -39,7 +39,7 @@ public class FileInfoDAO extends BaseDAO<FileInfo> {
 
 	@Override
 	public FileInfo populateObject(Cursor cursor) throws Exception {
-		FileInfo info = new FileInfo(LocationType.valueOf(cursor.getString(cursor.getColumnIndex(FileInfo.COL_TYPE))));
+		FileInfo info = new FileInfo(LocationType.valueOf(cursor.getString(cursor.getColumnIndex(FileInfo.COL_LOCATION))));
 		info.setKey(cursor.getString(cursor.getColumnIndex(FileInfo.COL_KEY)));
 		info.setPath(cursor.getString(cursor.getColumnIndex(FileInfo.COL_PATH)));
 		info.setMeta(FileMeta.createFromJSONString(cursor.getString(cursor.getColumnIndex(FileInfo.COL_META))));
@@ -47,7 +47,7 @@ public class FileInfoDAO extends BaseDAO<FileInfo> {
 	}
 	
 	public FileInfo mergeObject(Cursor cursor, FileInfo info) throws Exception {
-		info.setType(LocationType.valueOf(cursor.getString(cursor.getColumnIndex(FileInfo.COL_TYPE))));
+		info.setLocation(LocationType.valueOf(cursor.getString(cursor.getColumnIndex(FileInfo.COL_LOCATION))));
 		info.setKey(cursor.getString(cursor.getColumnIndex(FileInfo.COL_KEY)));
 		info.setPath(cursor.getString(cursor.getColumnIndex(FileInfo.COL_PATH)));
 		info.setMeta(FileMeta.createFromJSONString(cursor.getString(cursor.getColumnIndex(FileInfo.COL_META))));
@@ -74,13 +74,13 @@ public class FileInfoDAO extends BaseDAO<FileInfo> {
 		try {
 			info = populateObject(cursor);
 			
-			if (info.getType() == LocationType.DROPBOX) {
+			if (info.getLocation() == LocationType.DROPBOX) {
 				Entry entry = new Entry();
 				entry.path = info.getPath();
 				entry.isDir = true;
 				info.setEntry(entry);
 			}
-			if (info.getType() == LocationType.LOCAL) {
+			if (info.getLocation() == LocationType.LOCAL) {
 				info.setFile(new File(info.getPath()));
 			}
 			
