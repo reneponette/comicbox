@@ -34,6 +34,7 @@ import com.reneponette.comicbox.model.PageInfo;
 import com.reneponette.comicbox.model.PageInfo.PageType;
 import com.reneponette.comicbox.ui.FileSettingsActivity;
 import com.reneponette.comicbox.ui.ReaderActivity;
+import com.reneponette.comicbox.utils.MessageUtils;
 import com.reneponette.comicbox.view.ExtendedViewPager;
 import com.reneponette.comicbox.view.TouchImageView;
 import com.reneponette.comicbox.view.TouchImageView.OnSideTouchListener;
@@ -47,14 +48,16 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 	protected View menuContainer;
 	protected TextView filename;
 	protected SeekBar seekBar;
-	
+
 	View previewBox;
 	TextView previewPageNumTv;
 	ImageView previewIv;
-	
+
 	Timer previewLoadTimer;
 
 	private boolean use3Fingers;
+	
+	int curPageIndex;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -112,18 +115,17 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 						previewPageNumTv.setText(progress + 1 + "");
 					}
 
-					
-					if(previewLoadTimer != null) 
+					if (previewLoadTimer != null)
 						previewLoadTimer.cancel();
 					previewLoadTimer = new Timer();
 					previewLoadTimer.schedule(new TimerTask() {
-						
+
 						@Override
 						public void run() {
 							Log.e(this.getClass().getName(), "previewLoadTimer Fired!");
 							final Bitmap previewBitmap = getPreviewBitmap(previewIv, progress);
 							getActivity().runOnUiThread(new Runnable() {
-								
+
 								@Override
 								public void run() {
 									if (previewBitmap != null)
@@ -147,6 +149,8 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 
 			@Override
 			public void onPageSelected(int position) {
+				curPageIndex = position;
+				
 				seekBar.setProgress(position);
 
 				PageInfo pi = dataController.getPageInfo(position);
@@ -173,7 +177,14 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 	public void onDestroy() {
 		dataController.setOnDataBuildListener(null);
 		dataController.stopBuilding();
-		dataController.saveReadState(viewPager.getCurrentItem());
+
+		int pageCount = dataController.getPageInfoList().size();
+		int curPageNum = dataController.getReadDirection() == ReadDirection.RTL ? pageCount - curPageIndex : curPageIndex+1;
+		if (curPageNum == pageCount) {
+			dataController.saveReadState(-1);
+		} else {
+			dataController.saveReadState(viewPager.getCurrentItem());
+		}
 		super.onDestroy();
 	}
 
@@ -209,7 +220,7 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 
 	protected void onGoNextFile() {
 
-	}	
+	}
 
 	protected Bitmap getPreviewBitmap(ImageView iv, int position) {
 		return null;

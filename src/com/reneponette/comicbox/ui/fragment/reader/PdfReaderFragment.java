@@ -5,7 +5,6 @@ import java.io.File;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -18,13 +17,9 @@ import com.artifex.mupdfdemo.FilePicker;
 import com.reneponette.comicbox.cache.PageBitmapLoader;
 import com.reneponette.comicbox.controller.DataController.OnDataBuildListener;
 import com.reneponette.comicbox.db.FileInfo;
-import com.reneponette.comicbox.db.FileInfoDAO;
 import com.reneponette.comicbox.model.PageInfo;
-import com.reneponette.comicbox.ui.InterstitialActivity;
-import com.reneponette.comicbox.ui.ReaderActivity;
 import com.reneponette.comicbox.utils.DialogHelper;
 import com.reneponette.comicbox.utils.ImageUtils;
-import com.reneponette.comicbox.utils.MessageUtils;
 
 @SuppressWarnings("deprecation")
 public class PdfReaderFragment extends BasePagerReaderFragment implements OnDataBuildListener,
@@ -76,28 +71,13 @@ public class PdfReaderFragment extends BasePagerReaderFragment implements OnData
 	
 	@Override
 	protected void onGoNextFile() {
+		dataController.saveReadState(-1);		
+		
 		// 다음 권으로 넘김
 		DialogHelper.showGoNextComicsDialog(getActivity(), new OnClickListener() {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				
-//				dataController.saveReadState(-1);
-//
-//				File next = findNextFile();
-//				if (next != null) {
-//					FileInfo info = FileInfoDAO.instance().getFileInfo(next);
-//					Intent i = ReaderActivity.newIntent(getActivity(), info);
-//					startActivity(i);
-//					getActivity().finish();
-//				
-////					//광고 보여주기
-////					Intent intent = new Intent();
-////					intent.setClass(getActivity(), InterstitialActivity.class);
-////					startActivity(intent);					
-//				}
-				
-				dataController.saveReadState(-1);
 
 				File next = findNextFile();
 				if (next != null) {

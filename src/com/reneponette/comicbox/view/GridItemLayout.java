@@ -17,7 +17,7 @@ public class GridItemLayout extends RelativeLayout {
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		// TODO Auto-generated method stub
-		super.onMeasure(widthMeasureSpec, widthMeasureSpec + MetricUtils.dpToPixel(50));
+		super.onMeasure(widthMeasureSpec, widthMeasureSpec + MetricUtils.dpToPixel(getContext(), 50));
 	}
 
 }

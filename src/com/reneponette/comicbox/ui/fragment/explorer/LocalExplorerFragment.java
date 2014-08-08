@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.ImageView;
 
+import com.reneponette.comicbox.application.GlobalApplication;
 import com.reneponette.comicbox.cache.LocalThumbBitmapLoader;
 import com.reneponette.comicbox.constant.C;
 import com.reneponette.comicbox.db.FileInfo;
@@ -55,7 +56,13 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 	
 	@Override
 	public void onResume() {
-		enumerate();
+		handler.postDelayed(new Runnable() {
+			
+			@Override
+			public void run() {
+				enumerate();
+			}
+		}, 500);
 		super.onResume();
 	}
 

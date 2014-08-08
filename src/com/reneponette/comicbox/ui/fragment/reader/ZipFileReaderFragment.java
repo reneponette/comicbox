@@ -63,28 +63,13 @@ public class ZipFileReaderFragment extends BasePagerReaderFragment implements On
 
 	@Override
 	protected void onGoNextFile() {
+		dataController.saveReadState(-1);		
+		
 		// 다음 권으로 넘김
 		DialogHelper.showGoNextComicsDialog(getActivity(), new OnClickListener() {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				
-//				dataController.saveReadState(-1);
-//
-//				File next = findNextFile();
-//				if (next != null) {
-//					FileInfo info = FileInfoDAO.instance().getFileInfo(next);
-//					Intent i = ReaderActivity.newIntent(getActivity(), info);
-//					startActivity(i);
-//					getActivity().finish();
-//				}
-				
-//				//광고 보여주기
-//				Intent intent = new Intent();
-//				intent.setClass(getActivity(), InterstitialActivity.class);
-//				startActivity(intent);
-				
-				dataController.saveReadState(-1);
 
 				File next = findNextFile();
 				if (next != null) {
