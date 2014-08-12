@@ -1,10 +1,11 @@
 package com.reneponette.comicbox.application;
 
-import com.reneponette.comicbox.db.DBOpenHelper;
-
 import android.app.Application;
 import android.os.Handler;
 import android.os.Looper;
+
+import com.crashlytics.android.Crashlytics;
+import com.reneponette.comicbox.db.DBOpenHelper;
 
 
 public class GlobalApplication extends Application {
@@ -22,7 +23,9 @@ public class GlobalApplication extends Application {
 		super.onCreate();
 		instance = this;
 		
+		
 		DBOpenHelper.getInstance();
+		Crashlytics.start(this);
 	}
 	
 	@Override
