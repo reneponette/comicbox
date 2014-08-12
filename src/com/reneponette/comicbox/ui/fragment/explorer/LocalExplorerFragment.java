@@ -90,8 +90,6 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 		int indexInParent = 0;
 		int indexOfFocus = 0;
 
-		Log.e("sdfsf", "curInfo = " + curInfo);
-		Log.e("sdfsf", "curInfo.getFile() = " + curInfo.getFile());
 		List<File> childFileList = Arrays.asList(curInfo.getFile().listFiles());
 		Collections.sort(childFileList);
 
