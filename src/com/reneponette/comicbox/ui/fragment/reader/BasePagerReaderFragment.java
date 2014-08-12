@@ -1,9 +1,11 @@
 package com.reneponette.comicbox.ui.fragment.reader;
 
+import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -29,12 +31,13 @@ import android.widget.TextView;
 import com.reneponette.comicbox.R;
 import com.reneponette.comicbox.controller.DataController;
 import com.reneponette.comicbox.model.FileMeta;
+import com.reneponette.comicbox.model.FileMeta.FileType;
 import com.reneponette.comicbox.model.FileMeta.ReadDirection;
 import com.reneponette.comicbox.model.PageInfo;
 import com.reneponette.comicbox.model.PageInfo.PageType;
 import com.reneponette.comicbox.ui.FileSettingsActivity;
 import com.reneponette.comicbox.ui.ReaderActivity;
-import com.reneponette.comicbox.utils.MessageUtils;
+import com.reneponette.comicbox.utils.DialogHelper;
 import com.reneponette.comicbox.view.ExtendedViewPager;
 import com.reneponette.comicbox.view.TouchImageView;
 import com.reneponette.comicbox.view.TouchImageView.OnSideTouchListener;
@@ -219,7 +222,26 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 	}
 
 	protected void onGoNextFile() {
+		dataController.saveReadState(-1);		
+		
+		// 다음 권으로 넘김
+		DialogHelper.showGoNextComicsDialog(getActivity(), new DialogInterface.OnClickListener() {
 
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+
+				File next = findNextFile();
+				if (next != null) {
+					menuContainer.setVisibility(View.GONE);
+					dataController.prepare(next);
+					
+					if(dataController.getFileInfo().getMeta().type == FileType.ZIP)
+						dataController.build();
+					else if(dataController.getFileInfo().getMeta().type == FileType.PDF)
+						dataController.buildPdf();
+				}
+			}
+		});
 	}
 
 	protected Bitmap getPreviewBitmap(ImageView iv, int position) {
@@ -237,7 +259,7 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 		if (curIndex < 0) {
 			curIndex = 0;
 		}
-		viewPager.setCurrentItem(curIndex);
+		viewPager.setCurrentItem(curIndex, false);
 	}
 
 	@Override
@@ -247,7 +269,7 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 		if (curIndex >= pagerAdapter.getCount()) {
 			curIndex = pagerAdapter.getCount() - 1;
 		}
-		viewPager.setCurrentItem(curIndex);
+		viewPager.setCurrentItem(curIndex, false);
 	}
 
 	@Override

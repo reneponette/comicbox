@@ -3,8 +3,6 @@ package com.reneponette.comicbox.ui.fragment.reader;
 import java.io.File;
 
 import android.app.Activity;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,7 +12,6 @@ import android.widget.ImageView;
 
 import com.reneponette.comicbox.controller.DataController.OnDataBuildListener;
 import com.reneponette.comicbox.model.PageInfo;
-import com.reneponette.comicbox.utils.DialogHelper;
 import com.reneponette.comicbox.utils.ImageUtils;
 import com.reneponette.comicbox.utils.MessageUtils;
 
@@ -60,25 +57,6 @@ public class ZipFileReaderFragment extends BasePagerReaderFragment implements On
 	}
 
 	/*---------------------------------------------------------------------------*/
-
-	@Override
-	protected void onGoNextFile() {
-		dataController.saveReadState(-1);		
-		
-		// 다음 권으로 넘김
-		DialogHelper.showGoNextComicsDialog(getActivity(), new OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-
-				File next = findNextFile();
-				if (next != null) {
-					dataController.prepare(next);
-					dataController.build();
-				}
-			}
-		});
-	}
 
 
 	@Override

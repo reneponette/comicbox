@@ -2,6 +2,8 @@ package com.reneponette.comicbox.ui.fragment.reader;
 
 import java.io.File;
 
+import org.json.simple.parser.ContainerFactory;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -67,27 +69,7 @@ public class PdfReaderFragment extends BasePagerReaderFragment implements OnData
 	
 	
 	/*---------------------------------------------------------------------------*/
-	
-	
-	@Override
-	protected void onGoNextFile() {
-		dataController.saveReadState(-1);		
 		
-		// 다음 권으로 넘김
-		DialogHelper.showGoNextComicsDialog(getActivity(), new OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-
-				File next = findNextFile();
-				if (next != null) {
-					dataController.prepare(next);
-					dataController.buildPdf();
-				}				
-			}
-		});
-	}
-	
 
 	@Override
 	public void onStartBuild() {
