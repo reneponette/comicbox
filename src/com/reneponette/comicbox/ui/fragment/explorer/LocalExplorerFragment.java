@@ -7,9 +7,9 @@ import java.util.List;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 
-import com.reneponette.comicbox.application.GlobalApplication;
 import com.reneponette.comicbox.cache.LocalThumbBitmapLoader;
 import com.reneponette.comicbox.constant.C;
 import com.reneponette.comicbox.db.FileInfo;
@@ -62,10 +62,10 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 			public void run() {
 				enumerate();
 			}
-		}, 500);
+		}, 100);
 		super.onResume();
 	}
-
+	
 
 	private boolean goParentDirectory() {
 		File parentFile = curInfo.getFile().getParentFile();
@@ -90,6 +90,8 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 		int indexInParent = 0;
 		int indexOfFocus = 0;
 
+		Log.e("sdfsf", "curInfo = " + curInfo);
+		Log.e("sdfsf", "curInfo.getFile() = " + curInfo.getFile());
 		List<File> childFileList = Arrays.asList(curInfo.getFile().listFiles());
 		Collections.sort(childFileList);
 

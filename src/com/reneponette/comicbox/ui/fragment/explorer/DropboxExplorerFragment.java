@@ -114,7 +114,6 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 			parentEntry.path = curInfo.getEntry().parentPath();
 			parentInfo = new FileInfo(LocationType.DROPBOX);
 			parentInfo.setEntry(parentEntry);
-			infoList.add(parentInfo);
 			
 			FileInfo info = new FileInfo(LocationType.DROPBOX);
 			info.setEntry(parentEntry);

@@ -9,16 +9,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="50dp"
-        android:background="@drawable/bg_folder_default" />
+        android:src="@drawable/ic_folder" />
 
     <com.reneponette.comicbox.view.ProgressTextView
         android:id="@+id/itemProgress"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="50dp"
+        android:background="#88000000"
         android:gravity="center"
         android:shadowColor="#000000"
-        android:background="#88000000"
         android:shadowDx="3"
         android:shadowDy="3"
         android:shadowRadius="3"

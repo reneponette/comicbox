@@ -5,12 +5,15 @@ import java.io.File;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 
+import com.reneponette.comicbox.R;
 import com.reneponette.comicbox.application.GlobalApplication;
 import com.reneponette.comicbox.db.FileInfo;
 import com.reneponette.comicbox.db.FileInfoDAO;
 import com.reneponette.comicbox.manager.PausableThreadPoolExecutor;
 import com.reneponette.comicbox.manager.PausableThreadPoolExecutor.Type;
+import com.reneponette.comicbox.model.FileMeta.FileType;
 import com.reneponette.comicbox.utils.FileUtils;
 import com.reneponette.comicbox.utils.ImageUtils;
 import com.reneponette.comicbox.utils.StringUtils;
@@ -59,8 +62,15 @@ public class LocalThumbBitmapLoader {
 			}
 		}
 
-		if (iv != null)
-			iv.setImageBitmap(null);
+		if (iv != null) {
+			//기본 이미지 설정
+			if (info.getMeta().type == FileType.DIRECTORY) {
+				iv.setScaleType(ScaleType.CENTER_INSIDE);
+				iv.setImageResource(R.drawable.ic_folder);
+			} else {
+				iv.setImageBitmap(null);
+			}
+		}
 
 		PausableThreadPoolExecutor.instance(Type.DISK).execute(new Runnable() {
 			@Override
@@ -110,6 +120,9 @@ public class LocalThumbBitmapLoader {
 	}
 
 	private void notifyOnMainThread(final Bitmap bitmap) {
+		if (bitmap == null)
+			return;
+
 		GlobalApplication.instance().getHandler().post(new Runnable() {
 
 			@Override
@@ -117,6 +130,7 @@ public class LocalThumbBitmapLoader {
 				if (listener != null)
 					listener.onLoadBitmap(bitmap, info.getKey());
 				if (iv != null && info.getKey().equals(iv.getTag())) {
+					iv.setScaleType(ScaleType.CENTER_CROP);					
 					iv.setImageBitmap(bitmap);
 				}
 			}
