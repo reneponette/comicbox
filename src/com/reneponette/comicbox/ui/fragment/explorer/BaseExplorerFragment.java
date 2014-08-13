@@ -2,6 +2,7 @@ package com.reneponette.comicbox.ui.fragment.explorer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -298,6 +299,7 @@ public class BaseExplorerFragment extends Fragment {
 			
 			// image
 			holder.itemImage.setScaleType(ScaleType.CENTER_CROP);
+			holder.itemImage.setBackgroundColor(new Random().nextInt());
 			Bitmap thumbnail = getThumbnailBitmap(info, holder.itemImage);
 			if(thumbnail != null)
 				holder.itemImage.setImageBitmap(thumbnail);

@@ -21,14 +21,14 @@
     </style>
 
     <style name="ComicBox.ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-
-        <!-- <item name="android:titleTextStyle">@style/ComicBox.ActionBar.TitleTextStyle</item> -->
+ <!--        <item name="android:titleTextStyle">@style/ComicBox.ActionBar.TitleTextStyle</item> -->
         <item name="android:background">@color/primary</item>
+        <item name="android:icon">@android:color/transparent</item>
     </style>
 
     <style name="ComicBox.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
-<!--         <item name="android:textColor">@android:color/white</item> -->
-        <item name="android:textColor">@android:color/white</item>
+        <!-- <item name="android:textColor">@android:color/white</item> -->
+        <item name="android:textColor">#ffdc52</item>
     </style>
 
     <style name="FullscreenTheme" parent="android:Theme.NoTitleBar">

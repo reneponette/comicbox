@@ -1,20 +1,23 @@
 <resources>
 
     <color name="black_overlay">#66000000</color>
-    <color name="actionbar_bg">#ffff87c3</color>
+    <color name="actionbar_bg">#ff87c3</color>
     
     
-    <color name="primary">#ff1198d4</color>
-    <color name="primary_dark">#ff0087c3</color>
-    <color name="accent">#ff0087c3</color>
+    <color name="primary">#1198d4</color>
+    <color name="primary_dark">#0087c3</color>
+    <color name="accent">#0087c3</color>
+    
+    <color name="yellow">#ffc70f</color>
     
     
     
-    <color name="activity_bg">#ffe3e3e3</color>
+    
+    <color name="activity_bg">#e3e3e3</color>
     
     
-    <color name="text_primary">#ff6e6e6e</color>
-    <color name="text_primary_lighter">#ff888888</color>
+    <color name="text_primary">#6e6e6e</color>
+    <color name="text_primary_lighter">#888888</color>
     
     
 

@@ -7,7 +7,6 @@ import java.util.List;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 
 import com.reneponette.comicbox.cache.LocalThumbBitmapLoader;
