@@ -1193,6 +1193,18 @@ com.artifex.mupdfdemo.WidgetType: void <clinit>()
 com.artifex.mupdfdemo.WidgetType: WidgetType(java.lang.String,int)
 com.artifex.mupdfdemo.WidgetType: com.artifex.mupdfdemo.WidgetType[] values()
 com.artifex.mupdfdemo.WidgetType: com.artifex.mupdfdemo.WidgetType valueOf(java.lang.String)
+com.crashlytics.android.internal.W: com.crashlytics.android.internal.W[] values()
+com.crashlytics.android.internal.W: com.crashlytics.android.internal.W valueOf(java.lang.String)
+com.crashlytics.android.internal.aV: com.crashlytics.android.internal.aV[] values()
+com.crashlytics.android.internal.aV: com.crashlytics.android.internal.aV valueOf(java.lang.String)
+com.crashlytics.android.internal.ad: com.crashlytics.android.internal.ad[] values()
+com.crashlytics.android.internal.ad: com.crashlytics.android.internal.ad valueOf(java.lang.String)
+com.crashlytics.android.internal.ai: com.crashlytics.android.internal.ai[] values()
+com.crashlytics.android.internal.ai: com.crashlytics.android.internal.ai valueOf(java.lang.String)
+com.crashlytics.android.internal.ap: com.crashlytics.android.internal.ap[] values()
+com.crashlytics.android.internal.ap: com.crashlytics.android.internal.ap valueOf(java.lang.String)
+com.crashlytics.android.internal.ax: com.crashlytics.android.internal.ax[] values()
+com.crashlytics.android.internal.ax: com.crashlytics.android.internal.ax valueOf(java.lang.String)
 com.dropbox.client2.DropboxAPI
 com.dropbox.client2.DropboxAPI: int VERSION
 com.dropbox.client2.DropboxAPI: java.lang.String SDK_VERSION
@@ -1880,6 +1892,7 @@ com.reneponette.comicbox.R$dimen: int navigation_drawer_width
 com.reneponette.comicbox.R$drawable: int bg_actionbar
 com.reneponette.comicbox.R$drawable: int bg_dot
 com.reneponette.comicbox.R$drawable: int bg_dot_pattern
+com.reneponette.comicbox.R$drawable: int bg_folder_default
 com.reneponette.comicbox.R$drawable: int bg_folder_info
 com.reneponette.comicbox.R$drawable: int bg_folder_item
 com.reneponette.comicbox.R$drawable: int bg_side_menu_item_bottom
@@ -1888,6 +1901,7 @@ com.reneponette.comicbox.R$drawable: int comic_book_faces
 com.reneponette.comicbox.R$drawable: int drawer_shadow
 com.reneponette.comicbox.R$drawable: int ic_action_settings
 com.reneponette.comicbox.R$drawable: int ic_drawer
+com.reneponette.comicbox.R$drawable: int ic_folder
 com.reneponette.comicbox.R$drawable: int ic_launcher
 com.reneponette.comicbox.R$drawable: int ic_overflow
 com.reneponette.comicbox.R$drawable: int ico_blue_dropbox
@@ -1952,6 +1966,7 @@ com.reneponette.comicbox.R$string: int action_remove_from_favorite
 com.reneponette.comicbox.R$string: int action_settings
 com.reneponette.comicbox.R$string: int app_name
 com.reneponette.comicbox.R$string: int cannot_read_file
+com.reneponette.comicbox.R$string: int com_crashlytics_android_build_id
 com.reneponette.comicbox.R$string: int navigation_drawer_close
 com.reneponette.comicbox.R$string: int navigation_drawer_open
 com.reneponette.comicbox.R$string: int pref_description_dropbox_logout
@@ -2046,6 +2061,9 @@ com.reneponette.comicbox.view.ExtendedViewPager: ExtendedViewPager(android.conte
 com.reneponette.comicbox.view.ExtendedViewPager: ExtendedViewPager(android.content.Context,android.util.AttributeSet)
 com.reneponette.comicbox.view.GridItemLayout
 com.reneponette.comicbox.view.GridItemLayout: GridItemLayout(android.content.Context,android.util.AttributeSet)
+com.reneponette.comicbox.view.ProgressTextView
+com.reneponette.comicbox.view.ProgressTextView: ProgressTextView(android.content.Context,android.util.AttributeSet)
+com.reneponette.comicbox.view.ProgressTextView: void setProgress(float)
 com.reneponette.comicbox.view.TouchImageView: void setOnTouchListener(android.view.View$OnTouchListener)
 com.reneponette.comicbox.view.TouchImageView: void setOnTouchImageViewListener(com.reneponette.comicbox.view.TouchImageView$OnTouchImageViewListener)
 com.reneponette.comicbox.view.TouchImageView: void setOnDoubleTapListener(android.view.GestureDetector$OnDoubleTapListener)

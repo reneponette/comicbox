@@ -1359,6 +1359,117 @@ android.support.v4.widget.ViewDragHelper:
     908:927:protected boolean canScroll(android.view.View,boolean,int,int,int,int)
     1331:1337:public boolean isEdgeTouched(int)
     1351:1351:public boolean isEdgeTouched(int,int)
+com.crashlytics.android.CrashTest
+com.crashlytics.android.Crashlytics:
+    public static final java.lang.String TAG
+    176:189:public static void logException(java.lang.Throwable)
+    195:200:static void a(java.lang.String)
+    224:225:public static void log(java.lang.String)
+    228:236:private static void a(int,java.lang.String,java.lang.String)
+    252:256:public static void log(int,java.lang.String,java.lang.String)
+    284:285:public static void setUserIdentifier(java.lang.String)
+    293:294:public static void setUserName(java.lang.String)
+    302:303:public static void setUserEmail(java.lang.String)
+    309:310:public static void setApplicationInstallationIdentifier(java.lang.String)
+    321:341:public static void setString(java.lang.String,java.lang.String)
+    349:350:public static void setBool(java.lang.String,boolean)
+    358:359:public static void setDouble(java.lang.String,double)
+    367:368:public static void setFloat(java.lang.String,float)
+    376:377:public static void setInt(java.lang.String,int)
+    385:386:public static void setLong(java.lang.String,long)
+    399:400:public final void setListener(com.crashlytics.android.CrashlyticsListener)
+    408:409:public final void setDebugMode(boolean)
+    417:417:public final boolean getDebugMode()
+    425:457:public static void setPinningInfoProvider(com.crashlytics.android.PinningInfoProvider)
+    460:460:public static com.crashlytics.android.PinningInfoProvider getPinningInfoProvider()
+    473:476:public final boolean verifyPinning(java.net.URL)
+    514:515:public final void crash()
+    755:761:private static java.lang.String c(java.lang.String)
+com.crashlytics.android.CrashlyticsMissingDependencyException:
+    private static final long serialVersionUID
+com.crashlytics.android.P
+com.crashlytics.android.PinningInfoProvider:
+    public abstract java.io.InputStream getKeyStoreStream()
+    public abstract java.lang.String getKeyStorePassword()
+    public abstract java.lang.String[] getPins()
+com.crashlytics.android.i:
+    private static final long serialVersionUID
+com.crashlytics.android.internal.A:
+    68:68:public final void a(int,java.lang.String,java.lang.String,boolean)
+com.crashlytics.android.internal.B:
+    35:42:public final void c(java.lang.Object)
+    13:13:static synthetic void a(com.crashlytics.android.internal.B,java.lang.Object)
+com.crashlytics.android.internal.C
+com.crashlytics.android.internal.D:
+    104:104:public java.lang.String getVersion()
+    184:187:public final void a(com.crashlytics.android.internal.ag)
+com.crashlytics.android.internal.O:
+    108:112:public final void b(java.lang.String)
+com.crashlytics.android.internal.a
+com.crashlytics.android.internal.aD:
+    private static final long serialVersionUID
+com.crashlytics.android.internal.ab:
+    748:753:public static java.lang.String a(int)
+    801:815:public static java.lang.String b(int)
+com.crashlytics.android.internal.ag
+com.crashlytics.android.internal.aq:
+    495:509:public final synchronized void c()
+    513:520:private synchronized void d()
+com.crashlytics.android.internal.av:
+    45:49:public void a(com.crashlytics.android.internal.aG)
+    58:58:public com.crashlytics.android.internal.ay a(com.crashlytics.android.internal.ax,java.lang.String)
+    52:54:private synchronized void a()
+com.crashlytics.android.internal.b:
+    public static final java.lang.String a
+    125:126:public b()
+    134:135:public b(java.lang.String)
+    185:236:public void a(java.lang.Object)
+    239:249:private void a(com.crashlytics.android.internal.g,com.crashlytics.android.internal.h)
+    258:292:public void b(java.lang.Object)
+    304:325:public void c(java.lang.Object)
+    342:359:private void a()
+    372:377:private static void a(java.lang.Object,com.crashlytics.android.internal.g)
+    398:398:private java.util.Set a(java.lang.Class)
+    442:446:private static void a(java.lang.String,java.lang.reflect.InvocationTargetException)
+com.crashlytics.android.internal.e
+com.crashlytics.android.internal.f
+com.crashlytics.android.internal.g
+com.crashlytics.android.internal.h
+com.crashlytics.android.internal.i:
+    public abstract java.util.Map a(java.lang.Object)
+    public abstract java.util.Map b(java.lang.Object)
+com.crashlytics.android.internal.j:
+    33:33:public final java.util.Map a(java.lang.Object)
+    38:38:public final java.util.Map b(java.lang.Object)
+com.crashlytics.android.internal.k
+com.crashlytics.android.internal.l
+com.crashlytics.android.internal.m:
+    public abstract void a(com.crashlytics.android.internal.b)
+com.crashlytics.android.internal.n:
+    40:40:public final void a(com.crashlytics.android.internal.b)
+com.crashlytics.android.internal.o:
+    46:49:public final void a(com.crashlytics.android.internal.b)
+com.crashlytics.android.internal.p:
+    public abstract java.lang.String getVersion()
+    103:103:public java.lang.String getComponentPath()
+com.crashlytics.android.internal.q:
+    public abstract void a(int,java.lang.String,java.lang.String,boolean)
+com.crashlytics.android.internal.s
+com.crashlytics.android.internal.t
+com.crashlytics.android.internal.v:
+    233:237:public final void a(boolean)
+    269:270:public final void a(java.lang.String)
+com.crashlytics.android.j
+com.crashlytics.android.k
+com.crashlytics.android.v:
+    357:367:final void a(java.lang.Thread,java.lang.Throwable)
+    373:385:final void a(long,java.lang.String)
+    532:576:static void a(com.crashlytics.android.internal.aq,int,long,java.lang.String)
+    603:634:private boolean k()
+    66:66:static synthetic void b(com.crashlytics.android.v,java.util.Date,java.lang.Thread,java.lang.Throwable)
+    66:66:static synthetic com.crashlytics.android.internal.aq d(com.crashlytics.android.v)
+    66:66:static synthetic boolean e(com.crashlytics.android.v)
+com.crashlytics.android.x
 com.reneponette.comicbox.BuildConfig
 com.reneponette.comicbox.R
 com.reneponette.comicbox.R$array
@@ -1378,8 +1489,8 @@ com.reneponette.comicbox.cache.BitmapCache:
 com.reneponette.comicbox.cache.DropboxThumbBitmapLoader:
     39:43:public DropboxThumbBitmapLoader(com.reneponette.comicbox.db.FileInfo,com.dropbox.client2.DropboxAPI,com.reneponette.comicbox.cache.DropboxThumbBitmapLoader$OnLoadBitmapListener)
 com.reneponette.comicbox.cache.LocalThumbBitmapLoader:
-    30:33:public LocalThumbBitmapLoader(com.reneponette.comicbox.db.FileInfo,com.reneponette.comicbox.cache.LocalThumbBitmapLoader$OnLoadBitmapListener)
-    43:44:public com.reneponette.comicbox.cache.LocalThumbBitmapLoader lookupCacheFirst(boolean)
+    33:36:public LocalThumbBitmapLoader(com.reneponette.comicbox.db.FileInfo,com.reneponette.comicbox.cache.LocalThumbBitmapLoader$OnLoadBitmapListener)
+    46:47:public com.reneponette.comicbox.cache.LocalThumbBitmapLoader lookupCacheFirst(boolean)
 com.reneponette.comicbox.cache.PageBitmapLoader:
     27:33:public PageBitmapLoader(com.reneponette.comicbox.model.PageInfo,com.reneponette.comicbox.cache.PageBitmapLoader$OnLoadBitmapListener,boolean,boolean)
 com.reneponette.comicbox.constant.C:
@@ -1393,7 +1504,6 @@ com.reneponette.comicbox.constant.C:
 com.reneponette.comicbox.controller.DataController:
     boolean autocrop
     77:80:public DataController(com.reneponette.comicbox.controller.DataController$OnDataBuildListener)
-    182:182:public java.util.List getPageInfoList()
     206:206:public boolean isAutocrop()
     210:211:public void setAutocrop(boolean)
     502:504:private void addAdPageInfo(boolean)
@@ -1415,7 +1525,7 @@ com.reneponette.comicbox.db.DBOpenHelper:
 com.reneponette.comicbox.db.DataBases
 com.reneponette.comicbox.db.FileInfo:
     public static final java.lang.String COL_KEY
-    public static final java.lang.String COL_TYPE
+    public static final java.lang.String COL_LOCATION
     public static final java.lang.String COL_PATH
     public static final java.lang.String COL_META
 com.reneponette.comicbox.db.FileInfoDAO:
@@ -1448,14 +1558,13 @@ com.reneponette.comicbox.ui.fragment.NavigationDrawerFragment:
     private static final java.lang.String STATE_SELECTED_POSITION
     private static final java.lang.String PREF_USER_LEARNED_DRAWER
 com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment:
-    31:39:private void setInfoBackgroundColor(android.view.View,android.graphics.Bitmap,int)
+    192:200:private void setInfoBackgroundColor(android.view.View,android.graphics.Bitmap,int)
 com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment:
     private static final java.lang.String PATH
     private static final java.lang.String TAG
-    245:251:private void logOut()
+    214:220:private void logOut()
 com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment:
     private static final java.lang.String FILE_INFO
-    android.widget.PopupMenu popupMenu
 com.reneponette.comicbox.ui.fragment.reader.BaseReaderFragment:
     public static final java.lang.String PATH
     public static final int REQ_SETTINGS
@@ -1477,7 +1586,7 @@ com.reneponette.comicbox.utils.ImageUtils:
 com.reneponette.comicbox.utils.MessageUtils:
     6:6:public MessageUtils()
 com.reneponette.comicbox.utils.MetricUtils:
-    7:7:public MetricUtils()
+    6:6:public MetricUtils()
 com.reneponette.comicbox.utils.SimpleCrypto:
     10:10:public SimpleCrypto()
     18:29:public static java.lang.String encrypt(java.lang.String,java.lang.String)
@@ -1489,10 +1598,10 @@ com.reneponette.comicbox.view.TouchImageView:
     private static final java.lang.String DEBUG
     private static final float SUPER_MIN_MULTIPLIER
     private static final float SUPER_MAX_MULTIPLIER
-    109:111:public TouchImageView(android.content.Context,android.util.AttributeSet)
-    114:116:public TouchImageView(android.content.Context,android.util.AttributeSet,int)
-    441:442:public void setScrollPosition(float,float)
-    1300:1303:private void printMatrixInfo()
+    113:115:public TouchImageView(android.content.Context,android.util.AttributeSet)
+    118:120:public TouchImageView(android.content.Context,android.util.AttributeSet,int)
+    469:470:public void setScrollPosition(float,float)
+    1373:1377:private void printMatrixInfo()
 com.reneponette.comicbox.view.TouchImageView$DoubleTapZoom:
     private static final float ZOOM_TIME
 net.daum.adam.common.a:

@@ -3018,6 +3018,1070 @@ com.artifex.mupdfdemo.WidgetType -> com.artifex.mupdfdemo.WidgetType:
     com.artifex.mupdfdemo.WidgetType[] ENUM$VALUES -> ENUM$VALUES
     com.artifex.mupdfdemo.WidgetType[] values() -> values
     com.artifex.mupdfdemo.WidgetType valueOf(java.lang.String) -> valueOf
+com.crashlytics.android.A -> com.a.a.a:
+    com.crashlytics.android.v a -> a
+    java.lang.Object call() -> call
+com.crashlytics.android.B -> com.a.a.b:
+    com.crashlytics.android.v a -> a
+    java.lang.Boolean a() -> a
+    java.lang.Object call() -> call
+com.crashlytics.android.C -> com.a.a.c:
+    com.crashlytics.android.v a -> a
+    java.lang.Object call() -> call
+com.crashlytics.android.Crashlytics -> com.a.a.d:
+    long a -> a
+    java.util.concurrent.ConcurrentHashMap b -> b
+    com.crashlytics.android.CrashlyticsListener c -> c
+    com.crashlytics.android.v d -> d
+    com.crashlytics.android.internal.ao e -> e
+    java.lang.String f -> f
+    java.lang.String g -> g
+    java.lang.String h -> h
+    java.lang.String i -> i
+    android.content.ContextWrapper j -> j
+    java.lang.String k -> k
+    java.lang.String l -> l
+    java.lang.String m -> m
+    java.lang.String n -> n
+    java.lang.String o -> o
+    java.lang.String p -> p
+    java.lang.String q -> q
+    boolean r -> r
+    com.crashlytics.android.PinningInfoProvider s -> s
+    com.crashlytics.android.internal.av t -> t
+    float u -> u
+    com.crashlytics.android.Crashlytics v -> v
+    void start(android.content.Context) -> a
+    void start(android.content.Context,float) -> a
+    com.crashlytics.android.Crashlytics getInstance() -> a
+    void b(java.lang.String) -> a
+    java.util.Map a() -> b
+    java.lang.String getCrashlyticsVersion() -> c
+    com.crashlytics.android.internal.ao b() -> d
+    void c() -> e
+    java.lang.String getVersion() -> f
+    java.lang.String d() -> g
+    java.lang.String e() -> h
+    java.lang.String f() -> i
+    java.lang.String g() -> j
+    java.lang.String h() -> k
+    java.lang.String i() -> l
+    boolean j() -> m
+    boolean k() -> n
+    void a(boolean) -> a
+    com.crashlytics.android.v l() -> o
+    java.lang.String m() -> p
+    java.lang.String n() -> q
+    java.lang.String o() -> r
+    boolean p() -> s
+    com.crashlytics.android.V q() -> t
+    com.crashlytics.android.internal.aR r() -> u
+    void a(java.lang.String,android.content.Context,float) -> a
+    boolean a(android.content.Context,float) -> b
+    com.crashlytics.android.b a(com.crashlytics.android.Y) -> a
+    boolean a(com.crashlytics.android.Crashlytics,android.app.Activity,com.crashlytics.android.internal.aQ) -> a
+    com.crashlytics.android.internal.av s() -> v
+    int a(com.crashlytics.android.Crashlytics,float,int) -> a
+    boolean a(com.crashlytics.android.Crashlytics,android.content.Context,float) -> a
+    com.crashlytics.android.v a(com.crashlytics.android.Crashlytics) -> a
+com.crashlytics.android.CrashlyticsListener -> com.a.a.e:
+    void crashlyticsDidDetectCrashDuringPreviousExecution() -> a
+com.crashlytics.android.CrashlyticsMissingDependencyException -> com.a.a.f:
+    java.lang.String a(java.lang.String,java.lang.String) -> a
+com.crashlytics.android.D -> com.a.a.g:
+    java.io.File a -> a
+    void a() -> a
+com.crashlytics.android.E -> com.a.a.h:
+    com.crashlytics.android.v a -> a
+    void run() -> run
+com.crashlytics.android.F -> com.a.a.i:
+    java.lang.String a -> a
+    boolean accept(java.io.File,java.lang.String) -> accept
+com.crashlytics.android.G -> com.a.a.j:
+    java.lang.Runnable a -> a
+    void run() -> run
+com.crashlytics.android.H -> com.a.a.k:
+    int compare(java.lang.Object,java.lang.Object) -> compare
+com.crashlytics.android.I -> com.a.a.l:
+    java.util.concurrent.Callable a -> a
+    java.lang.Object call() -> call
+com.crashlytics.android.J -> com.a.a.m:
+    int compare(java.lang.Object,java.lang.Object) -> compare
+com.crashlytics.android.K -> com.a.a.n:
+    boolean accept(java.io.File,java.lang.String) -> accept
+com.crashlytics.android.L -> com.a.a.o:
+    com.crashlytics.android.v a -> a
+    void onReceive(android.content.Context,android.content.Intent) -> onReceive
+com.crashlytics.android.M -> com.a.a.p:
+    com.crashlytics.android.v a -> a
+    void onReceive(android.content.Context,android.content.Intent) -> onReceive
+com.crashlytics.android.N -> com.a.a.q:
+    java.util.Date a -> a
+    java.lang.Thread b -> b
+    java.lang.Throwable c -> c
+    com.crashlytics.android.v d -> d
+    java.lang.Object call() -> call
+com.crashlytics.android.O -> com.a.a.r:
+    com.crashlytics.android.v a -> a
+    java.lang.Object call() -> call
+com.crashlytics.android.PinningInfoProvider -> com.a.a.s:
+com.crashlytics.android.Q -> com.a.a.t:
+    boolean accept(java.io.File,java.lang.String) -> accept
+com.crashlytics.android.R -> com.a.a.u:
+    java.lang.String a -> a
+    boolean accept(java.io.File,java.lang.String) -> accept
+com.crashlytics.android.S -> com.a.a.v:
+    java.lang.String a -> a
+    boolean accept(java.io.File,java.lang.String) -> accept
+com.crashlytics.android.T -> com.a.a.w:
+com.crashlytics.android.U -> com.a.a.x:
+    java.lang.String a -> a
+    com.crashlytics.android.Z b -> b
+com.crashlytics.android.V -> com.a.a.y:
+    boolean a(com.crashlytics.android.U) -> a
+com.crashlytics.android.W -> com.a.a.z:
+    boolean a(com.crashlytics.android.U) -> a
+com.crashlytics.android.X -> com.a.a.aa:
+    android.content.Context a -> a
+    com.crashlytics.android.internal.aQ b -> b
+    java.lang.String a() -> a
+    java.lang.String b() -> b
+    java.lang.String c() -> c
+    java.lang.String d() -> d
+    java.lang.String e() -> e
+    java.lang.String a(java.lang.String,java.lang.String) -> a
+com.crashlytics.android.Y -> com.a.a.ab:
+    java.lang.String a -> a
+    int b -> b
+    int c -> c
+    int d -> d
+    com.crashlytics.android.Y a(android.content.Context,java.lang.String) -> a
+com.crashlytics.android.Z -> com.a.a.ac:
+    java.io.File a -> a
+    java.util.Map b -> b
+    boolean a() -> a
+    java.lang.String b() -> b
+    java.lang.String c() -> c
+    java.io.File d() -> d
+    java.util.Map e() -> e
+com.crashlytics.android.a -> com.a.a.ad:
+    boolean a(com.crashlytics.android.b) -> a
+    com.crashlytics.android.internal.ay a(com.crashlytics.android.internal.ay,com.crashlytics.android.b) -> a
+com.crashlytics.android.aa -> com.a.a.ae:
+    java.io.FilenameFilter b -> b
+    java.util.Map a -> a
+    short[] c -> c
+    java.lang.Object d -> d
+    com.crashlytics.android.V e -> e
+    java.lang.Thread f -> f
+    void a(float) -> a
+    boolean a(com.crashlytics.android.Z) -> a
+    java.util.List a() -> a
+    java.lang.Thread a(com.crashlytics.android.aa,java.lang.Thread) -> a
+    short[] b() -> b
+com.crashlytics.android.ab -> com.a.a.af:
+    boolean accept(java.io.File,java.lang.String) -> accept
+com.crashlytics.android.ac -> com.a.a.ag:
+    float a -> a
+    com.crashlytics.android.aa b -> b
+    void a() -> a
+com.crashlytics.android.ad -> com.a.a.ah:
+com.crashlytics.android.ae -> com.a.a.ai:
+    int a(int,int) -> a
+com.crashlytics.android.b -> com.a.a.aj:
+    java.lang.String a -> a
+    java.lang.String b -> b
+    java.lang.String c -> c
+    java.lang.String d -> d
+    java.lang.String e -> e
+    java.lang.String f -> f
+    int g -> g
+    java.lang.String h -> h
+    java.lang.String i -> i
+    com.crashlytics.android.Y j -> j
+    void a(java.io.File,java.io.FilenameFilter,int,java.util.Comparator) -> a
+com.crashlytics.android.c -> com.a.a.ak:
+    java.lang.String a -> a
+    boolean b -> b
+    void a(java.lang.String,java.lang.String) -> a
+com.crashlytics.android.d -> com.a.a.al:
+    byte[] a -> a
+    int b -> b
+    int a() -> a
+    com.crashlytics.android.d a(byte[],int,int) -> a
+    com.crashlytics.android.d a(java.lang.String) -> a
+    void a(byte[],int,int,int) -> a
+    boolean equals(java.lang.Object) -> equals
+    int hashCode() -> hashCode
+    java.io.InputStream b() -> b
+com.crashlytics.android.e -> com.a.a.am:
+    java.util.concurrent.atomic.AtomicLong a -> a
+    java.lang.String b -> b
+    byte[] a(long) -> a
+    java.lang.String toString() -> toString
+com.crashlytics.android.f -> com.a.a.an:
+    java.lang.String b -> b
+    java.io.File c -> c
+    boolean d -> d
+    java.io.FilenameFilter a -> a
+    void close() -> close
+    void a() -> a
+com.crashlytics.android.g -> com.a.a.ao:
+    boolean accept(java.io.File,java.lang.String) -> accept
+com.crashlytics.android.h -> com.a.a.ap:
+    byte[] a -> a
+    int b -> b
+    int c -> c
+    java.io.OutputStream d -> d
+    com.crashlytics.android.h a(java.io.OutputStream) -> a
+    void a(int,float) -> a
+    void a(int,long) -> a
+    void a(int,boolean) -> a
+    void a(int,java.lang.String) -> a
+    void a(int,com.crashlytics.android.d) -> a
+    void a(int,int) -> a
+    void b(int,int) -> b
+    void c(int,int) -> c
+    int b(int,float) -> b
+    int b(int,long) -> b
+    int b(int,boolean) -> b
+    int b(int,com.crashlytics.android.d) -> b
+    int d(int,int) -> d
+    int e(int,int) -> e
+    int f(int,int) -> f
+    void a() -> a
+    void flush() -> flush
+    void d(int) -> d
+    void a(byte[]) -> a
+    void g(int,int) -> g
+    int a(int) -> a
+    void b(int) -> b
+    int c(int) -> c
+    void a(long) -> a
+    int e(int) -> e
+com.crashlytics.android.i -> com.a.a.aq:
+com.crashlytics.android.internal.A -> com.a.a.a.a:
+    void a(java.lang.String,java.lang.String,java.lang.Throwable) -> a
+    void a(java.lang.String,java.lang.String) -> a
+    void b(java.lang.String,java.lang.String) -> b
+    void c(java.lang.String,java.lang.String) -> c
+    void d(java.lang.String,java.lang.String) -> d
+    void a(int,java.lang.String,java.lang.String) -> a
+com.crashlytics.android.internal.B -> com.a.a.a.b:
+    android.os.Handler b -> a
+com.crashlytics.android.internal.D -> com.a.a.a.c:
+    java.lang.String a -> a
+    java.lang.String b -> b
+    java.lang.String c -> c
+    com.crashlytics.android.internal.ao d -> d
+    com.crashlytics.android.internal.aJ e -> e
+    long f -> f
+    com.crashlytics.android.internal.av g -> g
+    com.crashlytics.android.internal.O h -> h
+    com.crashlytics.android.internal.D a() -> a
+    void c() -> e
+    java.lang.String b() -> b
+    void a(com.crashlytics.android.internal.af) -> a
+    void a(com.crashlytics.android.internal.D) -> a
+com.crashlytics.android.internal.E -> com.a.a.a.d:
+    com.crashlytics.android.internal.D a -> a
+    void a() -> a
+com.crashlytics.android.internal.F -> com.a.a.a.e:
+    android.app.Application b -> b
+    android.app.Application$ActivityLifecycleCallbacks c -> c
+    void a() -> a
+com.crashlytics.android.internal.G -> com.a.a.a.f:
+    com.crashlytics.android.internal.F a -> a
+    void onActivityCreated(android.app.Activity,android.os.Bundle) -> onActivityCreated
+    void onActivityDestroyed(android.app.Activity) -> onActivityDestroyed
+    void onActivityPaused(android.app.Activity) -> onActivityPaused
+    void onActivityResumed(android.app.Activity) -> onActivityResumed
+    void onActivitySaveInstanceState(android.app.Activity,android.os.Bundle) -> onActivitySaveInstanceState
+    void onActivityStarted(android.app.Activity) -> onActivityStarted
+    void onActivityStopped(android.app.Activity) -> onActivityStopped
+com.crashlytics.android.internal.H -> com.a.a.a.g:
+    boolean a(java.lang.String,java.util.List) -> a
+com.crashlytics.android.internal.I -> com.a.a.a.h:
+    void a() -> a
+    void a(com.crashlytics.android.internal.aK,java.lang.String) -> a
+    void b() -> b
+    void a(com.crashlytics.android.internal.V) -> a
+    void c() -> c
+    void d() -> d
+com.crashlytics.android.internal.J -> com.a.a.a.i:
+    java.util.concurrent.ScheduledExecutorService a -> a
+    com.crashlytics.android.internal.K b -> b
+    com.crashlytics.android.internal.av c -> c
+    java.util.concurrent.ScheduledFuture d -> d
+    int e -> e
+    com.crashlytics.android.internal.N f -> f
+    void a() -> a
+    void a(int,int) -> a
+    void c() -> c
+    void a(com.crashlytics.android.internal.aK,java.lang.String) -> a
+    void b() -> b
+    void a(com.crashlytics.android.internal.V) -> a
+    void d() -> d
+com.crashlytics.android.internal.K -> com.a.a.a.j:
+    com.crashlytics.android.internal.X a -> a
+    com.crashlytics.android.internal.ah b -> b
+    com.crashlytics.android.internal.aK c -> c
+    com.crashlytics.android.internal.aj d -> d
+    int e -> e
+    java.util.List f -> f
+    void a(com.crashlytics.android.internal.V) -> a
+    void a(com.crashlytics.android.internal.ak) -> a
+    boolean a() -> a
+    int e() -> e
+    void a(com.crashlytics.android.internal.aK) -> a
+    void a(java.lang.String) -> a
+    java.util.List b() -> b
+    void a(java.util.List) -> a
+    void c() -> c
+    void d() -> d
+    long b(java.lang.String) -> b
+com.crashlytics.android.internal.L -> com.a.a.a.k:
+    int compare(java.lang.Object,java.lang.Object) -> compare
+com.crashlytics.android.internal.M -> com.a.a.a.l:
+    java.io.File a -> a
+    long b -> b
+com.crashlytics.android.internal.N -> com.a.a.a.m:
+    boolean a(java.lang.String,java.util.List) -> a
+com.crashlytics.android.internal.O -> com.a.a.a.n:
+    java.lang.String b -> b
+    java.lang.String c -> c
+    java.lang.String d -> d
+    java.lang.String e -> e
+    java.lang.String f -> f
+    java.lang.String g -> g
+    java.lang.String h -> h
+    java.lang.String i -> i
+    java.util.concurrent.ScheduledExecutorService j -> j
+    com.crashlytics.android.internal.U a -> a
+    void a(java.lang.String) -> a
+    void b() -> b
+    void a(android.app.Activity) -> a
+    void b(android.app.Activity) -> b
+    void c(android.app.Activity) -> c
+    void d(android.app.Activity) -> d
+    void e(android.app.Activity) -> e
+    void f(android.app.Activity) -> f
+    void g(android.app.Activity) -> g
+    void a(com.crashlytics.android.internal.W,android.app.Activity,boolean) -> a
+    void a(com.crashlytics.android.internal.V,boolean) -> a
+    void a(com.crashlytics.android.internal.aK,java.lang.String) -> a
+    void c() -> c
+    void a() -> a
+    void a(java.lang.Runnable) -> a
+    java.lang.String a(com.crashlytics.android.internal.O) -> a
+    java.lang.String b(com.crashlytics.android.internal.O) -> b
+    java.lang.String c(com.crashlytics.android.internal.O) -> c
+    java.lang.String d(com.crashlytics.android.internal.O) -> d
+    java.lang.String e(com.crashlytics.android.internal.O) -> e
+    java.lang.String f(com.crashlytics.android.internal.O) -> f
+    java.lang.String g(com.crashlytics.android.internal.O) -> g
+    java.lang.String h(com.crashlytics.android.internal.O) -> h
+com.crashlytics.android.internal.P -> com.a.a.a.o:
+    java.lang.String a -> a
+    com.crashlytics.android.internal.O b -> b
+    void run() -> run
+com.crashlytics.android.internal.Q -> com.a.a.a.p:
+    com.crashlytics.android.internal.V a -> a
+    boolean b -> b
+    com.crashlytics.android.internal.O c -> c
+    void run() -> run
+com.crashlytics.android.internal.R -> com.a.a.a.q:
+    com.crashlytics.android.internal.aK a -> a
+    java.lang.String b -> b
+    com.crashlytics.android.internal.O c -> c
+    void run() -> run
+com.crashlytics.android.internal.S -> com.a.a.a.r:
+    com.crashlytics.android.internal.O a -> a
+    void run() -> run
+com.crashlytics.android.internal.T -> com.a.a.a.s:
+    com.crashlytics.android.internal.O a -> a
+    void run() -> run
+com.crashlytics.android.internal.U -> com.a.a.a.t:
+    void a() -> a
+    void a(com.crashlytics.android.internal.aK,java.lang.String) -> a
+    void b() -> b
+    void a(com.crashlytics.android.internal.V) -> a
+    void c() -> c
+    void d() -> d
+com.crashlytics.android.internal.V -> com.a.a.a.u:
+    java.lang.String a -> a
+    java.lang.String b -> b
+    java.lang.String c -> c
+    java.lang.String d -> d
+    java.lang.String e -> e
+    java.lang.String f -> f
+    java.lang.String g -> g
+    java.lang.String h -> h
+    long i -> i
+    com.crashlytics.android.internal.W j -> j
+    java.util.Map k -> k
+    java.lang.String l -> l
+    com.crashlytics.android.internal.V a(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,com.crashlytics.android.internal.W,java.util.Map) -> a
+    java.lang.String toString() -> toString
+com.crashlytics.android.internal.W -> com.a.a.a.v:
+    com.crashlytics.android.internal.W a -> a
+    com.crashlytics.android.internal.W b -> b
+    com.crashlytics.android.internal.W c -> c
+    com.crashlytics.android.internal.W d -> d
+    com.crashlytics.android.internal.W e -> e
+    com.crashlytics.android.internal.W f -> f
+    com.crashlytics.android.internal.W g -> g
+    com.crashlytics.android.internal.W h -> h
+    com.crashlytics.android.internal.W i -> i
+    com.crashlytics.android.internal.W j -> j
+    com.crashlytics.android.internal.W[] k -> k
+    com.crashlytics.android.internal.W[] values() -> values
+    com.crashlytics.android.internal.W valueOf(java.lang.String) -> valueOf
+com.crashlytics.android.internal.X -> com.a.a.a.w:
+    byte[] a(com.crashlytics.android.internal.V) -> a
+    org.json.JSONObject a(java.util.Map) -> a
+com.crashlytics.android.internal.Y -> com.a.a.a.x:
+    com.crashlytics.android.internal.K a -> a
+    com.crashlytics.android.internal.U b -> b
+    void run() -> run
+com.crashlytics.android.internal.Z -> com.a.a.a.y:
+    java.lang.String a -> a
+    java.util.regex.Pattern b -> b
+    java.lang.String c -> c
+    com.crashlytics.android.internal.av d -> d
+    com.crashlytics.android.internal.ax e -> e
+    java.lang.String f -> f
+    java.lang.String a() -> a
+    com.crashlytics.android.internal.ay b() -> b
+    com.crashlytics.android.internal.ay a(java.util.Map) -> a
+com.crashlytics.android.internal.aA -> com.a.a.a.z:
+    java.io.Closeable a -> a
+    boolean b -> b
+    void b() -> a
+com.crashlytics.android.internal.aB -> com.a.a.a.aa:
+    com.crashlytics.android.internal.aB a -> a
+    java.net.HttpURLConnection a(java.net.URL) -> a
+com.crashlytics.android.internal.aC -> com.a.a.a.ab:
+    java.net.HttpURLConnection a(java.net.URL) -> a
+com.crashlytics.android.internal.aD -> com.a.a.a.ac:
+    java.lang.Throwable getCause() -> getCause
+com.crashlytics.android.internal.aE -> com.a.a.a.ad:
+    java.lang.Object a() -> b
+    void b() -> a
+    java.lang.Object call() -> call
+com.crashlytics.android.internal.aF -> com.a.a.a.ae:
+    java.nio.charset.CharsetEncoder a -> a
+    com.crashlytics.android.internal.aF a(java.lang.String) -> a
+com.crashlytics.android.internal.aG -> com.a.a.a.af:
+    java.io.InputStream a() -> a
+    java.lang.String b() -> b
+    java.lang.String[] c() -> c
+com.crashlytics.android.internal.aH -> com.a.a.a.ag:
+    javax.net.ssl.TrustManager[] a -> a
+    com.crashlytics.android.internal.aI b -> b
+    long c -> c
+    java.util.List d -> d
+    java.util.Set e -> e
+    javax.net.ssl.TrustManager[] a(com.crashlytics.android.internal.aI) -> a
+    boolean a(java.security.cert.X509Certificate) -> a
+    void checkClientTrusted(java.security.cert.X509Certificate[],java.lang.String) -> checkClientTrusted
+    void checkServerTrusted(java.security.cert.X509Certificate[],java.lang.String) -> checkServerTrusted
+    java.security.cert.X509Certificate[] getAcceptedIssuers() -> getAcceptedIssuers
+    byte[] a(java.lang.String) -> a
+com.crashlytics.android.internal.aI -> com.a.a.a.ah:
+    java.security.KeyStore a -> a
+    java.util.HashMap b -> b
+    boolean a(java.security.cert.X509Certificate) -> a
+    java.security.cert.X509Certificate b(java.security.cert.X509Certificate) -> b
+    java.util.HashMap a(java.security.KeyStore) -> a
+    java.security.KeyStore a(java.io.InputStream,java.lang.String) -> a
+com.crashlytics.android.internal.aJ -> com.a.a.a.ai:
+    java.lang.String a -> a
+    android.content.Context b -> b
+    android.content.SharedPreferences a() -> a
+    android.content.SharedPreferences$Editor b() -> b
+    boolean a(android.content.SharedPreferences$Editor) -> a
+com.crashlytics.android.internal.aK -> com.a.a.a.aj:
+    java.lang.String a -> a
+    int b -> b
+    int c -> c
+com.crashlytics.android.internal.aL -> com.a.a.a.ak:
+com.crashlytics.android.internal.aM -> com.a.a.a.al:
+    java.lang.String a -> a
+    java.lang.String b -> b
+    java.lang.String c -> c
+    boolean d -> d
+com.crashlytics.android.internal.aN -> com.a.a.a.am:
+    org.json.JSONObject a() -> a
+    void a(long,org.json.JSONObject) -> a
+com.crashlytics.android.internal.aO -> com.a.a.a.an:
+    org.json.JSONObject a(com.crashlytics.android.internal.aZ) -> a
+com.crashlytics.android.internal.aP -> com.a.a.a.ao:
+    boolean a -> a
+    boolean b -> b
+    boolean c -> c
+com.crashlytics.android.internal.aQ -> com.a.a.a.ap:
+    java.lang.String a -> a
+    java.lang.String b -> b
+    java.lang.String c -> c
+    boolean d -> d
+    java.lang.String e -> e
+    boolean f -> f
+    java.lang.String g -> g
+com.crashlytics.android.internal.aR -> com.a.a.a.aq:
+    int a -> a
+com.crashlytics.android.internal.aS -> com.a.a.a.ar:
+    java.util.concurrent.atomic.AtomicReference a -> a
+    com.crashlytics.android.internal.aW b -> b
+    boolean c -> c
+    com.crashlytics.android.internal.aS a() -> a
+    com.crashlytics.android.internal.aS a(android.content.Context,com.crashlytics.android.internal.av,java.lang.String,java.lang.String,java.lang.String) -> a
+    com.crashlytics.android.internal.aX b() -> b
+    java.lang.Object a(com.crashlytics.android.internal.aU,java.lang.Object) -> a
+    boolean c() -> c
+    boolean d() -> d
+    java.lang.String a(java.lang.String,java.lang.String,android.content.Context) -> a
+com.crashlytics.android.internal.aT -> com.a.a.a.as:
+    com.crashlytics.android.internal.aS a -> a
+    com.crashlytics.android.internal.aS a() -> a
+com.crashlytics.android.internal.aU -> com.a.a.a.at:
+    java.lang.Object a(com.crashlytics.android.internal.aX) -> a
+com.crashlytics.android.internal.aV -> com.a.a.a.au:
+    com.crashlytics.android.internal.aV a -> a
+    com.crashlytics.android.internal.aV b -> b
+    com.crashlytics.android.internal.aV c -> c
+    com.crashlytics.android.internal.aV[] d -> d
+    com.crashlytics.android.internal.aV[] values() -> values
+    com.crashlytics.android.internal.aV valueOf(java.lang.String) -> valueOf
+com.crashlytics.android.internal.aW -> com.a.a.a.av:
+    com.crashlytics.android.internal.aZ a -> a
+    com.crashlytics.android.internal.aY b -> b
+    com.crashlytics.android.internal.ah c -> c
+    com.crashlytics.android.internal.aN d -> d
+    com.crashlytics.android.internal.ba e -> e
+    com.crashlytics.android.internal.aX a() -> a
+    com.crashlytics.android.internal.aX a(com.crashlytics.android.internal.aV) -> a
+    com.crashlytics.android.internal.aX b(com.crashlytics.android.internal.aV) -> b
+    void a(org.json.JSONObject,java.lang.String) -> a
+com.crashlytics.android.internal.aX -> com.a.a.a.aw:
+    com.crashlytics.android.internal.aM a -> a
+    com.crashlytics.android.internal.aR b -> b
+    com.crashlytics.android.internal.aQ c -> c
+    com.crashlytics.android.internal.aP d -> d
+    com.crashlytics.android.internal.aK e -> e
+    long f -> f
+com.crashlytics.android.internal.aY -> com.a.a.a.ax:
+    com.crashlytics.android.internal.aX a(com.crashlytics.android.internal.ah,org.json.JSONObject) -> a
+    org.json.JSONObject a(org.json.JSONObject) -> a
+com.crashlytics.android.internal.aZ -> com.a.a.a.ay:
+    java.lang.String a -> a
+    java.lang.String b -> b
+    java.lang.String c -> c
+    java.lang.String d -> d
+    java.lang.String e -> e
+    int f -> f
+    java.lang.String g -> g
+com.crashlytics.android.internal.aa -> com.a.a.a.az:
+    void run() -> run
+    void a() -> a
+com.crashlytics.android.internal.ab -> com.a.a.a.ba:
+    java.lang.Boolean b -> b
+    char[] c -> c
+    long d -> d
+    java.lang.Boolean e -> e
+    java.util.Comparator a -> a
+    android.content.SharedPreferences a() -> a
+    java.lang.String a(java.io.File,java.lang.String) -> a
+    int b() -> b
+    long c() -> c
+    long a(java.lang.String,java.lang.String,int) -> a
+    android.app.ActivityManager$RunningAppProcessInfo a(java.lang.String,android.content.Context) -> a
+    java.lang.String a(java.io.InputStream) -> a
+    java.lang.String a(java.lang.String) -> a
+    java.lang.String b(java.io.InputStream) -> b
+    java.lang.String a(byte[],java.lang.String) -> a
+    java.lang.String a(java.lang.String[]) -> a
+    long a(android.content.Context) -> a
+    long b(java.lang.String) -> b
+    float b(android.content.Context) -> b
+    boolean c(android.content.Context) -> c
+    void c(java.lang.String) -> c
+    void d(java.lang.String) -> d
+    void a(int,java.lang.String) -> a
+    boolean d(android.content.Context) -> d
+    boolean e(android.content.Context) -> e
+    boolean a(android.content.Context,java.lang.String,boolean) -> a
+    int a(android.content.Context,java.lang.String,java.lang.String) -> a
+    boolean d() -> d
+    boolean e() -> e
+    int f() -> f
+    int a(boolean) -> a
+    javax.crypto.Cipher b(int,java.lang.String) -> b
+    java.lang.String a(byte[]) -> a
+    boolean f(android.content.Context) -> f
+    java.lang.String a(android.content.Context,java.lang.String) -> a
+    void a(java.io.Closeable,java.lang.String) -> a
+    void a(java.io.Flushable,java.lang.String) -> a
+    boolean e(java.lang.String) -> e
+    void a(java.io.InputStream,java.io.OutputStream,byte[]) -> a
+    java.lang.String g(android.content.Context) -> g
+    int h(android.content.Context) -> h
+    java.lang.String i(android.content.Context) -> i
+com.crashlytics.android.internal.ac -> com.a.a.a.bb:
+    int compare(java.lang.Object,java.lang.Object) -> compare
+com.crashlytics.android.internal.ad -> com.a.a.a.bc:
+    com.crashlytics.android.internal.ad a -> a
+    com.crashlytics.android.internal.ad b -> b
+    com.crashlytics.android.internal.ad c -> c
+    com.crashlytics.android.internal.ad d -> d
+    com.crashlytics.android.internal.ad e -> e
+    com.crashlytics.android.internal.ad f -> f
+    com.crashlytics.android.internal.ad g -> g
+    com.crashlytics.android.internal.ad h -> h
+    com.crashlytics.android.internal.ad i -> i
+    com.crashlytics.android.internal.ad j -> j
+    java.util.Map k -> k
+    com.crashlytics.android.internal.ad[] l -> l
+    com.crashlytics.android.internal.ad[] values() -> values
+    com.crashlytics.android.internal.ad valueOf(java.lang.String) -> valueOf
+    com.crashlytics.android.internal.ad a() -> a
+com.crashlytics.android.internal.ae -> com.a.a.a.bd:
+    java.lang.String a -> a
+    java.lang.String a() -> a
+com.crashlytics.android.internal.af -> com.a.a.a.be:
+com.crashlytics.android.internal.ah -> com.a.a.a.bf:
+    long a() -> a
+    java.util.concurrent.ExecutorService a(java.lang.String) -> a
+    java.util.concurrent.ScheduledExecutorService b(java.lang.String) -> b
+    java.util.concurrent.ThreadFactory c(java.lang.String) -> c
+    void a(java.lang.String,java.util.concurrent.ExecutorService) -> a
+com.crashlytics.android.internal.ai -> com.a.a.a.bg:
+    com.crashlytics.android.internal.ai a -> a
+    com.crashlytics.android.internal.ai b -> b
+    com.crashlytics.android.internal.ai c -> c
+    com.crashlytics.android.internal.ai d -> d
+    int e -> e
+    com.crashlytics.android.internal.ai[] f -> f
+    com.crashlytics.android.internal.ai[] values() -> values
+    com.crashlytics.android.internal.ai valueOf(java.lang.String) -> valueOf
+    int a() -> a
+    java.lang.String toString() -> toString
+    com.crashlytics.android.internal.ai a(java.lang.String) -> a
+com.crashlytics.android.internal.aj -> com.a.a.a.bh:
+    java.io.File a -> a
+    java.lang.String b -> b
+    com.crashlytics.android.internal.aq c -> c
+    java.io.File d -> d
+    java.io.File e -> e
+    void a(byte[]) -> a
+    int a() -> a
+    boolean b() -> b
+    void a(java.lang.String) -> a
+    java.util.List a(int) -> a
+    java.util.List c() -> c
+    void a(java.util.List) -> a
+    void d() -> d
+    boolean a(int,int) -> a
+com.crashlytics.android.internal.ak -> com.a.a.a.bi:
+    void c() -> c
+com.crashlytics.android.internal.al -> com.a.a.a.bj:
+    java.lang.String a -> a
+    java.util.concurrent.atomic.AtomicLong b -> b
+    java.lang.Thread newThread(java.lang.Runnable) -> newThread
+com.crashlytics.android.internal.am -> com.a.a.a.bk:
+    java.lang.Runnable a -> a
+    void a() -> a
+com.crashlytics.android.internal.an -> com.a.a.a.bl:
+    java.lang.String a -> a
+    java.util.concurrent.ExecutorService b -> b
+    long c -> c
+    java.util.concurrent.TimeUnit d -> d
+    void a() -> a
+com.crashlytics.android.internal.ao -> com.a.a.a.bm:
+    java.util.regex.Pattern a -> a
+    java.lang.String b -> b
+    java.util.concurrent.locks.ReentrantLock c -> c
+    boolean d -> d
+    boolean e -> e
+    android.content.Context f -> f
+    boolean a() -> a
+    boolean a(java.lang.String) -> a
+    java.lang.String b(java.lang.String) -> b
+    java.lang.String b() -> b
+    java.lang.String c() -> c
+    java.lang.String d() -> d
+    java.lang.String c(java.lang.String) -> c
+    java.lang.String e() -> e
+    java.lang.String a(android.content.SharedPreferences) -> a
+    java.util.Map f() -> f
+    void a(java.util.Map,com.crashlytics.android.internal.ap,java.lang.String) -> a
+    java.lang.String g() -> g
+    java.lang.String h() -> h
+    java.lang.String i() -> i
+com.crashlytics.android.internal.ap -> com.a.a.a.bn:
+    com.crashlytics.android.internal.ap a -> a
+    com.crashlytics.android.internal.ap b -> b
+    com.crashlytics.android.internal.ap c -> c
+    com.crashlytics.android.internal.ap d -> d
+    com.crashlytics.android.internal.ap e -> e
+    int f -> f
+    com.crashlytics.android.internal.ap[] g -> g
+    com.crashlytics.android.internal.ap[] values() -> values
+    com.crashlytics.android.internal.ap valueOf(java.lang.String) -> valueOf
+com.crashlytics.android.internal.aq -> com.a.a.a.bo:
+    java.util.logging.Logger a -> a
+    java.io.RandomAccessFile b -> b
+    int c -> c
+    int d -> d
+    com.crashlytics.android.internal.as e -> e
+    com.crashlytics.android.internal.as f -> f
+    byte[] g -> g
+    void a(byte[],int,int) -> a
+    void a(byte[],int[]) -> a
+    int a(byte[],int) -> a
+    void a(int,int,int,int) -> a
+    com.crashlytics.android.internal.as a(int) -> a
+    java.io.RandomAccessFile a(java.io.File) -> a
+    int b(int) -> b
+    void a(int,byte[],int,int) -> a
+    void b(int,byte[],int,int) -> b
+    void a(byte[]) -> a
+    void b(byte[],int,int) -> b
+    int a() -> a
+    boolean b() -> b
+    void c(int) -> c
+    void d(int) -> d
+    void a(com.crashlytics.android.internal.au) -> a
+    java.lang.Object b(java.lang.Object,java.lang.String) -> b
+    void close() -> close
+    boolean a(int,int) -> a
+    java.lang.String toString() -> toString
+    int a(com.crashlytics.android.internal.aq,int) -> a
+    java.lang.Object a(java.lang.Object,java.lang.String) -> a
+    void a(com.crashlytics.android.internal.aq,int,byte[],int,int) -> a
+    java.io.RandomAccessFile a(com.crashlytics.android.internal.aq) -> a
+com.crashlytics.android.internal.ar -> com.a.a.a.bp:
+    boolean a -> a
+    java.lang.StringBuilder b -> b
+    void a(java.io.InputStream,int) -> a
+com.crashlytics.android.internal.as -> com.a.a.a.bq:
+    com.crashlytics.android.internal.as a -> a
+    int b -> b
+    int c -> c
+    java.lang.String toString() -> toString
+com.crashlytics.android.internal.at -> com.a.a.a.br:
+    int a -> a
+    int b -> b
+    com.crashlytics.android.internal.aq c -> c
+    int read(byte[],int,int) -> read
+    int read() -> read
+com.crashlytics.android.internal.au -> com.a.a.a.bs:
+    void a(java.io.InputStream,int) -> a
+com.crashlytics.android.internal.av -> com.a.a.a.bt:
+    com.crashlytics.android.internal.q a -> a
+    com.crashlytics.android.internal.aG b -> b
+    javax.net.ssl.SSLSocketFactory c -> c
+    boolean d -> d
+    java.security.cert.X509Certificate[] a(java.security.cert.X509Certificate[],com.crashlytics.android.internal.aI) -> a
+    boolean a(java.security.cert.X509Certificate,java.security.cert.X509Certificate) -> a
+    com.crashlytics.android.internal.ay a(com.crashlytics.android.internal.ax,java.lang.String,java.util.Map) -> a
+    javax.net.ssl.SSLSocketFactory b() -> a
+    javax.net.ssl.SSLSocketFactory c() -> b
+com.crashlytics.android.internal.aw -> com.a.a.a.bu:
+    int[] a -> a
+com.crashlytics.android.internal.ax -> com.a.a.a.bv:
+    com.crashlytics.android.internal.ax a -> a
+    com.crashlytics.android.internal.ax b -> b
+    com.crashlytics.android.internal.ax c -> c
+    com.crashlytics.android.internal.ax d -> d
+    com.crashlytics.android.internal.ax[] e -> e
+    com.crashlytics.android.internal.ax[] values() -> values
+    com.crashlytics.android.internal.ax valueOf(java.lang.String) -> valueOf
+com.crashlytics.android.internal.ay -> com.a.a.a.bw:
+    com.crashlytics.android.internal.aB a -> a
+    java.net.HttpURLConnection b -> b
+    java.net.URL c -> c
+    java.lang.String d -> d
+    com.crashlytics.android.internal.aF e -> e
+    boolean f -> f
+    boolean g -> g
+    boolean h -> h
+    int i -> i
+    java.lang.String c(java.lang.String) -> c
+    java.lang.String c(java.lang.CharSequence) -> c
+    java.lang.String a(java.lang.CharSequence,java.util.Map) -> a
+    com.crashlytics.android.internal.ay a(java.lang.CharSequence,java.util.Map,boolean) -> a
+    com.crashlytics.android.internal.ay b(java.lang.CharSequence,java.util.Map,boolean) -> b
+    com.crashlytics.android.internal.ay a(java.lang.CharSequence) -> a
+    com.crashlytics.android.internal.ay b(java.lang.CharSequence) -> b
+    java.net.HttpURLConnection e() -> e
+    java.lang.String toString() -> toString
+    java.net.HttpURLConnection a() -> a
+    int b() -> b
+    java.lang.String d(java.lang.String) -> d
+    java.lang.String c() -> c
+    java.io.InputStream f() -> f
+    com.crashlytics.android.internal.ay a(int) -> a
+    com.crashlytics.android.internal.ay a(java.lang.String,java.lang.String) -> a
+    com.crashlytics.android.internal.ay a(java.util.Map$Entry) -> a
+    java.lang.String a(java.lang.String) -> a
+    java.lang.String c(java.lang.String,java.lang.String) -> c
+    com.crashlytics.android.internal.ay a(boolean) -> a
+    com.crashlytics.android.internal.ay a(java.io.InputStream,java.io.OutputStream) -> a
+    com.crashlytics.android.internal.ay g() -> g
+    com.crashlytics.android.internal.ay h() -> h
+    com.crashlytics.android.internal.ay i() -> i
+    com.crashlytics.android.internal.ay j() -> j
+    com.crashlytics.android.internal.ay a(java.lang.String,java.lang.String,java.lang.String) -> a
+    com.crashlytics.android.internal.ay b(java.lang.String,java.lang.String) -> b
+    com.crashlytics.android.internal.ay b(java.lang.String,java.lang.String,java.lang.String) -> b
+    com.crashlytics.android.internal.ay a(java.lang.String,java.lang.String,java.lang.String,java.lang.String) -> a
+    com.crashlytics.android.internal.ay a(java.lang.String,java.lang.Number) -> a
+    com.crashlytics.android.internal.ay a(java.lang.String,java.lang.String,java.lang.String,java.io.File) -> a
+    com.crashlytics.android.internal.ay a(java.lang.String,java.lang.String,java.lang.String,java.io.InputStream) -> a
+    com.crashlytics.android.internal.ay d(java.lang.String,java.lang.String) -> d
+    com.crashlytics.android.internal.ay d(java.lang.CharSequence) -> d
+    java.lang.String d() -> d
+    java.lang.String b(java.lang.String) -> b
+    int a(com.crashlytics.android.internal.ay) -> a
+com.crashlytics.android.internal.az -> com.a.a.a.bx:
+    java.io.InputStream a -> a
+    java.io.OutputStream b -> b
+    com.crashlytics.android.internal.ay c -> c
+    java.lang.Object a() -> b
+com.crashlytics.android.internal.b -> com.a.a.a.by:
+    java.util.concurrent.ConcurrentMap b -> a
+    java.util.concurrent.ConcurrentMap c -> b
+    java.lang.String d -> c
+    com.crashlytics.android.internal.m e -> d
+    com.crashlytics.android.internal.i f -> e
+    java.lang.ThreadLocal g -> f
+    java.lang.ThreadLocal h -> g
+    java.util.Map i -> h
+    java.lang.String toString() -> toString
+com.crashlytics.android.internal.ba -> com.a.a.a.bz:
+    org.json.JSONObject a(com.crashlytics.android.internal.aZ) -> a
+com.crashlytics.android.internal.c -> com.a.a.a.ca:
+    java.lang.Object initialValue() -> initialValue
+com.crashlytics.android.internal.d -> com.a.a.a.cb:
+    java.lang.Object initialValue() -> initialValue
+com.crashlytics.android.internal.i -> com.a.a.a.cc:
+    com.crashlytics.android.internal.i a -> a
+com.crashlytics.android.internal.j -> com.a.a.a.cd:
+com.crashlytics.android.internal.m -> com.a.a.a.ce:
+    com.crashlytics.android.internal.m a -> a
+    com.crashlytics.android.internal.m b -> b
+com.crashlytics.android.internal.n -> com.a.a.a.cf:
+com.crashlytics.android.internal.o -> com.a.a.a.cg:
+com.crashlytics.android.internal.p -> com.a.a.a.ch:
+    android.content.Context a -> a
+    boolean b -> b
+    void c() -> e
+    void a(android.content.Context) -> b
+    android.content.Context getContext() -> w
+    boolean isInitialized() -> x
+    java.lang.String getName() -> y
+com.crashlytics.android.internal.q -> com.a.a.a.ci:
+    void a(java.lang.String,java.lang.String,java.lang.Throwable) -> a
+    void a(java.lang.String,java.lang.String) -> a
+    void b(java.lang.String,java.lang.String) -> b
+    void c(java.lang.String,java.lang.String) -> c
+    void d(java.lang.String,java.lang.String) -> d
+    void a(int,java.lang.String,java.lang.String) -> a
+com.crashlytics.android.internal.r -> com.a.a.a.cj:
+    boolean b(int) -> b
+    void a(java.lang.String,java.lang.String,java.lang.Throwable) -> a
+    void a(java.lang.String,java.lang.String) -> a
+    void b(java.lang.String,java.lang.String) -> b
+    void c(java.lang.String,java.lang.String) -> c
+    void d(java.lang.String,java.lang.String) -> d
+    void a(int,java.lang.String,java.lang.String) -> a
+    void a(int,java.lang.String,java.lang.String,boolean) -> a
+    android.app.Activity a(android.content.Context) -> a
+    android.app.Application b(android.content.Context) -> b
+    java.lang.String a(android.content.Context,boolean) -> a
+    int a(int) -> a
+com.crashlytics.android.internal.u -> com.a.a.a.ck:
+com.crashlytics.android.internal.v -> com.a.a.a.cl:
+    com.crashlytics.android.internal.b a -> a
+    java.util.concurrent.atomic.AtomicReference b -> b
+    boolean c -> c
+    java.io.File d -> d
+    android.app.Application e -> e
+    java.lang.ref.WeakReference f -> f
+    java.lang.String g -> g
+    int h -> h
+    java.util.concurrent.ConcurrentHashMap i -> i
+    com.crashlytics.android.internal.v a() -> a
+    void a(android.content.Context,com.crashlytics.android.internal.u[]) -> a
+    com.crashlytics.android.internal.q b() -> b
+    void a(com.crashlytics.android.internal.q) -> a
+    android.app.Application d() -> c
+    com.crashlytics.android.internal.v a(android.app.Activity) -> a
+    android.app.Activity e() -> d
+    void c() -> e
+    java.lang.String getVersion() -> f
+    com.crashlytics.android.internal.u a(java.lang.Class) -> a
+    boolean f() -> g
+    int g() -> h
+    java.io.File h() -> i
+    java.lang.String i() -> j
+    com.crashlytics.android.internal.v a(com.crashlytics.android.internal.v,android.app.Activity) -> a
+com.crashlytics.android.internal.w -> com.a.a.a.cm:
+    com.crashlytics.android.internal.v a -> a
+    void a(com.crashlytics.android.internal.w,android.app.Application) -> a
+com.crashlytics.android.internal.x -> com.a.a.a.cn:
+    com.crashlytics.android.internal.w a -> a
+    void onActivityCreated(android.app.Activity,android.os.Bundle) -> onActivityCreated
+    void onActivityStarted(android.app.Activity) -> onActivityStarted
+    void onActivityResumed(android.app.Activity) -> onActivityResumed
+    void onActivityPaused(android.app.Activity) -> onActivityPaused
+    void onActivityStopped(android.app.Activity) -> onActivityStopped
+    void onActivitySaveInstanceState(android.app.Activity,android.os.Bundle) -> onActivitySaveInstanceState
+    void onActivityDestroyed(android.app.Activity) -> onActivityDestroyed
+com.crashlytics.android.internal.y -> com.a.a.a.co:
+    com.crashlytics.android.internal.v a -> a
+    com.crashlytics.android.internal.v a() -> a
+com.crashlytics.android.internal.z -> com.a.a.a.cp:
+    java.lang.String a -> a
+    java.io.File getDatabasePath(java.lang.String) -> getDatabasePath
+    android.database.sqlite.SQLiteDatabase openOrCreateDatabase(java.lang.String,int,android.database.sqlite.SQLiteDatabase$CursorFactory) -> openOrCreateDatabase
+    android.database.sqlite.SQLiteDatabase openOrCreateDatabase(java.lang.String,int,android.database.sqlite.SQLiteDatabase$CursorFactory,android.database.DatabaseErrorHandler) -> openOrCreateDatabase
+    java.io.File getFilesDir() -> getFilesDir
+    java.io.File getExternalFilesDir(java.lang.String) -> getExternalFilesDir
+    java.io.File getCacheDir() -> getCacheDir
+    java.io.File getExternalCacheDir() -> getExternalCacheDir
+com.crashlytics.android.l -> com.a.a.ar:
+    com.crashlytics.android.Crashlytics a -> a
+    java.lang.Object a(com.crashlytics.android.internal.aX) -> a
+com.crashlytics.android.m -> com.a.a.as:
+    com.crashlytics.android.Crashlytics a -> a
+    java.lang.Object a(com.crashlytics.android.internal.aX) -> a
+com.crashlytics.android.n -> com.a.a.at:
+    java.lang.Object a(com.crashlytics.android.internal.aX) -> a
+com.crashlytics.android.o -> com.a.a.au:
+    java.lang.Object a(com.crashlytics.android.internal.aX) -> a
+com.crashlytics.android.p -> com.a.a.av:
+    android.app.Activity c -> c
+    com.crashlytics.android.u a -> a
+    com.crashlytics.android.X d -> d
+    com.crashlytics.android.internal.aQ e -> e
+    com.crashlytics.android.Crashlytics b -> b
+    void run() -> run
+com.crashlytics.android.q -> com.a.a.aw:
+    com.crashlytics.android.p a -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.crashlytics.android.r -> com.a.a.ax:
+    com.crashlytics.android.p a -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.crashlytics.android.s -> com.a.a.ay:
+    com.crashlytics.android.p a -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.crashlytics.android.t -> com.a.a.az:
+    android.content.Context a -> a
+    float b -> b
+    java.util.concurrent.CountDownLatch c -> c
+    com.crashlytics.android.Crashlytics d -> d
+    void a() -> a
+com.crashlytics.android.u -> com.a.a.ba:
+    boolean a -> a
+    java.util.concurrent.CountDownLatch b -> b
+    void a(boolean) -> a
+    boolean a() -> a
+    void b() -> b
+com.crashlytics.android.v -> com.a.a.bb:
+    java.io.FilenameFilter a -> a
+    java.util.Comparator b -> b
+    java.util.Comparator c -> c
+    java.util.regex.Pattern d -> d
+    java.util.Map e -> e
+    com.crashlytics.android.d f -> f
+    java.util.concurrent.atomic.AtomicInteger g -> g
+    java.util.concurrent.atomic.AtomicBoolean h -> h
+    int i -> i
+    java.lang.Thread$UncaughtExceptionHandler j -> j
+    java.io.File k -> k
+    java.io.File l -> l
+    java.util.concurrent.atomic.AtomicBoolean m -> m
+    java.lang.String n -> n
+    android.content.BroadcastReceiver o -> o
+    android.content.BroadcastReceiver p -> p
+    com.crashlytics.android.d q -> q
+    com.crashlytics.android.d r -> r
+    java.util.concurrent.ExecutorService s -> s
+    android.app.ActivityManager$RunningAppProcessInfo t -> t
+    com.crashlytics.android.internal.aq u -> u
+    boolean v -> v
+    java.lang.Thread[] w -> w
+    java.util.List x -> x
+    java.lang.StackTraceElement[] y -> y
+    boolean a() -> a
+    void uncaughtException(java.lang.Thread,java.lang.Throwable) -> uncaughtException
+    boolean b() -> b
+    com.crashlytics.android.d a(com.crashlytics.android.internal.aq) -> a
+    void c() -> c
+    void d() -> d
+    void e() -> e
+    boolean f() -> f
+    boolean g() -> g
+    void l() -> k
+    void m() -> l
+    java.lang.String n() -> m
+    java.lang.String a(java.io.File) -> a
+    void a(com.crashlytics.android.f) -> a
+    void a(com.crashlytics.android.h,java.io.File[],java.lang.String) -> a
+    void a(com.crashlytics.android.h,java.lang.String) -> a
+    void a(java.lang.String) -> a
+    java.io.File[] o() -> n
+    java.io.File[] a(java.io.FilenameFilter) -> a
+    void p() -> o
+    void a(java.lang.Throwable,java.io.OutputStream) -> a
+    void a(java.lang.Throwable,java.io.Writer) -> a
+    int q() -> p
+    com.crashlytics.android.d b(java.lang.String) -> b
+    void c(java.lang.String) -> c
+    int a(com.crashlytics.android.internal.ap,java.lang.String) -> a
+    int a(int,com.crashlytics.android.d,com.crashlytics.android.d,int,long,long,boolean,java.util.Map,int,com.crashlytics.android.d,com.crashlytics.android.d) -> a
+    void a(com.crashlytics.android.h,java.io.File) -> a
+    void a(java.lang.String,int) -> a
+    void a(java.util.Date,com.crashlytics.android.h,java.lang.Thread,java.lang.Throwable,java.lang.String,boolean) -> a
+    void a(com.crashlytics.android.h,java.lang.Thread,java.lang.Throwable) -> a
+    void a(com.crashlytics.android.h,java.util.Map) -> a
+    int r() -> q
+    void a(com.crashlytics.android.h,java.lang.Throwable,int,int) -> a
+    int a(java.lang.Thread,java.lang.StackTraceElement[],int,boolean) -> a
+    void a(com.crashlytics.android.h,java.lang.Thread,java.lang.StackTraceElement[],int,boolean) -> a
+    int a(java.lang.StackTraceElement,boolean) -> a
+    void a(com.crashlytics.android.h,int,java.lang.StackTraceElement,boolean) -> a
+    int a(java.lang.Thread,java.lang.Throwable,java.util.Map) -> a
+    int b(java.lang.Thread,java.lang.Throwable) -> a
+    int a(java.lang.String,java.lang.String) -> a
+    int a(float,int,boolean,int,long,long) -> a
+    int a(java.lang.Throwable,int) -> a
+    int s() -> r
+    void h() -> h
+    void a(java.io.File[]) -> a
+    java.lang.Object a(java.util.concurrent.Callable) -> a
+    java.util.concurrent.Future a(java.lang.Runnable) -> a
+    java.util.concurrent.Future b(java.util.concurrent.Callable) -> b
+    java.util.regex.Pattern i() -> i
+    boolean a(com.crashlytics.android.v,boolean) -> a
+    void a(com.crashlytics.android.v,java.util.Date,java.lang.Thread,java.lang.Throwable) -> a
+    java.util.concurrent.atomic.AtomicBoolean a(com.crashlytics.android.v) -> a
+    void b(com.crashlytics.android.v) -> b
+    void c(com.crashlytics.android.v) -> c
+    java.io.File f(com.crashlytics.android.v) -> d
+    java.util.Map j() -> j
+    java.io.File[] a(com.crashlytics.android.v,java.io.FilenameFilter) -> a
+com.crashlytics.android.w -> com.a.a.bc:
+    boolean accept(java.io.File,java.lang.String) -> accept
+com.crashlytics.android.y -> com.a.a.bd:
+    byte[] a -> a
+    int[] b -> b
+    void a(java.io.InputStream,int) -> a
+com.crashlytics.android.z -> com.a.a.be:
+    com.crashlytics.android.v a -> a
+    java.lang.Object call() -> call
 com.dropbox.client2.DropboxAPI -> com.dropbox.client2.DropboxAPI:
     int VERSION -> VERSION
     java.lang.String SDK_VERSION -> SDK_VERSION
@@ -3688,21 +4752,22 @@ com.reneponette.comicbox.controller.DataController -> com.reneponette.comicbox.c
     com.artifex.mupdfdemo.MuPDFCore core -> j
     com.reneponette.comicbox.controller.DataController$OnDataBuildListener listener -> k
     void setOnDataBuildListener(com.reneponette.comicbox.controller.DataController$OnDataBuildListener) -> a
-    void init() -> j
+    void init() -> k
     com.reneponette.comicbox.controller.DataController prepare(java.lang.Object) -> a
-    com.reneponette.comicbox.controller.DataController prepareForZip() -> k
-    com.reneponette.comicbox.controller.DataController prepareForFolder() -> l
-    com.reneponette.comicbox.controller.DataController prepareForZipStreaming() -> m
+    com.reneponette.comicbox.controller.DataController prepareForZip() -> l
+    com.reneponette.comicbox.controller.DataController prepareForFolder() -> m
+    com.reneponette.comicbox.controller.DataController prepareForZipStreaming() -> n
     void saveReadState(int) -> a
-    com.reneponette.comicbox.db.FileInfo getFileInfo() -> a
+    java.util.List getPageInfoList() -> a
+    com.reneponette.comicbox.db.FileInfo getFileInfo() -> b
     com.reneponette.comicbox.model.PageInfo getPageInfo(int) -> b
-    int getPagesPerScan() -> b
-    com.reneponette.comicbox.model.FileMeta$ReadDirection getReadDirection() -> c
-    com.reneponette.comicbox.model.FileMeta$ReadDirection getScanDirection() -> d
-    int pageSize() -> e
-    void build() -> f
-    void buildFolder() -> g
-    void buildPdf() -> h
+    int getPagesPerScan() -> c
+    com.reneponette.comicbox.model.FileMeta$ReadDirection getReadDirection() -> d
+    com.reneponette.comicbox.model.FileMeta$ReadDirection getScanDirection() -> e
+    int pageSize() -> f
+    void build() -> g
+    void buildFolder() -> h
+    void buildPdf() -> i
     com.artifex.mupdfdemo.MuPDFCore openFile(java.lang.String) -> a
     void build(com.dropbox.client2.DropboxAPI,java.io.File) -> a
     void addPageInfo(com.reneponette.comicbox.model.PageInfo$PageBuildType,java.io.File,boolean) -> a
@@ -3710,8 +4775,8 @@ com.reneponette.comicbox.controller.DataController -> com.reneponette.comicbox.c
     void addPageInfo(com.reneponette.comicbox.model.PageInfo$PageBuildType,int,boolean) -> a
     void addEndPageInfo(boolean) -> a
     void fillPageInfoAndNotify(com.reneponette.comicbox.model.PageInfo,com.reneponette.comicbox.model.PageInfo$PageType,com.reneponette.comicbox.model.PageInfo$PageBuildType,boolean) -> a
-    void fillFinalPagesAndNotify() -> n
-    void stopBuilding() -> i
+    void fillFinalPagesAndNotify() -> o
+    void stopBuilding() -> j
     void access$0(com.reneponette.comicbox.controller.DataController,com.reneponette.comicbox.model.PageInfo$PageBuildType,java.util.zip.ZipEntry,boolean) -> a
     void access$1(com.reneponette.comicbox.controller.DataController) -> a
     void access$2(com.reneponette.comicbox.controller.DataController,com.reneponette.comicbox.model.PageInfo$PageBuildType,java.io.File,boolean) -> a
@@ -3773,7 +4838,7 @@ com.reneponette.comicbox.db.DatabaseStorable -> com.reneponette.comicbox.db.d:
 com.reneponette.comicbox.db.FileInfo -> com.reneponette.comicbox.db.FileInfo:
     java.lang.String key -> c
     java.lang.String path -> d
-    com.reneponette.comicbox.db.FileInfo$LocationType type -> e
+    com.reneponette.comicbox.db.FileInfo$LocationType location -> e
     com.reneponette.comicbox.model.FileMeta meta -> f
     java.io.File file -> g
     com.dropbox.client2.DropboxAPI$Entry entry -> h
@@ -3781,7 +4846,7 @@ com.reneponette.comicbox.db.FileInfo -> com.reneponette.comicbox.db.FileInfo:
     int indexInParent -> b
     android.os.Parcelable$Creator CREATOR -> CREATOR
     int[] $SWITCH_TABLE$com$reneponette$comicbox$db$FileInfo$LocationType -> i
-    java.lang.String toKey() -> m
+    java.lang.String toKey() -> n
     android.content.ContentValues toContentValues() -> a
     java.lang.String getPrimaryKey() -> b
     java.lang.String getName() -> c
@@ -3793,13 +4858,14 @@ com.reneponette.comicbox.db.FileInfo -> com.reneponette.comicbox.db.FileInfo:
     boolean setFile(java.io.File) -> a
     com.dropbox.client2.DropboxAPI$Entry getEntry() -> g
     boolean setEntry(com.dropbox.client2.DropboxAPI$Entry) -> a
-    boolean setMetaTypeFromFilename(java.lang.String) -> c
+    boolean setMetaTypeFromFilename(java.lang.String,boolean) -> a
     java.io.File getCacheDir() -> h
     java.io.File getCacheOuputFile() -> i
-    com.reneponette.comicbox.db.FileInfo$LocationType getType() -> j
-    void setType(com.reneponette.comicbox.db.FileInfo$LocationType) -> a
+    com.reneponette.comicbox.db.FileInfo$LocationType getLocation() -> j
+    void setLocation(com.reneponette.comicbox.db.FileInfo$LocationType) -> a
     com.reneponette.comicbox.model.FileMeta getMeta() -> k
     void setMeta(com.reneponette.comicbox.model.FileMeta) -> a
+    int getChildCount() -> l
     int describeContents() -> describeContents
     void writeToParcel(android.os.Parcel,int) -> writeToParcel
     void access$1(com.reneponette.comicbox.db.FileInfo,java.lang.String) -> a
@@ -3808,7 +4874,7 @@ com.reneponette.comicbox.db.FileInfo -> com.reneponette.comicbox.db.FileInfo:
     void access$4(com.reneponette.comicbox.db.FileInfo,com.reneponette.comicbox.model.FileMeta) -> a
     com.reneponette.comicbox.db.FileInfo$LocationType access$5(com.reneponette.comicbox.db.FileInfo) -> a
     java.lang.String access$6(com.reneponette.comicbox.db.FileInfo) -> b
-    int[] $SWITCH_TABLE$com$reneponette$comicbox$db$FileInfo$LocationType() -> l
+    int[] $SWITCH_TABLE$com$reneponette$comicbox$db$FileInfo$LocationType() -> m
 com.reneponette.comicbox.db.FileInfo$1 -> com.reneponette.comicbox.db.e:
     com.reneponette.comicbox.db.FileInfo createFromParcel(android.os.Parcel) -> a
     com.reneponette.comicbox.db.FileInfo[] newArray(int) -> a
@@ -4171,146 +5237,113 @@ com.reneponette.comicbox.ui.fragment.NavigationDrawerFragment$NavigationDrawerCa
     void onNavigationDrawerItemSelected(int) -> a
     void onFavoriteItemSelected(com.reneponette.comicbox.db.FileInfo) -> a
 com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment -> com.reneponette.comicbox.ui.fragment.a.a:
-    android.app.ProgressDialog mProgressDlg -> a
+    com.reneponette.comicbox.db.FileInfo curInfo -> a
+    java.util.List infoList -> b
+    com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment$FolderViewAdapter adapter -> c
+    android.widget.GridView gridView -> d
+    android.os.Handler handler -> e
+    android.app.ProgressDialog mProgressDlg -> g
+    int numOfColumn -> f
+    void onAttach(android.app.Activity) -> onAttach
+    void onCreate(android.os.Bundle) -> onCreate
+    android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
+    void onViewCreated(android.view.View,android.os.Bundle) -> onViewCreated
+    void onResume() -> onResume
+    void onActivityCreated(android.os.Bundle) -> onActivityCreated
+    void onCreateOptionsMenu(android.view.Menu,android.view.MenuInflater) -> onCreateOptionsMenu
+    boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
     void showWaitingDialog() -> a
     void hideWaitingDialog() -> b
     boolean onBackPressed() -> c
     void removeCover(com.reneponette.comicbox.db.FileInfo) -> a
     void setReadDirection(com.reneponette.comicbox.db.FileInfo) -> b
+    com.reneponette.comicbox.db.FileInfo onGetFileInfo() -> d
+    android.graphics.Bitmap getThumbnailBitmap(com.reneponette.comicbox.db.FileInfo,android.widget.ImageView) -> a
     void access$0(com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment,android.app.ProgressDialog) -> a
 com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment$1 -> com.reneponette.comicbox.ui.fragment.a.b:
     com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment this$0 -> a
-    void onCancel(android.content.DialogInterface) -> onCancel
+    void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
 com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment$2 -> com.reneponette.comicbox.ui.fragment.a.c:
     com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment this$0 -> a
-    void onDismiss(android.content.DialogInterface) -> onDismiss
+    void onCancel(android.content.DialogInterface) -> onCancel
 com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment$3 -> com.reneponette.comicbox.ui.fragment.a.d:
+    com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment this$0 -> a
+    void onDismiss(android.content.DialogInterface) -> onDismiss
+com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment$4 -> com.reneponette.comicbox.ui.fragment.a.e:
     com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment this$0 -> a
     com.reneponette.comicbox.db.FileInfo val$info -> b
     void onDismiss(android.content.DialogInterface) -> onDismiss
-com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment$FolderViewFragmentListener -> com.reneponette.comicbox.ui.fragment.a.e:
+com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment$FolderViewAdapter -> com.reneponette.comicbox.ui.fragment.a.f:
+    java.util.List list -> b
+    com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment this$0 -> a
+    android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+    long getItemId(int) -> getItemId
+    java.lang.Object getItem(int) -> getItem
+    int getCount() -> getCount
+    com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment access$0(com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment$FolderViewAdapter) -> a
+com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment$FolderViewAdapter$1 -> com.reneponette.comicbox.ui.fragment.a.g:
+    com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment$FolderViewAdapter this$1 -> a
+    com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment$FolderViewAdapter$Holder val$holder -> b
+    com.reneponette.comicbox.db.FileInfo val$info -> c
+    void onClick(android.view.View) -> onClick
+    com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment$FolderViewAdapter access$0(com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment$FolderViewAdapter$1) -> a
+com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment$FolderViewAdapter$1$1 -> com.reneponette.comicbox.ui.fragment.a.h:
+    com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment$FolderViewAdapter$1 this$2 -> a
+    com.reneponette.comicbox.db.FileInfo val$info -> b
+    boolean onMenuItemClick(android.view.MenuItem) -> onMenuItemClick
+com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment$FolderViewAdapter$Holder -> com.reneponette.comicbox.ui.fragment.a.i:
+    android.widget.ImageView itemImage -> a
+    android.widget.TextView itemName -> b
+    com.reneponette.comicbox.view.ProgressTextView itemProgress -> c
+    android.widget.TextView itemCount -> d
+    android.widget.ImageView itemMenuBtn -> e
+    com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment$FolderViewAdapter this$1 -> f
+com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment$FolderViewFragmentListener -> com.reneponette.comicbox.ui.fragment.a.j:
     void onFileClicked(com.reneponette.comicbox.db.FileInfo) -> b
     void onEntryClicked(com.reneponette.comicbox.db.FileInfo) -> c
-com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment -> com.reneponette.comicbox.ui.fragment.a.f:
-    com.reneponette.comicbox.db.FileInfo curInfo -> b
-    java.util.List infoList -> c
-    com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment$FolderViewAdapter adapter -> d
-    android.widget.GridView gridView -> e
-    com.dropbox.client2.DropboxAPI mApi -> a
-    boolean mLoggedIn -> f
-    java.lang.String dropboxPath -> g
-    int numOfColumn -> h
-    java.lang.Thread runningThread -> i
+com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment -> com.reneponette.comicbox.ui.fragment.a.k:
+    com.dropbox.client2.DropboxAPI mApi -> g
+    boolean mLoggedIn -> h
+    java.lang.String dropboxPath -> i
+    java.lang.Thread runningThread -> j
     com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment newInstance(java.lang.String) -> a
-    void onAttach(android.app.Activity) -> onAttach
+    com.reneponette.comicbox.db.FileInfo onGetFileInfo() -> d
     void onCreate(android.os.Bundle) -> onCreate
-    android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
-    void onViewCreated(android.view.View,android.os.Bundle) -> onViewCreated
-    void onActivityCreated(android.os.Bundle) -> onActivityCreated
     void onResume() -> onResume
-    void onCreateOptionsMenu(android.view.Menu,android.view.MenuInflater) -> onCreateOptionsMenu
-    boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
-    void setLoggedIn(boolean) -> a
-    boolean goParentDirectory() -> d
-    void enumerate() -> e
+    boolean goParentDirectory() -> e
+    void enumerate() -> f
     boolean onBackPressed() -> c
-    com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment$FolderViewAdapter access$0(com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment) -> a
-    com.reneponette.comicbox.db.FileInfo access$1(com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment) -> b
-    java.lang.String access$2(com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment) -> c
-    java.util.List access$3(com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment) -> d
-    android.widget.GridView access$4(com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment) -> e
-    void access$5(com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment,java.lang.Thread) -> a
-com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment$1 -> com.reneponette.comicbox.ui.fragment.a.g:
-    com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment this$0 -> a
-    void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment$2 -> com.reneponette.comicbox.ui.fragment.a.h:
-    com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment this$0 -> a
-    void onDismiss(android.content.DialogInterface) -> onDismiss
-com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment$3 -> com.reneponette.comicbox.ui.fragment.a.i:
+    android.graphics.Bitmap getThumbnailBitmap(com.reneponette.comicbox.db.FileInfo,android.widget.ImageView) -> a
+    void setLoggedIn(boolean) -> a
+    java.lang.String access$0(com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment) -> a
+    void access$1(com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment,java.lang.Thread) -> a
+com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment$1 -> com.reneponette.comicbox.ui.fragment.a.l:
     com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment this$0 -> a
     void run() -> run
-    com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment access$0(com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment$3) -> a
-com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment$3$1 -> com.reneponette.comicbox.ui.fragment.a.j:
-    com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment$3 this$1 -> a
+    com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment access$0(com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment$1) -> a
+com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment$1$1 -> com.reneponette.comicbox.ui.fragment.a.m:
+    com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment$1 this$1 -> a
     void run() -> run
-com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment$3$2 -> com.reneponette.comicbox.ui.fragment.a.k:
-    com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment$3 this$1 -> a
+com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment$1$2 -> com.reneponette.comicbox.ui.fragment.a.n:
+    com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment$1 this$1 -> a
     com.dropbox.client2.DropboxAPI$Entry val$entry -> b
     void run() -> run
-com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment$3$3 -> com.reneponette.comicbox.ui.fragment.a.l:
-    com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment$3 this$1 -> a
+com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment$1$3 -> com.reneponette.comicbox.ui.fragment.a.o:
+    com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment$1 this$1 -> a
     void run() -> run
-com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment$FolderViewAdapter -> com.reneponette.comicbox.ui.fragment.a.m:
-    java.util.List list -> b
-    com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment this$0 -> a
-    android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-    long getItemId(int) -> getItemId
-    java.lang.Object getItem(int) -> getItem
-    int getCount() -> getCount
-    com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment access$0(com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment$FolderViewAdapter) -> a
-com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment$FolderViewAdapter$1 -> com.reneponette.comicbox.ui.fragment.a.n:
-    com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment$FolderViewAdapter this$1 -> a
-    com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment$FolderViewAdapter$Holder val$holder -> b
-    com.reneponette.comicbox.db.FileInfo val$info -> c
-    void onClick(android.view.View) -> onClick
-    com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment$FolderViewAdapter access$0(com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment$FolderViewAdapter$1) -> a
-com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment$FolderViewAdapter$1$1 -> com.reneponette.comicbox.ui.fragment.a.o:
-    com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment$FolderViewAdapter$1 this$2 -> a
-    com.reneponette.comicbox.db.FileInfo val$info -> b
-    boolean onMenuItemClick(android.view.MenuItem) -> onMenuItemClick
-com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment$FolderViewAdapter$Holder -> com.reneponette.comicbox.ui.fragment.a.p:
-    android.widget.ImageView itemImage -> a
-    android.widget.TextView itemName -> b
-    android.widget.TextView itemProgress -> c
-    android.widget.TextView itemCount -> d
-    android.widget.ImageView itemMenuBtn -> e
-    com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment$FolderViewAdapter this$1 -> f
-com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment -> com.reneponette.comicbox.ui.fragment.a.q:
-    com.reneponette.comicbox.db.FileInfo curInfo -> a
-    java.util.List infoList -> b
-    com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment$FolderViewAdapter adapter -> c
-    android.widget.GridView gridView -> d
-    int numOfColumn -> e
+com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment -> com.reneponette.comicbox.ui.fragment.a.p:
     com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment newInstance(com.reneponette.comicbox.db.FileInfo) -> c
-    void onAttach(android.app.Activity) -> onAttach
+    com.reneponette.comicbox.db.FileInfo onGetFileInfo() -> d
     void onCreate(android.os.Bundle) -> onCreate
-    android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
-    void onViewCreated(android.view.View,android.os.Bundle) -> onViewCreated
-    void onActivityCreated(android.os.Bundle) -> onActivityCreated
     void onResume() -> onResume
-    void onCreateOptionsMenu(android.view.Menu,android.view.MenuInflater) -> onCreateOptionsMenu
-    boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
-    boolean goParentDirectory() -> d
-    void enumerate() -> e
+    boolean goParentDirectory() -> e
+    void enumerate() -> f
     boolean onBackPressed() -> c
-com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment$1 -> com.reneponette.comicbox.ui.fragment.a.r:
+    android.graphics.Bitmap getThumbnailBitmap(com.reneponette.comicbox.db.FileInfo,android.widget.ImageView) -> a
+    void access$0(com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment) -> a
+com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment$1 -> com.reneponette.comicbox.ui.fragment.a.q:
     com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment this$0 -> a
-    void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment$FolderViewAdapter -> com.reneponette.comicbox.ui.fragment.a.s:
-    java.util.List list -> b
-    com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment this$0 -> a
-    android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-    long getItemId(int) -> getItemId
-    java.lang.Object getItem(int) -> getItem
-    int getCount() -> getCount
-    com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment access$0(com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment$FolderViewAdapter) -> a
-com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment$FolderViewAdapter$1 -> com.reneponette.comicbox.ui.fragment.a.t:
-    com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment$FolderViewAdapter this$1 -> a
-    com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment$FolderViewAdapter$Holder val$holder -> b
-    com.reneponette.comicbox.db.FileInfo val$info -> c
-    void onClick(android.view.View) -> onClick
-    com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment$FolderViewAdapter access$0(com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment$FolderViewAdapter$1) -> a
-com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment$FolderViewAdapter$1$1 -> com.reneponette.comicbox.ui.fragment.a.u:
-    com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment$FolderViewAdapter$1 this$2 -> a
-    com.reneponette.comicbox.db.FileInfo val$info -> b
-    boolean onMenuItemClick(android.view.MenuItem) -> onMenuItemClick
-com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment$FolderViewAdapter$Holder -> com.reneponette.comicbox.ui.fragment.a.v:
-    android.widget.ImageView itemImage -> a
-    android.widget.TextView itemName -> b
-    android.widget.TextView itemProgress -> c
-    android.widget.TextView itemCount -> d
-    android.widget.ImageView itemMenuBtn -> e
-    com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment$FolderViewAdapter this$1 -> f
+    void run() -> run
 com.reneponette.comicbox.ui.fragment.reader.BasePagerReaderFragment -> com.reneponette.comicbox.ui.fragment.b.a:
     com.reneponette.comicbox.view.ExtendedViewPager viewPager -> a
     android.support.v4.view.PagerAdapter pagerAdapter -> b
@@ -4321,7 +5354,8 @@ com.reneponette.comicbox.ui.fragment.reader.BasePagerReaderFragment -> com.renep
     android.widget.TextView previewPageNumTv -> g
     android.widget.ImageView previewIv -> h
     java.util.Timer previewLoadTimer -> i
-    boolean use3Fingers -> k
+    boolean use3Fingers -> l
+    int curPageIndex -> j
     void onCreate(android.os.Bundle) -> onCreate
     android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
     void onViewCreated(android.view.View,android.os.Bundle) -> onViewCreated
@@ -4364,7 +5398,10 @@ com.reneponette.comicbox.ui.fragment.reader.BasePagerReaderFragment$3 -> com.ren
     void onPageSelected(int) -> a
     void onPageScrolled(int,float,int) -> a
     void onPageScrollStateChanged(int) -> b
-com.reneponette.comicbox.ui.fragment.reader.BasePagerReaderFragment$TouchImageAdapter -> com.reneponette.comicbox.ui.fragment.b.g:
+com.reneponette.comicbox.ui.fragment.reader.BasePagerReaderFragment$4 -> com.reneponette.comicbox.ui.fragment.b.g:
+    com.reneponette.comicbox.ui.fragment.reader.BasePagerReaderFragment this$0 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.reneponette.comicbox.ui.fragment.reader.BasePagerReaderFragment$TouchImageAdapter -> com.reneponette.comicbox.ui.fragment.b.h:
     com.reneponette.comicbox.controller.DataController controller -> a
     com.reneponette.comicbox.ui.fragment.reader.BasePagerReaderFragment this$0 -> b
     int getCount() -> a
@@ -4374,25 +5411,25 @@ com.reneponette.comicbox.ui.fragment.reader.BasePagerReaderFragment$TouchImageAd
     void setupImageView(com.reneponette.comicbox.view.TouchImageView) -> a
     java.lang.Object instantiateItem(android.view.ViewGroup,int) -> a
     com.reneponette.comicbox.ui.fragment.reader.BasePagerReaderFragment access$1(com.reneponette.comicbox.ui.fragment.reader.BasePagerReaderFragment$TouchImageAdapter) -> a
-com.reneponette.comicbox.ui.fragment.reader.BasePagerReaderFragment$TouchImageAdapter$1 -> com.reneponette.comicbox.ui.fragment.b.h:
+com.reneponette.comicbox.ui.fragment.reader.BasePagerReaderFragment$TouchImageAdapter$1 -> com.reneponette.comicbox.ui.fragment.b.i:
     com.reneponette.comicbox.ui.fragment.reader.BasePagerReaderFragment$TouchImageAdapter this$1 -> a
     void onClick(android.view.View) -> onClick
-com.reneponette.comicbox.ui.fragment.reader.BasePagerReaderFragment$TouchImageAdapter$2 -> com.reneponette.comicbox.ui.fragment.b.i:
+com.reneponette.comicbox.ui.fragment.reader.BasePagerReaderFragment$TouchImageAdapter$2 -> com.reneponette.comicbox.ui.fragment.b.j:
     com.reneponette.comicbox.ui.fragment.reader.BasePagerReaderFragment$TouchImageAdapter this$1 -> a
     boolean onLongClick(android.view.View) -> onLongClick
-com.reneponette.comicbox.ui.fragment.reader.BasePagerReaderFragment$TouchImageAdapter$3 -> com.reneponette.comicbox.ui.fragment.b.j:
+com.reneponette.comicbox.ui.fragment.reader.BasePagerReaderFragment$TouchImageAdapter$3 -> com.reneponette.comicbox.ui.fragment.b.k:
     com.reneponette.comicbox.ui.fragment.reader.BasePagerReaderFragment$TouchImageAdapter this$1 -> a
     void onTouchRightSide() -> a
     void onTouchLeftSide() -> b
-com.reneponette.comicbox.ui.fragment.reader.BasePagerReaderFragment$TouchImageAdapter$4 -> com.reneponette.comicbox.ui.fragment.b.k:
+com.reneponette.comicbox.ui.fragment.reader.BasePagerReaderFragment$TouchImageAdapter$4 -> com.reneponette.comicbox.ui.fragment.b.l:
     android.view.ViewConfiguration viewConfig -> d
     int scaledTouchSlop -> e
     int startX -> a
     int startY -> b
     com.reneponette.comicbox.ui.fragment.reader.BasePagerReaderFragment$TouchImageAdapter this$1 -> c
     boolean onTouch(android.view.View,android.view.MotionEvent) -> onTouch
-com.reneponette.comicbox.ui.fragment.reader.BaseReaderFragment -> com.reneponette.comicbox.ui.fragment.b.l:
-    com.reneponette.comicbox.controller.DataController dataController -> j
+com.reneponette.comicbox.ui.fragment.reader.BaseReaderFragment -> com.reneponette.comicbox.ui.fragment.b.m:
+    com.reneponette.comicbox.controller.DataController dataController -> k
     boolean autocrop -> a
     android.app.ProgressDialog mProgressDlg -> b
     void onCreate(android.os.Bundle) -> onCreate
@@ -4407,15 +5444,15 @@ com.reneponette.comicbox.ui.fragment.reader.BaseReaderFragment -> com.reneponett
     java.io.File findNextFile() -> n
     void adjustScreenBrightness(boolean) -> a
     void access$0(com.reneponette.comicbox.ui.fragment.reader.BaseReaderFragment,android.app.ProgressDialog) -> a
-com.reneponette.comicbox.ui.fragment.reader.BaseReaderFragment$1 -> com.reneponette.comicbox.ui.fragment.b.m:
+com.reneponette.comicbox.ui.fragment.reader.BaseReaderFragment$1 -> com.reneponette.comicbox.ui.fragment.b.n:
     com.reneponette.comicbox.ui.fragment.reader.BaseReaderFragment this$0 -> a
     void onCancel(android.content.DialogInterface) -> onCancel
-com.reneponette.comicbox.ui.fragment.reader.BaseReaderFragment$2 -> com.reneponette.comicbox.ui.fragment.b.n:
+com.reneponette.comicbox.ui.fragment.reader.BaseReaderFragment$2 -> com.reneponette.comicbox.ui.fragment.b.o:
     com.reneponette.comicbox.ui.fragment.reader.BaseReaderFragment this$0 -> a
     void onDismiss(android.content.DialogInterface) -> onDismiss
-com.reneponette.comicbox.ui.fragment.reader.FolderReaderFragment -> com.reneponette.comicbox.ui.fragment.b.o:
-    java.io.File curFile -> k
-    int startIndex -> l
+com.reneponette.comicbox.ui.fragment.reader.FolderReaderFragment -> com.reneponette.comicbox.ui.fragment.b.p:
+    java.io.File curFile -> l
+    int startIndex -> m
     com.reneponette.comicbox.ui.fragment.reader.FolderReaderFragment newInstance(java.lang.String,int) -> a
     void onAttach(android.app.Activity) -> onAttach
     void onCreate(android.os.Bundle) -> onCreate
@@ -4427,7 +5464,7 @@ com.reneponette.comicbox.ui.fragment.reader.FolderReaderFragment -> com.renepone
     void onFinishBuild() -> b
     android.graphics.Bitmap getPageBitmap(android.widget.ImageView,int) -> b
     android.graphics.Bitmap getPreviewBitmap(android.widget.ImageView,int) -> a
-com.reneponette.comicbox.ui.fragment.reader.PdfOldReaderFragment -> com.reneponette.comicbox.ui.fragment.b.p:
+com.reneponette.comicbox.ui.fragment.reader.PdfOldReaderFragment -> com.reneponette.comicbox.ui.fragment.b.q:
     java.io.File curFile -> a
     com.reneponette.comicbox.db.FileInfo fileInfo -> b
     com.artifex.mupdfdemo.MuPDFCore core -> c
@@ -4450,33 +5487,32 @@ com.reneponette.comicbox.ui.fragment.reader.PdfOldReaderFragment -> com.renepone
     void performPickFor(com.artifex.mupdfdemo.FilePicker) -> performPickFor
     void updateSeekBarLabel() -> c
     boolean onBackPressed() -> f
-com.reneponette.comicbox.ui.fragment.reader.PdfOldReaderFragment$1 -> com.reneponette.comicbox.ui.fragment.b.q:
+com.reneponette.comicbox.ui.fragment.reader.PdfOldReaderFragment$1 -> com.reneponette.comicbox.ui.fragment.b.r:
     com.reneponette.comicbox.ui.fragment.reader.PdfOldReaderFragment this$0 -> a
     void onClick(android.content.DialogInterface,int) -> onClick
-com.reneponette.comicbox.ui.fragment.reader.PdfOldReaderFragment$2 -> com.reneponette.comicbox.ui.fragment.b.r:
+com.reneponette.comicbox.ui.fragment.reader.PdfOldReaderFragment$2 -> com.reneponette.comicbox.ui.fragment.b.s:
     com.reneponette.comicbox.ui.fragment.reader.PdfOldReaderFragment this$0 -> a
     void onTapMainDocArea() -> onTapMainDocArea
     void onMoveToChild(int) -> onMoveToChild
-com.reneponette.comicbox.ui.fragment.reader.PdfOldReaderFragment$3 -> com.reneponette.comicbox.ui.fragment.b.s:
+com.reneponette.comicbox.ui.fragment.reader.PdfOldReaderFragment$3 -> com.reneponette.comicbox.ui.fragment.b.t:
     com.reneponette.comicbox.ui.fragment.reader.PdfOldReaderFragment this$0 -> a
     void onStopTrackingTouch(android.widget.SeekBar) -> onStopTrackingTouch
     void onStartTrackingTouch(android.widget.SeekBar) -> onStartTrackingTouch
     void onProgressChanged(android.widget.SeekBar,int,boolean) -> onProgressChanged
-com.reneponette.comicbox.ui.fragment.reader.PdfOldReaderFragment$4 -> com.reneponette.comicbox.ui.fragment.b.t:
+com.reneponette.comicbox.ui.fragment.reader.PdfOldReaderFragment$4 -> com.reneponette.comicbox.ui.fragment.b.u:
     com.reneponette.comicbox.ui.fragment.reader.PdfOldReaderFragment this$0 -> a
     android.os.Bundle val$savedInstanceState -> b
     void onClick(android.content.DialogInterface,int) -> onClick
-com.reneponette.comicbox.ui.fragment.reader.PdfOldReaderFragment$5 -> com.reneponette.comicbox.ui.fragment.b.u:
+com.reneponette.comicbox.ui.fragment.reader.PdfOldReaderFragment$5 -> com.reneponette.comicbox.ui.fragment.b.v:
     com.reneponette.comicbox.ui.fragment.reader.PdfOldReaderFragment this$0 -> a
     void onClick(android.content.DialogInterface,int) -> onClick
-com.reneponette.comicbox.ui.fragment.reader.PdfReaderFragment -> com.reneponette.comicbox.ui.fragment.b.v:
-    java.io.File curFile -> k
+com.reneponette.comicbox.ui.fragment.reader.PdfReaderFragment -> com.reneponette.comicbox.ui.fragment.b.w:
+    java.io.File curFile -> l
     com.reneponette.comicbox.ui.fragment.reader.PdfReaderFragment newInstance(java.lang.String) -> b
     void onAttach(android.app.Activity) -> onAttach
     void onCreate(android.os.Bundle) -> onCreate
     android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
     void onViewCreated(android.view.View,android.os.Bundle) -> onViewCreated
-    void onGoNextFile() -> c
     void onStartBuild() -> a
     void onFailBuild(java.lang.String) -> a
     void onAddPageInfo(com.reneponette.comicbox.model.PageInfo) -> a
@@ -4484,33 +5520,26 @@ com.reneponette.comicbox.ui.fragment.reader.PdfReaderFragment -> com.reneponette
     void performPickFor(com.artifex.mupdfdemo.FilePicker) -> performPickFor
     android.graphics.Bitmap getPageBitmap(android.widget.ImageView,int) -> b
     android.graphics.Bitmap getPreviewBitmap(android.widget.ImageView,int) -> a
-com.reneponette.comicbox.ui.fragment.reader.PdfReaderFragment$1 -> com.reneponette.comicbox.ui.fragment.b.w:
-    com.reneponette.comicbox.ui.fragment.reader.PdfReaderFragment this$0 -> a
-    void onClick(android.content.DialogInterface,int) -> onClick
-com.reneponette.comicbox.ui.fragment.reader.PdfReaderFragment$2 -> com.reneponette.comicbox.ui.fragment.b.x:
+com.reneponette.comicbox.ui.fragment.reader.PdfReaderFragment$1 -> com.reneponette.comicbox.ui.fragment.b.x:
     com.reneponette.comicbox.ui.fragment.reader.PdfReaderFragment this$0 -> a
     void onClick(android.content.DialogInterface,int) -> onClick
 com.reneponette.comicbox.ui.fragment.reader.ZipFileReaderFragment -> com.reneponette.comicbox.ui.fragment.b.y:
-    java.io.File curFile -> k
+    java.io.File curFile -> l
     com.reneponette.comicbox.ui.fragment.reader.ZipFileReaderFragment newInstance(java.lang.String) -> b
     void onAttach(android.app.Activity) -> onAttach
     void onCreate(android.os.Bundle) -> onCreate
     android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
     void onViewCreated(android.view.View,android.os.Bundle) -> onViewCreated
-    void onGoNextFile() -> c
     void onStartBuild() -> a
     void onFailBuild(java.lang.String) -> a
     void onAddPageInfo(com.reneponette.comicbox.model.PageInfo) -> a
     void onFinishBuild() -> b
     android.graphics.Bitmap getPageBitmap(android.widget.ImageView,int) -> b
     android.graphics.Bitmap getPreviewBitmap(android.widget.ImageView,int) -> a
-com.reneponette.comicbox.ui.fragment.reader.ZipFileReaderFragment$1 -> com.reneponette.comicbox.ui.fragment.b.z:
-    com.reneponette.comicbox.ui.fragment.reader.ZipFileReaderFragment this$0 -> a
-    void onClick(android.content.DialogInterface,int) -> onClick
-com.reneponette.comicbox.ui.fragment.reader.ZipStreamReaderFragment -> com.reneponette.comicbox.ui.fragment.b.aa:
-    com.dropbox.client2.DropboxAPI api -> k
-    com.dropbox.client2.DropboxAPI$Entry curEntry -> l
-    java.io.File cacheDir -> m
+com.reneponette.comicbox.ui.fragment.reader.ZipStreamReaderFragment -> com.reneponette.comicbox.ui.fragment.b.z:
+    com.dropbox.client2.DropboxAPI api -> l
+    com.dropbox.client2.DropboxAPI$Entry curEntry -> m
+    java.io.File cacheDir -> n
     com.reneponette.comicbox.ui.fragment.reader.ZipStreamReaderFragment newInstance(java.lang.String) -> b
     void onAttach(android.app.Activity) -> onAttach
     void onCreate(android.os.Bundle) -> onCreate
@@ -4555,7 +5584,7 @@ com.reneponette.comicbox.utils.ImageUtils -> com.reneponette.comicbox.e.e:
 com.reneponette.comicbox.utils.MessageUtils -> com.reneponette.comicbox.e.f:
     void toast(android.content.Context,java.lang.String) -> a
 com.reneponette.comicbox.utils.MetricUtils -> com.reneponette.comicbox.e.g:
-    int dpToPixel(int) -> a
+    int dpToPixel(android.content.Context,int) -> a
 com.reneponette.comicbox.utils.SimpleCrypto -> com.reneponette.comicbox.e.h:
     java.lang.String charsetName -> a
     java.lang.String algorithm -> b
@@ -4577,6 +5606,10 @@ com.reneponette.comicbox.view.ExtendedViewPager -> com.reneponette.comicbox.view
     boolean canScroll(android.view.View,boolean,int,int,int) -> a
 com.reneponette.comicbox.view.GridItemLayout -> com.reneponette.comicbox.view.GridItemLayout:
     void onMeasure(int,int) -> onMeasure
+com.reneponette.comicbox.view.ProgressTextView -> com.reneponette.comicbox.view.ProgressTextView:
+    float progress -> a
+    void setProgress(float) -> setProgress
+    void onDraw(android.graphics.Canvas) -> onDraw
 com.reneponette.comicbox.view.TouchImageView -> com.reneponette.comicbox.view.a:
     float normalizedScale -> a
     android.graphics.Matrix matrix -> b
@@ -4717,6 +5750,7 @@ com.reneponette.comicbox.view.TouchImageView$Fling -> com.reneponette.comicbox.v
     void run() -> run
 com.reneponette.comicbox.view.TouchImageView$GestureListener -> com.reneponette.comicbox.view.e:
     com.reneponette.comicbox.view.TouchImageView this$0 -> a
+    boolean onSingleTapUp(android.view.MotionEvent) -> onSingleTapUp
     boolean onSingleTapConfirmed(android.view.MotionEvent) -> onSingleTapConfirmed
     void onLongPress(android.view.MotionEvent) -> onLongPress
     boolean onFling(android.view.MotionEvent,android.view.MotionEvent,float,float) -> onFling
