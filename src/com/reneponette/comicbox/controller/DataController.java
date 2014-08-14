@@ -336,7 +336,7 @@ public class DataController {
 				if (core != null && core.countPages() == 0) {
 					core = null;
 				}
-				
+
 				if (core == null) {
 					if (listener != null)
 						listener.onFailBuild(GlobalApplication.instance().getString(R.string.cannot_read_file));
@@ -388,11 +388,10 @@ public class DataController {
 		if (listener != null)
 			listener.onStartBuild();
 
-		runningThread = new Thread(new Runnable() {
-
+		runningThread = new Thread() {
+			
 			@Override
 			public void run() {
-
 				Set<String> nameSet = new HashSet<String>();
 				for (File imageFile : cacheDir.listFiles()) {
 					if (imageFile.isHidden())
@@ -409,12 +408,18 @@ public class DataController {
 
 				ZipArchiveInputStream zis;
 				try {
-					zis = new ZipArchiveInputStream(api.getFileStream(getFileInfo().getPath(), null), "utf-8");
 
 					ZipArchiveEntry ze;
+					zis = new ZipArchiveInputStream(api.getFileStream(getFileInfo().getPath(), null), "utf-8");
 					while ((ze = zis.getNextZipEntry()) != null) {
 						Log.e(this.getClass().getName(), "entry name = " + ze.getName());
-
+						
+						if(isInterrupted()) {
+							Log.e(this.getClass().getName(), "interrupted");
+							zis.close();
+							return;
+						}
+						
 						// 파일 엔트리를 하나 읽음
 						ByteArrayOutputStream baos = new ByteArrayOutputStream();
 						byte[] buffer = new byte[1024];
@@ -456,7 +461,6 @@ public class DataController {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-
 			}
 
 			private void addPageWithBitmap(Bitmap bitmap, File cachedFile) {
@@ -481,7 +485,8 @@ public class DataController {
 				}
 
 			}
-		});
+		};
+
 		runningThread.start();
 	}
 
