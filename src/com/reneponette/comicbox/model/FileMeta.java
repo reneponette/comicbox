@@ -23,7 +23,7 @@ public class FileMeta implements Parcelable {
 	public int lastPagesPerScan = 0;
 	public String cachePath;
 	public String coverPath;
-	public int coverAvgColor = -1;
+	public int coverColor = -1;
 	public int lastTotalPageCount;
 	public int lastReadPageIndex = -1; // -1은 한번도 읽은적 없는 경우
 	public ReadDirection lastReadDirection = ReadDirection.NOTSET;
@@ -55,7 +55,7 @@ public class FileMeta implements Parcelable {
 		result.lastPagesPerScan = obj.optInt("lastPagesPerScan");
 		result.cachePath = obj.optString("cachePath");
 		result.coverPath = obj.optString("coverPath");
-		result.coverAvgColor = obj.optInt("coverAvgColor");
+		result.coverColor = obj.optInt("coverColor");
 		result.lastTotalPageCount = obj.optInt("lastTotalPageCount");
 		result.lastReadPageIndex = obj.optInt("lastReadPageIndex", -1);
 		result.lastReadDirection = ReadDirection
@@ -76,7 +76,7 @@ public class FileMeta implements Parcelable {
 				obj.put("cachePath", cachePath);
 			if(coverPath != null)
 				obj.put("coverPath", coverPath);
-			obj.put("coverAvgColor", coverAvgColor);
+			obj.put("coverColor", coverColor);
 			obj.put("lastTotalPageCount", lastTotalPageCount);
 			obj.put("lastReadPageIndex", lastReadPageIndex);
 			obj.put("lastReadDirection", lastReadDirection.name());
@@ -102,7 +102,7 @@ public class FileMeta implements Parcelable {
 		dest.writeInt(pagesPerScan);
 		dest.writeInt(lastPagesPerScan);
 		dest.writeString(coverPath);
-		dest.writeInt(coverAvgColor);
+		dest.writeInt(coverColor);
 		dest.writeInt(lastTotalPageCount);
 		dest.writeInt(lastReadPageIndex);
 		dest.writeString(lastReadDirection.name());
@@ -117,7 +117,7 @@ public class FileMeta implements Parcelable {
 			obj.pagesPerScan = source.readInt();
 			obj.lastPagesPerScan = source.readInt();
 			obj.coverPath = source.readString();
-			obj.coverAvgColor = source.readInt();
+			obj.coverColor = source.readInt();
 			obj.lastTotalPageCount = source.readInt();
 			obj.lastReadPageIndex = source.readInt();
 			obj.lastReadDirection = ReadDirection.valueOf(source.readString());

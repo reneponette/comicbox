@@ -299,7 +299,6 @@ public class BaseExplorerFragment extends Fragment {
 			
 			// image
 			holder.itemImage.setScaleType(ScaleType.CENTER_CROP);
-			holder.itemImage.setBackgroundColor(new Random().nextInt());
 			Bitmap thumbnail = getThumbnailBitmap(info, holder.itemImage);
 			if(thumbnail != null)
 				holder.itemImage.setImageBitmap(thumbnail);
