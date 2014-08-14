@@ -2,6 +2,7 @@ package com.reneponette.comicbox.ui.fragment.explorer;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -9,6 +10,7 @@ import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.DropboxAPI.Entry;
 import com.dropbox.client2.android.AndroidAuthSession;
 import com.dropbox.client2.exception.DropboxException;
+import com.reneponette.comicbox.application.GlobalApplication;
 import com.reneponette.comicbox.cache.DropboxThumbBitmapLoader;
 import com.reneponette.comicbox.constant.C;
 import com.reneponette.comicbox.db.FileInfo;
@@ -51,6 +53,8 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 	private boolean mLoggedIn;
 	private String dropboxPath;
 	private Thread runningThread;
+	
+	Handler handler = GlobalApplication.instance().getHandler();
 
 	
 	@Override
@@ -135,32 +139,30 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 		infoList.clear();
 		gridView.setAdapter(null);
 
-		runningThread = new Thread(new Runnable() {
-
+		runningThread = new Thread() {
 			@Override
 			public void run() {
 				try {
-					if (getActivity() == null)
-						return;
 
 					final Entry entry = mApi.metadata(dropboxPath, 1000, null, true, null);
 					if (!entry.isDir || entry.contents == null) {
-						getActivity().runOnUiThread(new Runnable() {
-
+						
+						handler.post(new Runnable() {
+							
 							@Override
 							public void run() {
 								Log.e(TAG, "File or empty directory");
 								hideWaitingDialog();
 							}
 						});
+
 						return;
 					}
-
-					getActivity().runOnUiThread(new Runnable() {
-
+					
+					handler.post(new Runnable() {
+						
 						@Override
 						public void run() {
-
 							curInfo.setEntry(entry);
 
 							String name = curInfo.getName();
@@ -177,6 +179,7 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 							hideWaitingDialog();
 						}
 					});
+
 				} catch (DropboxException e) {
 					getActivity().runOnUiThread(new Runnable() {
 
@@ -189,11 +192,12 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 				}
 				runningThread = null;
 			}
-		});
+			
+		};
 		runningThread.start();
 
 	}
-
+	
 	
 	@Override
 	public boolean onBackPressed() {

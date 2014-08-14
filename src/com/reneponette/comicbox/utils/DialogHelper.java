@@ -54,7 +54,7 @@ public class DialogHelper {
 	
 	public static void showSelectDownloadOrStreaming(Context context, DialogInterface.OnClickListener streamingListener, DialogInterface.OnClickListener downloadListener) {
 		AlertDialog.Builder builder = new Builder(context);
-		builder.setMessage("다운로드 하고볼래 스트리밍 하면서 볼래?");
+		builder.setMessage(context.getString(R.string.warning_message_use_streaming));
 		builder.setPositiveButton("스트리밍", streamingListener);
 		builder.setNeutralButton("다운로드", downloadListener);
 		builder.setNegativeButton(android.R.string.cancel, null);

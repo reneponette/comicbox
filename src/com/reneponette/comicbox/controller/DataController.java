@@ -18,6 +18,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
 import android.os.Handler;
+import android.util.Log;
 
 import com.artifex.mupdfdemo.MuPDFCore;
 import com.artifex.mupdfdemo.OutlineActivityData;
@@ -412,6 +413,7 @@ public class DataController {
 
 					ZipArchiveEntry ze;
 					while ((ze = zis.getNextZipEntry()) != null) {
+						Log.e(this.getClass().getName(), "entry name = " + ze.getName());
 
 						// 파일 엔트리를 하나 읽음
 						ByteArrayOutputStream baos = new ByteArrayOutputStream();

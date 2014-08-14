@@ -30,7 +30,9 @@
     <string name="action_remove_from_favorite">즐겨찾기에서 제거</string>
     <string name="action_read_direction_setting">읽기방향 설정</string>
     <string name="action_recreate_thumbnail">커버 재생성</string>
+    
     <string name="warning_message_data_download">데이터 네트워크를 사용하고 있습니다. 만화책 스트리밍시 데이터 요금이 부과됩니다. 계속하시겠습니까?</string>
+    <string name="warning_message_use_streaming">감상 방법을 선택하세요.</string>
 
     <!-- 뷰어 -->
     <string name="cannot_read_file">파일을 읽을 수 없습니다.</string>
