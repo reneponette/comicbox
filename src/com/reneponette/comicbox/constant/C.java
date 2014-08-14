@@ -16,6 +16,9 @@ public class C {
     final static public String DEFAULT_LOCAL_PATH = LOCAL_ROOT_PATH + "/" + DEFAULT_NAME;
     final static public String DEFAULT_DROPBOX_PATH = "/";
     
-    final static public String COMICS_CACHE_ROOT = new File(GlobalApplication.instance().getCacheDir(), "comics").toString();    
+    final static public String COMICS_CACHE_ROOT = new File(GlobalApplication.instance().getCacheDir(), "comics").toString();
+    
+    final static public int COVER_W = 400;
+    final static public int COVER_H = 600;
 
 }

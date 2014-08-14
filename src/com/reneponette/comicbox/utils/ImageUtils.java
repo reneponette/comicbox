@@ -125,7 +125,9 @@ public class ImageUtils {
 			return null;
 
 		if (preview) {
+			Bitmap oldBitmap = bm;
 			bm = Bitmap.createScaledBitmap(bm, 200, 300, false);
+			oldBitmap.recycle();
 		}
 
 		return getProcessedBitmap(bm, buildType, autocrop);
@@ -249,12 +251,12 @@ public class ImageUtils {
 	 * @param src
 	 * @return
 	 */
-	public static Bitmap extractCoverFromPdf(Context c, File src) {
+	public static Bitmap extractCoverFromPdf(Context c, File src, int w, int h) {
 		try {
 			MuPDFCore core = new MuPDFCore(c, src.getAbsolutePath());
-			Bitmap bm = Bitmap.createBitmap(400, 600, Config.ARGB_8888);
+			Bitmap bm = Bitmap.createBitmap(w, h, Config.ARGB_8888);
 			core.countPages();
-			core.drawPage(bm, 0, 400, 600, 0, 0, 400, 600);
+			core.drawPage(bm, 0, w, h, 0, 0, w, h);
 
 			return removeMargins(bm, 350, 200, 350, 200);
 		} catch (Exception e) {
@@ -269,7 +271,7 @@ public class ImageUtils {
 	 * @param src
 	 * @return
 	 */
-	public static Bitmap extractCoverFromZip(File src) {
+	public static Bitmap extractCoverFromZip(File src, int w, int h) {
 
 		try {
 			ZipFile zipFile;
@@ -291,7 +293,7 @@ public class ImageUtils {
 					if (bm.getWidth() > bm.getHeight()) {
 						// 두장 스캔본은 첫장의 왼쪽 이미지를 뽑음 (일본판 제본이라고 가정하고....)
 						bm = cutBitmapInHalf(bm, false);
-						bm = Bitmap.createScaledBitmap(bm, 400, 600, false);
+						bm = Bitmap.createScaledBitmap(bm, w, h, false);
 					}
 					return removeMargins(bm, 350, 200, 350, 200);
 				}
@@ -310,7 +312,7 @@ public class ImageUtils {
 	 * @param is
 	 * @return
 	 */
-	public static Bitmap extractCoverFromZip(InputStream is) {
+	public static Bitmap extractCoverFromZip(InputStream is, int w, int h) {
 		ZipArchiveEntry ze;
 		ZipArchiveInputStream zis;
 		try {
@@ -341,7 +343,7 @@ public class ImageUtils {
 					if (bm.getWidth() > bm.getHeight()) {
 						// 두장 스캔본은 첫장의 왼쪽 이미지를 뽑음 (일본판 제본이라고 가정하고....)
 						bm = cutBitmapInHalf(bm, false);
-						bm = Bitmap.createScaledBitmap(bm, 400, 600, false);
+						bm = Bitmap.createScaledBitmap(bm, w, h, false);
 					}
 					return removeMargins(bm, 350, 200, 350, 200);
 				}
@@ -353,7 +355,7 @@ public class ImageUtils {
 		return null;
 	}
 
-	public static Bitmap extractCoverFromFolder(File src, boolean multipleCover) {
+	public static Bitmap extractCoverFromFolder(File src, int w, int h, boolean multipleCover) {
 		if (src == null)
 			return null;
 
@@ -383,9 +385,9 @@ public class ImageUtils {
 
 				String ext = StringUtils.getExtension(f.getName());
 				if ("zip".equalsIgnoreCase(ext))
-					cover = extractCoverFromZip(f);
+					cover = extractCoverFromZip(f, w, h);
 				else if ("pdf".equalsIgnoreCase(ext))
-					cover = extractCoverFromPdf(GlobalApplication.instance(), f);
+					cover = extractCoverFromPdf(GlobalApplication.instance(), f, w, h);
 				else if ("jpg".equalsIgnoreCase(ext))
 					cover = extractCoverFromJpg(f);
 
@@ -434,9 +436,9 @@ public class ImageUtils {
 
 				String ext = StringUtils.getExtension(f.getName());
 				if ("zip".equalsIgnoreCase(ext))
-					cover = extractCoverFromZip(f);
+					cover = extractCoverFromZip(f, w, h);
 				else if ("pdf".equalsIgnoreCase(ext))
-					cover = extractCoverFromPdf(GlobalApplication.instance(), f);
+					cover = extractCoverFromPdf(GlobalApplication.instance(), f, w, h);
 				else if ("jpg".equalsIgnoreCase(ext))
 					cover = extractCoverFromJpg(f);
 			}
@@ -445,7 +447,7 @@ public class ImageUtils {
 		}
 	}
 
-	public static Bitmap extractCoverFromFolder(DropboxAPI<AndroidAuthSession> api, Entry entry) {
+	public static Bitmap extractCoverFromFolder(DropboxAPI<AndroidAuthSession> api, Entry entry, int w, int h) {
 
 		if (entry.isDir == false)
 			return null;
@@ -478,7 +480,7 @@ public class ImageUtils {
 					}
 
 					if (cover == null) {
-						cover = extractCoverFromZip(api.getFileStream(ent.path, null));
+						cover = extractCoverFromZip(api.getFileStream(ent.path, null), w, h);
 					}
 				} else
 					continue;

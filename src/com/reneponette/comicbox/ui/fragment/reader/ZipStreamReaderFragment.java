@@ -16,7 +16,6 @@ import com.dropbox.client2.DropboxAPI.Entry;
 import com.dropbox.client2.android.AndroidAuthSession;
 import com.reneponette.comicbox.R;
 import com.reneponette.comicbox.application.GlobalApplication;
-import com.reneponette.comicbox.cache.PageBitmapLoader;
 import com.reneponette.comicbox.controller.DataController.OnDataBuildListener;
 import com.reneponette.comicbox.manager.DropBoxManager;
 import com.reneponette.comicbox.model.PageInfo;
@@ -98,6 +97,12 @@ public class ZipStreamReaderFragment extends BasePagerReaderFragment implements 
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		dataController.build(api, cacheDir);
+	}
+	
+	@Override
+	protected void onGoNextFile() {
+		
+		// do nothing
 	}
 
 	/*---------------------------------------------------------------------------*/

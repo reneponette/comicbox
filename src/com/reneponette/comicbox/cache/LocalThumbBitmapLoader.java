@@ -9,6 +9,7 @@ import android.widget.ImageView.ScaleType;
 
 import com.reneponette.comicbox.R;
 import com.reneponette.comicbox.application.GlobalApplication;
+import com.reneponette.comicbox.constant.C;
 import com.reneponette.comicbox.db.FileInfo;
 import com.reneponette.comicbox.db.FileInfoDAO;
 import com.reneponette.comicbox.manager.PausableThreadPoolExecutor;
@@ -64,11 +65,11 @@ public class LocalThumbBitmapLoader {
 
 		if (iv != null) {
 			//기본 이미지 설정
+			iv.setScaleType(ScaleType.CENTER_INSIDE);
 			if (info.getMeta().type == FileType.DIRECTORY) {
-				iv.setScaleType(ScaleType.CENTER_INSIDE);
 				iv.setImageResource(R.drawable.ic_folder);
 			} else {
-				iv.setImageBitmap(null);
+				iv.setImageResource(R.drawable.ic_comics);
 			}
 		}
 
@@ -88,13 +89,13 @@ public class LocalThumbBitmapLoader {
 				// 비트맵 처음 생성일 경우
 				switch (info.getMeta().type) {
 				case DIRECTORY:
-					bitmap = ImageUtils.extractCoverFromFolder(info.getFile(), true);
+					bitmap = ImageUtils.extractCoverFromFolder(info.getFile(), C.COVER_W, C.COVER_H, true);
 					break;
 				case ZIP:
-					bitmap = ImageUtils.extractCoverFromZip(info.getFile());
+					bitmap = ImageUtils.extractCoverFromZip(info.getFile(), C.COVER_W, C.COVER_H);
 					break;
 				case PDF:
-					bitmap = ImageUtils.extractCoverFromPdf(GlobalApplication.instance(), info.getFile());
+					bitmap = ImageUtils.extractCoverFromPdf(GlobalApplication.instance(), info.getFile(),  C.COVER_W, C.COVER_H);
 					break;
 				case JPG:
 					bitmap = ImageUtils.extractCoverFromJpg(info.getFile());

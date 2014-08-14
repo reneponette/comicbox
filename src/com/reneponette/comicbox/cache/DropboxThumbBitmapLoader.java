@@ -14,6 +14,7 @@ import com.dropbox.client2.DropboxAPI.DropboxInputStream;
 import com.dropbox.client2.android.AndroidAuthSession;
 import com.dropbox.client2.exception.DropboxException;
 import com.reneponette.comicbox.application.GlobalApplication;
+import com.reneponette.comicbox.constant.C;
 import com.reneponette.comicbox.db.FileInfo;
 import com.reneponette.comicbox.db.FileInfoDAO;
 import com.reneponette.comicbox.manager.PausableThreadPoolExecutor;
@@ -22,7 +23,7 @@ import com.reneponette.comicbox.utils.FileUtils;
 import com.reneponette.comicbox.utils.ImageUtils;
 import com.reneponette.comicbox.utils.StringUtils;
 
-public class DropboxThumbBitmapLoader  {
+public class DropboxThumbBitmapLoader {
 
 	public interface OnLoadBitmapListener {
 		public void onLoadBitmap(Bitmap bitmap, String key);
@@ -33,7 +34,7 @@ public class DropboxThumbBitmapLoader  {
 
 	ImageView iv;
 	OnLoadBitmapListener listener;
-	
+
 	private static Set<FileInfo> requestSet = new HashSet<FileInfo>();
 
 	public DropboxThumbBitmapLoader(FileInfo info, DropboxAPI<AndroidAuthSession> api, OnLoadBitmapListener l) {
@@ -56,27 +57,27 @@ public class DropboxThumbBitmapLoader  {
 
 		Bitmap bitmap = BitmapCache.INSTANCE.getBitmapFromMemCache(info.getKey());
 		if (bitmap != null) {
-			if(listener != null)
+			if (listener != null)
 				listener.onLoadBitmap(bitmap, info.getKey());
-			if(iv != null)
+			if (iv != null)
 				iv.setImageBitmap(bitmap);
 			return;
 		}
 
 		if (iv != null)
 			iv.setImageBitmap(null);
-		
-		if(requestSet.contains(info))
+
+		if (requestSet.contains(info))
 			return;
 
 		requestSet.add(info);
-		
+
 		PausableThreadPoolExecutor.instance(Type.NETWORK).execute(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				Bitmap bitmap = null;
-				
+
 				// 디스크에 캐쉬되어있으면...
 				if (StringUtils.isBlank(info.getMeta().coverPath) == false && iv != null) {
 					bitmap = BitmapFactory.decodeFile(info.getMeta().coverPath);
@@ -88,12 +89,12 @@ public class DropboxThumbBitmapLoader  {
 				try {
 					// 비트맵 처음 생성일 경우
 					switch (info.getMeta().type) {
-					 case DIRECTORY:
-					 bitmap = ImageUtils.extractCoverFromFolder(api, info.getEntry());
-					 break;
+					case DIRECTORY:
+						bitmap = ImageUtils.extractCoverFromFolder(api, info.getEntry(), C.COVER_W, C.COVER_H);
+						break;
 					case ZIP:
 						DropboxInputStream dis = api.getFileStream(info.getEntry().path, null);
-						bitmap = ImageUtils.extractCoverFromZip(dis);
+						bitmap = ImageUtils.extractCoverFromZip(dis, C.COVER_W, C.COVER_H);
 						break;
 					default:
 						bitmap = null;
@@ -106,22 +107,22 @@ public class DropboxThumbBitmapLoader  {
 							info.getMeta().coverPath = coverFile.getAbsolutePath();
 							FileInfoDAO.instance().insertOrUpdate(info);
 						}
-						
+
 						BitmapCache.INSTANCE.addBitmapToMemoryCache(info, bitmap);
 						notifyOnMainThread(bitmap);
 					}
 				} catch (DropboxException e) {
 					e.printStackTrace();
 				}
-				
+
 				requestSet.remove(info);
 			}
 		});
 	}
-	
+
 	private void notifyOnMainThread(final Bitmap bitmap) {
 		GlobalApplication.instance().getHandler().post(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				if (listener != null)
@@ -130,7 +131,7 @@ public class DropboxThumbBitmapLoader  {
 					iv.setImageBitmap(bitmap);
 				}
 			}
-		});		
+		});
 	}
 
 }
