@@ -33,7 +33,6 @@ import com.reneponette.comicbox.application.GlobalApplication;
 import com.reneponette.comicbox.cache.BitmapCache;
 import com.reneponette.comicbox.db.FileInfo;
 import com.reneponette.comicbox.db.FileInfoDAO;
-import com.reneponette.comicbox.model.PageInfo;
 import com.reneponette.comicbox.model.PageInfo.PageBuildType;
 
 /**
@@ -355,6 +354,45 @@ public class ImageUtils {
 		return null;
 	}
 
+	
+	private static boolean drawCover(Canvas canvas, Bitmap cover, int index) {
+		int w = canvas.getWidth();
+		int h = canvas.getHeight();
+		
+		Rect rect = new Rect();
+		switch (index) {
+		case 0:
+			rect.left = 0;
+			rect.top = 0;
+			rect.right = w/2;
+			rect.bottom = h/2;
+			break;
+		case 1:
+			rect.left = w/2;
+			rect.top = 0;
+			rect.right = w;
+			rect.bottom = h/2;
+			break;
+		case 2:
+			rect.left = 0;
+			rect.top = h/2;
+			rect.right = w/2;
+			rect.bottom = h;
+			break;
+		case 3:
+			rect.left = w/2;
+			rect.top = h/2;
+			rect.right = w;
+			rect.bottom = h;
+			break;
+		default:
+			return false;
+		}
+		canvas.drawBitmap(cover, null, rect, null);
+		return true;
+	}
+
+	
 	public static Bitmap extractCoverFromFolder(File src, int w, int h, boolean multipleCover) {
 		if (src == null)
 			return null;
@@ -365,16 +403,15 @@ public class ImageUtils {
 		if (src.listFiles() == null)
 			return null;
 
-		Bitmap cover = null;
 
 		if (multipleCover) {
 
-			Bitmap dst = null;
-			Canvas comboImage = null;
-			int count = 0;
+			Bitmap resultBitmap = null;
+			Canvas comboCanvas = null;
+			int index = 0;
 			int jump = src.listFiles().length / 4;
 			for (int i = 0; i < src.listFiles().length; i++) {
-				if (i != jump * count)
+				if (i != jump * index)
 					continue;
 
 				File f = src.listFiles()[i];
@@ -382,6 +419,8 @@ public class ImageUtils {
 					continue;
 				if (f.isDirectory())
 					continue;
+				
+				Bitmap cover = null;
 
 				String ext = StringUtils.getExtension(f.getName());
 				if ("zip".equalsIgnoreCase(ext))
@@ -392,43 +431,19 @@ public class ImageUtils {
 					cover = extractCoverFromJpg(f);
 
 				if (cover != null) {
-					count++;
-
-					if (dst == null) {
-						dst = Bitmap.createBitmap(400, 600, Bitmap.Config.ARGB_8888);
-						comboImage = new Canvas(dst);
+					if (resultBitmap == null) {
+						resultBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+						comboCanvas = new Canvas(resultBitmap);
 					}
 
-					Rect rect = new Rect();
-					if (count == 1) {
-						rect.left = rect.top = 0;
-						rect.right = 200;
-						rect.bottom = 300;
-					} else if (count == 2) {
-						rect.left = 200;
-						rect.top = 0;
-						rect.right = 400;
-						rect.bottom = 300;
-					} else if (count == 3) {
-						rect.left = 0;
-						rect.top = 300;
-						rect.right = 200;
-						rect.bottom = 600;
-					} else if (count == 4) {
-						rect.left = 200;
-						rect.top = 300;
-						rect.right = 400;
-						rect.bottom = 600;
-					} else
-						break;
-
-					comboImage.drawBitmap(cover, null, rect, null);
+					if(drawCover(comboCanvas, cover, index))
+						index++;
 				}
 			}
-			return dst;
-			
-			
+			return resultBitmap;
+
 		} else {
+			Bitmap resultBitmap = null;			
 			int length = src.listFiles().length;
 			if (length > 0) {
 				int index = new Random().nextInt(length);
@@ -436,14 +451,14 @@ public class ImageUtils {
 
 				String ext = StringUtils.getExtension(f.getName());
 				if ("zip".equalsIgnoreCase(ext))
-					cover = extractCoverFromZip(f, w, h);
+					resultBitmap = extractCoverFromZip(f, w, h);
 				else if ("pdf".equalsIgnoreCase(ext))
-					cover = extractCoverFromPdf(GlobalApplication.instance(), f, w, h);
+					resultBitmap = extractCoverFromPdf(GlobalApplication.instance(), f, w, h);
 				else if ("jpg".equalsIgnoreCase(ext))
-					cover = extractCoverFromJpg(f);
+					resultBitmap = extractCoverFromJpg(f);
 			}
 
-			return cover;
+			return resultBitmap;
 		}
 	}
 
@@ -452,15 +467,15 @@ public class ImageUtils {
 		if (entry.isDir == false)
 			return null;
 
-		Bitmap dst = null;
-		Canvas comboImage = null;
+		Bitmap resultBitmap = null;
+		Canvas comboCanvas = null;
 		try {
 			entry = api.metadata(entry.path, 1000, null, true, null);
 
-			int count = 0;
+			int index = 0;
 			int jump = entry.contents.size() / 4;
 			for (int i = 0; i < entry.contents.size(); i++) {
-				if (i != jump * count)
+				if (i != jump * index)
 					continue;
 
 				Entry ent = entry.contents.get(i);
@@ -472,6 +487,8 @@ public class ImageUtils {
 				String ext = StringUtils.getExtension(ent.fileName());
 				if ("zip".equalsIgnoreCase(ext)) {
 					FileInfo info = FileInfoDAO.instance().getFileInfo(ent);
+
+					// 일단 캐쉬에서 꺼내봄
 					cover = BitmapCache.INSTANCE.getBitmapFromMemCache(info);
 					if (cover == null && StringUtils.isBlank(info.getMeta().coverPath) == false) {
 						cover = BitmapFactory.decodeFile(info.getMeta().coverPath);
@@ -486,44 +503,23 @@ public class ImageUtils {
 					continue;
 
 				if (cover != null) {
-					count++;
-
-					if (dst == null) {
-						dst = Bitmap.createBitmap(400, 600, Bitmap.Config.ARGB_8888);
-						comboImage = new Canvas(dst);
+					if (resultBitmap == null) {
+						resultBitmap = Bitmap.createBitmap(400, 600, Bitmap.Config.ARGB_8888);
+						comboCanvas = new Canvas(resultBitmap);
 					}
-
-					Rect rect = new Rect();
-					if (count == 1) {
-						rect.left = rect.top = 0;
-						rect.right = 200;
-						rect.bottom = 300;
-					} else if (count == 2) {
-						rect.left = 200;
-						rect.top = 0;
-						rect.right = 400;
-						rect.bottom = 300;
-					} else if (count == 3) {
-						rect.left = 0;
-						rect.top = 300;
-						rect.right = 200;
-						rect.bottom = 600;
-					} else if (count == 4) {
-						rect.left = 200;
-						rect.top = 300;
-						rect.right = 400;
-						rect.bottom = 600;
-					} else
-						break;
-
-					comboImage.drawBitmap(cover, null, rect, null);
+					
+					if(drawCover(comboCanvas, cover, index))
+						index++;
 				}
 			}
 		} catch (DropboxException e) {
 			e.printStackTrace();
 		}
-		return dst;
+		return resultBitmap;
 	}
+	
+	
+	/********************************************************************************/
 
 	public static Bitmap cutBitmapInHalf(Bitmap src, boolean isRightSide) {
 
@@ -590,6 +586,9 @@ public class ImageUtils {
 
 	public static Bitmap removeMargins(Bitmap bmp, int dT, int dL, int dB, int dR) {
 
+		if(bmp == null)
+			return null;
+			
 		int color = bmp.getPixel(0, 0);
 		long dtMili = System.currentTimeMillis();
 		int MTop = 0, MBot = 0, MLeft = 0, MRight = 0;
