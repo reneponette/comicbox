@@ -16,6 +16,7 @@ public class ZipUtils {
 	public static List<ZipEntry> enumerateAndSortZipEntries(ZipFile zipFile, int limit) {
 		int count = 0;
 		List<ZipEntry> entries = new ArrayList<ZipEntry>();
+		
 		for (Enumeration<? extends ZipEntry> e = zipFile.entries(); e.hasMoreElements();) {
 			if(limit != 0 && count > limit)
 				break;

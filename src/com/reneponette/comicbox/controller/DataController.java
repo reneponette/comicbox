@@ -563,6 +563,7 @@ public class DataController {
 		if (zipFile != null) {
 			try {
 				zipFile.close();
+				zipFile = null;
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

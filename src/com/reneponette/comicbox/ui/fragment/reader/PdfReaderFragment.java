@@ -2,12 +2,9 @@ package com.reneponette.comicbox.ui.fragment.reader;
 
 import java.io.File;
 
-import org.json.simple.parser.ContainerFactory;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,7 +17,6 @@ import com.reneponette.comicbox.cache.PageBitmapLoader;
 import com.reneponette.comicbox.controller.DataController.OnDataBuildListener;
 import com.reneponette.comicbox.db.FileInfo;
 import com.reneponette.comicbox.model.PageInfo;
-import com.reneponette.comicbox.utils.DialogHelper;
 import com.reneponette.comicbox.utils.ImageUtils;
 
 @SuppressWarnings("deprecation")
@@ -41,19 +37,13 @@ public class PdfReaderFragment extends BasePagerReaderFragment implements OnData
 	File curFile;
 	FileInfo fileInfo;
 
-	// //////////////////////////////////////////////////
-
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-		curFile = new File(getArguments().getString(PATH));
-	}
+	/*---------------------------------------------------------------------------*/
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		curFile = new File(getArguments().getString(PATH));
 		dataController.setOnDataBuildListener(this);
-		dataController.prepare(curFile);
 	}
 
 	@Override
@@ -64,7 +54,7 @@ public class PdfReaderFragment extends BasePagerReaderFragment implements OnData
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		dataController.buildPdf();
+		dataController.prepare(curFile).buildPdf();
 	}
 	
 	

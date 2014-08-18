@@ -55,14 +55,15 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 	
 	@Override
 	public void onResume() {
+		super.onResume();
+		
 		handler.postDelayed(new Runnable() {
 			
 			@Override
 			public void run() {
 				enumerate();
 			}
-		}, 100);
-		super.onResume();
+		}, 300);
 	}
 	
 

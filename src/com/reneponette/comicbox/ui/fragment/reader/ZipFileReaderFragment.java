@@ -2,7 +2,6 @@ package com.reneponette.comicbox.ui.fragment.reader;
 
 import java.io.File;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -30,19 +29,13 @@ public class ZipFileReaderFragment extends BasePagerReaderFragment implements On
 
 	private File curFile;
 
-	// //////////////////////////////////////////////////
-
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-		curFile = new File(getArguments().getString(PATH));
-	}
+	/*---------------------------------------------------------------------------*/
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		curFile = new File(getArguments().getString(PATH));		
 		dataController.setOnDataBuildListener(this);
-		dataController.prepare(curFile);
 	}
 
 	@Override
@@ -53,7 +46,7 @@ public class ZipFileReaderFragment extends BasePagerReaderFragment implements On
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		dataController.build();
+		dataController.prepare(curFile).build();
 	}
 
 	/*---------------------------------------------------------------------------*/

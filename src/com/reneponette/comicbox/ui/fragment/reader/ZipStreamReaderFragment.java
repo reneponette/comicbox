@@ -44,18 +44,12 @@ public class ZipStreamReaderFragment extends BasePagerReaderFragment implements 
 	/*---------------------------------------------------------------------------*/
 
 	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-		Entry entry = new Entry();
-		entry.path = getArguments().getString(PATH);
-		curEntry = entry;
-	}
-
-	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Entry entry = new Entry();
+		entry.path = getArguments().getString(PATH);
+		curEntry = entry;		
 		dataController.setOnDataBuildListener(this);
-		dataController.prepare(curEntry);
 
 		cacheDir = new File(GlobalApplication.instance().getCacheDir(), "comics/"
 				+ StringUtils.getMD5(dataController.getFileInfo().getName()));
@@ -96,7 +90,7 @@ public class ZipStreamReaderFragment extends BasePagerReaderFragment implements 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		dataController.build(api, cacheDir);
+		dataController.prepare(curEntry).build(api, cacheDir);
 	}
 	
 	@Override
