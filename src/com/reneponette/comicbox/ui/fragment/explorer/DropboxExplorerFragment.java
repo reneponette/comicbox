@@ -51,7 +51,6 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 	DropboxAPI<AndroidAuthSession> mApi;
 
 	private boolean mLoggedIn;
-	private String dropboxPath;
 	private Thread runningThread;
 	
 	Handler handler;
@@ -59,7 +58,7 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 	
 	@Override
 	protected FileInfo onGetFileInfo() {
-		dropboxPath = getArguments().getString(PATH);
+		String dropboxPath = getArguments().getString(PATH);
 		Entry entry = new Entry();
 		entry.path = dropboxPath;		
 		return FileInfoDAO.instance().getFileInfo(entry);
@@ -145,8 +144,8 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 			@Override
 			public void run() {
 				try {
-
-					final Entry entry = mApi.metadata(dropboxPath, 1000, null, true, null);
+					
+					final Entry entry = mApi.metadata(getCurrentInfo().getPath(), 1000, null, true, null);
 					if (!entry.isDir || entry.contents == null) {
 						
 						handler.post(new Runnable() {

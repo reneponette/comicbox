@@ -2,9 +2,7 @@ package com.reneponette.comicbox.ui.fragment.explorer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -65,18 +63,23 @@ public class BaseExplorerFragment extends Fragment {
 	private ProgressDialog mProgressDlg;
 	int numOfColumn;
 
+	
 	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-
-		curInfo = onGetFileInfo();
-
-		((MainActivity) activity).onSectionAttached(curInfo.getName());
+	public void onSaveInstanceState(Bundle outState) {
+		outState.putParcelable("file_info", curInfo);
+		super.onSaveInstanceState(outState);
 	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		if(savedInstanceState == null) {
+			curInfo = onGetFileInfo();
+		} else {
+			curInfo = savedInstanceState.getParcelable("file_info");
+		}
+		
 		handler = GlobalApplication.instance().getHandler();
 		infoList = new ArrayList<FileInfo>();
 		adapter = new FolderViewAdapter(infoList);
@@ -100,7 +103,6 @@ public class BaseExplorerFragment extends Fragment {
 						((FolderViewFragmentListener) getActivity()).onEntryClicked(info);
 				}
 			}
-
 		});
 
 		return rootView;
@@ -133,7 +135,7 @@ public class BaseExplorerFragment extends Fragment {
 		super.onActivityCreated(savedInstanceState);
 		setHasOptionsMenu(true);
 	}
-
+	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
@@ -184,6 +186,13 @@ public class BaseExplorerFragment extends Fragment {
 		return super.onOptionsItemSelected(item);
 	}
 
+	/*---------------------------------------------------------------------*/
+	
+	public FileInfo getCurrentInfo() {
+		return curInfo;
+	}
+	
+	
 	private void setInfoBackgroundColor(View v, Bitmap bm, int color) {
 		// 텍스뷰 배경 색깔 변경
 		int avgColor = color == -1 ? ImageUtils.getAverageColor(bm, 200, false) : color;
@@ -195,13 +204,11 @@ public class BaseExplorerFragment extends Fragment {
 			v.setBackgroundColor(avgColor);
 		}
 	}
-
-	// //////////////////////////////
+	
 	public void showWaitingDialog() {
 		if (mProgressDlg != null)
 			return;
 		mProgressDlg = new ProgressDialog(getActivity(), ProgressDialog.THEME_HOLO_LIGHT);
-		// mProgressDlg.setTitle(R.string.progress_title);
 		mProgressDlg.setMessage(getResources().getString(R.string.progress_loading));
 		mProgressDlg.setCanceledOnTouchOutside(false);
 		mProgressDlg.setOnCancelListener(new OnCancelListener() {
@@ -255,6 +262,7 @@ public class BaseExplorerFragment extends Fragment {
 		return null;
 	}
 
+	
 	/*---------------------------------------------------------------------*/
 
 	public class FolderViewAdapter extends BaseAdapter {

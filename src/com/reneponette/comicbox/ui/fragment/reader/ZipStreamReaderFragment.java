@@ -44,11 +44,22 @@ public class ZipStreamReaderFragment extends BasePagerReaderFragment implements 
 	/*---------------------------------------------------------------------------*/
 
 	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		outState.putString(PATH, curEntry.path);
+		super.onSaveInstanceState(outState);
+	}
+	
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Entry entry = new Entry();
-		entry.path = getArguments().getString(PATH);
-		curEntry = entry;
+		
+		curEntry = new Entry();
+		if(savedInstanceState == null) {
+			curEntry.path = getArguments().getString(PATH);
+		} else {
+			curEntry.path = savedInstanceState.getString(PATH);
+		}
+		
 		dataController.prepare(curEntry);		
 		dataController.setOnDataBuildListener(this);
 

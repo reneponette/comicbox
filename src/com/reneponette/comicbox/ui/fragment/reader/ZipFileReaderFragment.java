@@ -32,9 +32,21 @@ public class ZipFileReaderFragment extends BasePagerReaderFragment implements On
 	/*---------------------------------------------------------------------------*/
 
 	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		outState.putString(PATH, curFile.getAbsolutePath());
+		super.onSaveInstanceState(outState);
+	}
+	
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		curFile = new File(getArguments().getString(PATH));
+		
+		if(savedInstanceState == null) {
+			curFile = new File(getArguments().getString(PATH));
+		} else {
+			curFile = new File(savedInstanceState.getString(PATH));
+		}
+		
 		dataController.prepare(curFile);		
 		dataController.setOnDataBuildListener(this);
 	}
