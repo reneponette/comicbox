@@ -54,7 +54,7 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 	private String dropboxPath;
 	private Thread runningThread;
 	
-	Handler handler = GlobalApplication.instance().getHandler();
+	Handler handler;
 
 	
 	@Override
@@ -68,6 +68,8 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		handler = GlobalApplication.instance().getHandler();
 
 		// We create a new AuthSession so that we can use the Dropbox API.
 		AndroidAuthSession session = DropBoxManager.INSTANCE.buildSession();

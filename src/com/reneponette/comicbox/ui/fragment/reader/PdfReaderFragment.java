@@ -43,6 +43,7 @@ public class PdfReaderFragment extends BasePagerReaderFragment implements OnData
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		curFile = new File(getArguments().getString(PATH));
+		dataController.prepare(curFile);		
 		dataController.setOnDataBuildListener(this);
 	}
 
@@ -54,7 +55,7 @@ public class PdfReaderFragment extends BasePagerReaderFragment implements OnData
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		dataController.prepare(curFile).buildPdf();
+		dataController.buildPdf();
 	}
 	
 	

@@ -34,7 +34,8 @@ public class ZipFileReaderFragment extends BasePagerReaderFragment implements On
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		curFile = new File(getArguments().getString(PATH));		
+		curFile = new File(getArguments().getString(PATH));
+		dataController.prepare(curFile);		
 		dataController.setOnDataBuildListener(this);
 	}
 
@@ -46,7 +47,7 @@ public class ZipFileReaderFragment extends BasePagerReaderFragment implements On
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		dataController.prepare(curFile).build();
+		dataController.build();
 	}
 
 	/*---------------------------------------------------------------------------*/
