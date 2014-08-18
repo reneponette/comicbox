@@ -16,12 +16,12 @@ import com.reneponette.comicbox.model.FileMeta.ReadDirection;
 import com.reneponette.comicbox.model.PageInfo;
 import com.reneponette.comicbox.utils.ImageUtils;
 
-public class FolderReaderFragment extends BasePagerReaderFragment implements OnDataBuildListener {
+public class DropboxFolderReaderFragment extends BasePagerReaderFragment implements OnDataBuildListener {
+	
+	private static final String START_INDEX = "start_index";	
 
-	private static final String START_INDEX = "start_index";
-
-	public static FolderReaderFragment newInstance(String path, int startIndex) {
-		FolderReaderFragment fragment = new FolderReaderFragment();
+	public static DropboxFolderReaderFragment newInstance(String path, int startIndex) {
+		DropboxFolderReaderFragment fragment = new DropboxFolderReaderFragment();
 		Bundle args = new Bundle();
 		args.putString(PATH, path);
 		args.putInt(START_INDEX, startIndex);
@@ -29,30 +29,18 @@ public class FolderReaderFragment extends BasePagerReaderFragment implements OnD
 		return fragment;
 	}
 
-	public FolderReaderFragment() {
+	public DropboxFolderReaderFragment() {
 	}
 
 	private File curFile;
 	private int startIndex;
-	
-	
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		outState.putString(PATH, curFile.getAbsolutePath());
-		super.onSaveInstanceState(outState);
-	}
+
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		if (savedInstanceState == null) {
-			curFile = new File(getArguments().getString(PATH));
-			startIndex = getArguments().getInt(START_INDEX, -1);
-		} else {
-			curFile = new File(savedInstanceState.getString(PATH));			
-		}
-		
+		curFile = new File(getArguments().getString(PATH));
+		startIndex = getArguments().getInt(START_INDEX, -1);		
 		dataController.setOnDataBuildListener(this);
 		dataController.prepare(curFile);
 	}
@@ -73,7 +61,7 @@ public class FolderReaderFragment extends BasePagerReaderFragment implements OnD
 	@Override
 	public void onStartBuild() {
 		showWaitingDialog();
-
+		
 		viewPager.setAdapter(null);
 	}
 
@@ -93,8 +81,8 @@ public class FolderReaderFragment extends BasePagerReaderFragment implements OnD
 		viewPager.setAdapter(pagerAdapter);
 
 		int startPageIndex;
-		if (startIndex > -1) {
-			if (dataController.getReadDirection() == ReadDirection.RTL)
+		if(startIndex > -1 ) {
+			if(dataController.getReadDirection() == ReadDirection.RTL)
 				startPageIndex = dataController.pageSize() - 1 - startIndex;
 			else
 				startPageIndex = startIndex;
@@ -105,7 +93,7 @@ public class FolderReaderFragment extends BasePagerReaderFragment implements OnD
 		} else {
 			initUI();
 		}
-
+		
 		hideWaitingDialog();
 	}
 

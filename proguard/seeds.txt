@@ -1885,6 +1885,7 @@ com.reneponette.comicbox.R$color: int primary
 com.reneponette.comicbox.R$color: int primary_dark
 com.reneponette.comicbox.R$color: int text_primary
 com.reneponette.comicbox.R$color: int text_primary_lighter
+com.reneponette.comicbox.R$color: int yellow
 com.reneponette.comicbox.R$dimen: int activity_horizontal_margin
 com.reneponette.comicbox.R$dimen: int activity_padding
 com.reneponette.comicbox.R$dimen: int activity_vertical_margin
@@ -1900,6 +1901,7 @@ com.reneponette.comicbox.R$drawable: int bg_side_menu_item_top
 com.reneponette.comicbox.R$drawable: int comic_book_faces
 com.reneponette.comicbox.R$drawable: int drawer_shadow
 com.reneponette.comicbox.R$drawable: int ic_action_settings
+com.reneponette.comicbox.R$drawable: int ic_comics
 com.reneponette.comicbox.R$drawable: int ic_drawer
 com.reneponette.comicbox.R$drawable: int ic_folder
 com.reneponette.comicbox.R$drawable: int ic_launcher
@@ -1998,6 +2000,7 @@ com.reneponette.comicbox.R$string: int title_section_sdcard
 com.reneponette.comicbox.R$string: int title_section_settings
 com.reneponette.comicbox.R$string: int title_warning
 com.reneponette.comicbox.R$string: int warning_message_data_download
+com.reneponette.comicbox.R$string: int warning_message_use_streaming
 com.reneponette.comicbox.R$string: int will_read_next_comics
 com.reneponette.comicbox.R$style: int AppBaseTheme
 com.reneponette.comicbox.R$style: int AppTheme

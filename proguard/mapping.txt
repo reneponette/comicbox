@@ -4881,9 +4881,10 @@ com.reneponette.comicbox.db.FileInfo$1 -> com.reneponette.comicbox.db.e:
     java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
     java.lang.Object[] newArray(int) -> newArray
 com.reneponette.comicbox.db.FileInfo$LocationType -> com.reneponette.comicbox.db.f:
-    com.reneponette.comicbox.db.FileInfo$LocationType LOCAL -> a
-    com.reneponette.comicbox.db.FileInfo$LocationType DROPBOX -> b
-    com.reneponette.comicbox.db.FileInfo$LocationType[] ENUM$VALUES -> c
+    com.reneponette.comicbox.db.FileInfo$LocationType UNKNOWN -> a
+    com.reneponette.comicbox.db.FileInfo$LocationType LOCAL -> b
+    com.reneponette.comicbox.db.FileInfo$LocationType DROPBOX -> c
+    com.reneponette.comicbox.db.FileInfo$LocationType[] ENUM$VALUES -> d
     com.reneponette.comicbox.db.FileInfo$LocationType[] values() -> values
     com.reneponette.comicbox.db.FileInfo$LocationType valueOf(java.lang.String) -> valueOf
 com.reneponette.comicbox.db.FileInfoDAO -> com.reneponette.comicbox.db.g:
@@ -4892,6 +4893,7 @@ com.reneponette.comicbox.db.FileInfoDAO -> com.reneponette.comicbox.db.g:
     java.lang.String getPrimaryColumnName() -> b
     com.reneponette.comicbox.db.FileInfo populateObject(android.database.Cursor) -> a
     com.reneponette.comicbox.db.FileInfo mergeObject(android.database.Cursor,com.reneponette.comicbox.db.FileInfo) -> a
+    com.reneponette.comicbox.db.FileInfo newFileInfo(java.lang.Object) -> b
     com.reneponette.comicbox.db.FileInfo getFileInfo(java.lang.String) -> a
     com.reneponette.comicbox.db.FileInfo getFileInfo(java.lang.Object) -> a
 com.reneponette.comicbox.manager.DropBoxManager -> com.reneponette.comicbox.d.a:
@@ -4945,7 +4947,7 @@ com.reneponette.comicbox.model.FileMeta -> com.reneponette.comicbox.model.FileMe
     int lastPagesPerScan -> c
     java.lang.String cachePath -> d
     java.lang.String coverPath -> e
-    int coverAvgColor -> f
+    int coverColor -> f
     int lastTotalPageCount -> g
     int lastReadPageIndex -> h
     com.reneponette.comicbox.model.FileMeta$ReadDirection lastReadDirection -> i
@@ -5244,7 +5246,7 @@ com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment -> com.renepo
     android.os.Handler handler -> e
     android.app.ProgressDialog mProgressDlg -> g
     int numOfColumn -> f
-    void onAttach(android.app.Activity) -> onAttach
+    void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
     void onCreate(android.os.Bundle) -> onCreate
     android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
     void onViewCreated(android.view.View,android.os.Bundle) -> onViewCreated
@@ -5252,12 +5254,13 @@ com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment -> com.renepo
     void onActivityCreated(android.os.Bundle) -> onActivityCreated
     void onCreateOptionsMenu(android.view.Menu,android.view.MenuInflater) -> onCreateOptionsMenu
     boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
-    void showWaitingDialog() -> a
-    void hideWaitingDialog() -> b
-    boolean onBackPressed() -> c
+    com.reneponette.comicbox.db.FileInfo getCurrentInfo() -> a
+    void showWaitingDialog() -> b
+    void hideWaitingDialog() -> c
+    boolean onBackPressed() -> d
     void removeCover(com.reneponette.comicbox.db.FileInfo) -> a
     void setReadDirection(com.reneponette.comicbox.db.FileInfo) -> b
-    com.reneponette.comicbox.db.FileInfo onGetFileInfo() -> d
+    com.reneponette.comicbox.db.FileInfo onGetFileInfo() -> e
     android.graphics.Bitmap getThumbnailBitmap(com.reneponette.comicbox.db.FileInfo,android.widget.ImageView) -> a
     void access$0(com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment,android.app.ProgressDialog) -> a
 com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment$1 -> com.reneponette.comicbox.ui.fragment.a.b:
@@ -5303,20 +5306,19 @@ com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment$FolderViewFra
     void onEntryClicked(com.reneponette.comicbox.db.FileInfo) -> c
 com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment -> com.reneponette.comicbox.ui.fragment.a.k:
     com.dropbox.client2.DropboxAPI mApi -> g
-    boolean mLoggedIn -> h
-    java.lang.String dropboxPath -> i
+    boolean mLoggedIn -> i
     java.lang.Thread runningThread -> j
+    android.os.Handler handler -> h
     com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment newInstance(java.lang.String) -> a
-    com.reneponette.comicbox.db.FileInfo onGetFileInfo() -> d
+    com.reneponette.comicbox.db.FileInfo onGetFileInfo() -> e
     void onCreate(android.os.Bundle) -> onCreate
     void onResume() -> onResume
-    boolean goParentDirectory() -> e
-    void enumerate() -> f
-    boolean onBackPressed() -> c
+    boolean goParentDirectory() -> f
+    void enumerate() -> g
+    boolean onBackPressed() -> d
     android.graphics.Bitmap getThumbnailBitmap(com.reneponette.comicbox.db.FileInfo,android.widget.ImageView) -> a
     void setLoggedIn(boolean) -> a
-    java.lang.String access$0(com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment) -> a
-    void access$1(com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment,java.lang.Thread) -> a
+    void access$0(com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment,java.lang.Thread) -> a
 com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment$1 -> com.reneponette.comicbox.ui.fragment.a.l:
     com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment this$0 -> a
     void run() -> run
@@ -5333,17 +5335,13 @@ com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment$1$3 -> com
     void run() -> run
 com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment -> com.reneponette.comicbox.ui.fragment.a.p:
     com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment newInstance(com.reneponette.comicbox.db.FileInfo) -> c
-    com.reneponette.comicbox.db.FileInfo onGetFileInfo() -> d
+    com.reneponette.comicbox.db.FileInfo onGetFileInfo() -> e
     void onCreate(android.os.Bundle) -> onCreate
     void onResume() -> onResume
-    boolean goParentDirectory() -> e
-    void enumerate() -> f
-    boolean onBackPressed() -> c
+    boolean goParentDirectory() -> f
+    void enumerate() -> g
+    boolean onBackPressed() -> d
     android.graphics.Bitmap getThumbnailBitmap(com.reneponette.comicbox.db.FileInfo,android.widget.ImageView) -> a
-    void access$0(com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment) -> a
-com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment$1 -> com.reneponette.comicbox.ui.fragment.a.q:
-    com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment this$0 -> a
-    void run() -> run
 com.reneponette.comicbox.ui.fragment.reader.BasePagerReaderFragment -> com.reneponette.comicbox.ui.fragment.b.a:
     com.reneponette.comicbox.view.ExtendedViewPager viewPager -> a
     android.support.v4.view.PagerAdapter pagerAdapter -> b
@@ -5509,7 +5507,7 @@ com.reneponette.comicbox.ui.fragment.reader.PdfOldReaderFragment$5 -> com.renepo
 com.reneponette.comicbox.ui.fragment.reader.PdfReaderFragment -> com.reneponette.comicbox.ui.fragment.b.w:
     java.io.File curFile -> l
     com.reneponette.comicbox.ui.fragment.reader.PdfReaderFragment newInstance(java.lang.String) -> b
-    void onAttach(android.app.Activity) -> onAttach
+    void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
     void onCreate(android.os.Bundle) -> onCreate
     android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
     void onViewCreated(android.view.View,android.os.Bundle) -> onViewCreated
@@ -5526,7 +5524,7 @@ com.reneponette.comicbox.ui.fragment.reader.PdfReaderFragment$1 -> com.reneponet
 com.reneponette.comicbox.ui.fragment.reader.ZipFileReaderFragment -> com.reneponette.comicbox.ui.fragment.b.y:
     java.io.File curFile -> l
     com.reneponette.comicbox.ui.fragment.reader.ZipFileReaderFragment newInstance(java.lang.String) -> b
-    void onAttach(android.app.Activity) -> onAttach
+    void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
     void onCreate(android.os.Bundle) -> onCreate
     android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
     void onViewCreated(android.view.View,android.os.Bundle) -> onViewCreated
@@ -5541,11 +5539,12 @@ com.reneponette.comicbox.ui.fragment.reader.ZipStreamReaderFragment -> com.renep
     com.dropbox.client2.DropboxAPI$Entry curEntry -> m
     java.io.File cacheDir -> n
     com.reneponette.comicbox.ui.fragment.reader.ZipStreamReaderFragment newInstance(java.lang.String) -> b
-    void onAttach(android.app.Activity) -> onAttach
+    void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
     void onCreate(android.os.Bundle) -> onCreate
     void removeOtherCacheDir() -> o
     android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
     void onViewCreated(android.view.View,android.os.Bundle) -> onViewCreated
+    void onGoNextFile() -> c
     void onStartBuild() -> a
     void onFailBuild(java.lang.String) -> a
     void onAddPageInfo(com.reneponette.comicbox.model.PageInfo) -> a
@@ -5572,11 +5571,12 @@ com.reneponette.comicbox.utils.ImageUtils -> com.reneponette.comicbox.e.e:
     android.graphics.Bitmap getProcessedBitmap(android.graphics.Bitmap,com.reneponette.comicbox.model.PageInfo$PageBuildType,boolean) -> a
     int pagesPerScan(java.io.File) -> a
     android.graphics.Bitmap extractCoverFromJpg(java.io.File) -> b
-    android.graphics.Bitmap extractCoverFromPdf(android.content.Context,java.io.File) -> a
-    android.graphics.Bitmap extractCoverFromZip(java.io.File) -> c
-    android.graphics.Bitmap extractCoverFromZip(java.io.InputStream) -> a
-    android.graphics.Bitmap extractCoverFromFolder(java.io.File,boolean) -> a
-    android.graphics.Bitmap extractCoverFromFolder(com.dropbox.client2.DropboxAPI,com.dropbox.client2.DropboxAPI$Entry) -> a
+    android.graphics.Bitmap extractCoverFromPdf(android.content.Context,java.io.File,int,int) -> a
+    android.graphics.Bitmap extractCoverFromZip(java.io.File,int,int) -> a
+    android.graphics.Bitmap extractCoverFromZip(java.io.InputStream,int,int) -> a
+    boolean drawCover(android.graphics.Canvas,android.graphics.Bitmap,int) -> a
+    android.graphics.Bitmap extractCoverFromFolder(java.io.File,int,int,boolean) -> a
+    android.graphics.Bitmap extractCoverFromFolder(com.dropbox.client2.DropboxAPI,com.dropbox.client2.DropboxAPI$Entry,int,int) -> a
     android.graphics.Bitmap cutBitmapInHalf(android.graphics.Bitmap,boolean) -> a
     android.graphics.Bitmap removeMargins(android.graphics.Bitmap,int,int,int,int) -> a
     int getColorDelta(int,int) -> a

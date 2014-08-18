@@ -26,6 +26,7 @@ import android.view.MenuItem;
 import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.DropboxAPI.Entry;
 import com.dropbox.client2.android.AndroidAuthSession;
+import com.dropbox.client2.exception.DropboxException;
 import com.reneponette.comicbox.R;
 import com.reneponette.comicbox.cache.DropboxComicsDownloader;
 import com.reneponette.comicbox.cache.DropboxComicsDownloader.OnLoadComicsListener;
@@ -123,15 +124,14 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 			break;
 		}
 	}
-	
-	
+
 	@Override
 	public void onFavoriteItemSelected(FileInfo info) {
-		if(info.getLocation() == LocationType.LOCAL)
+		if (info.getLocation() == LocationType.LOCAL)
 			onFileClicked(info);
 		else
 			onEntryClicked(info);
-	}	
+	}
 
 	public void onSectionAttached(String name) {
 		mTitle = name;
@@ -196,7 +196,7 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 	}
 
 	@Override
-	public void onFileClicked(FileInfo info) {
+	public void onFileClicked(final FileInfo info) {
 
 		if (info.getMeta().type == FileType.DIRECTORY) {
 			curDir = info.getFile();
@@ -234,54 +234,55 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 			State wifi = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
 
 			if (wifi == State.CONNECTED) {
-				if (info.getMeta().type == FileType.ZIP) {
-
-					DialogHelper.showSelectDownloadOrStreaming(MainActivity.this, new OnClickListener() {
-
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							startActivity(ReaderActivity.newIntent(MainActivity.this, info));
-						}
-					}, new OnClickListener() {
-
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
-							downloadAndShow(info);
-						}
-					});
-				} else if (info.getMeta().type == FileType.PDF) {
-					downloadAndShow(info);
-				}
+				viewDropboxFile(info);
 			} else {
 				DialogHelper.showDataDownloadWarningDialog(this, new OnClickListener() {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-
-						if (info.getMeta().type == FileType.ZIP) {
-
-							DialogHelper.showSelectDownloadOrStreaming(MainActivity.this, new OnClickListener() {
-
-								@Override
-								public void onClick(DialogInterface dialog, int which) {
-									startActivity(ReaderActivity.newIntent(MainActivity.this, info));
-								}
-							}, new OnClickListener() {
-
-								@Override
-								public void onClick(DialogInterface dialog, int which) {
-									// TODO Auto-generated method stub
-									downloadAndShow(info);
-								}
-							});
-						} else if (info.getMeta().type == FileType.PDF) {
-							downloadAndShow(info);
-						}
-
+						viewDropboxFile(info);
 					}
 				});
 			}
+		}
+
+	}
+
+	private void viewDropboxFile(final FileInfo info) {
+		if (info.getMeta().type == FileType.ZIP) {
+
+			DialogHelper.showSelectDownloadOrStreaming(MainActivity.this, new OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					startActivity(ReaderActivity.newIntent(MainActivity.this, info));
+				}
+			}, new OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					downloadAndShow(info);
+				}
+			});
+		} else if (info.getMeta().type == FileType.PDF) {
+			downloadAndShow(info);
+		} else if (info.getMeta().type == FileType.JPG) {
+			new Thread() {
+				public void run() {
+					AndroidAuthSession session = DropBoxManager.INSTANCE.buildSession();
+					DropboxAPI<AndroidAuthSession> api = new DropboxAPI<AndroidAuthSession>(session);
+					try {
+						Entry parentEntry = api.metadata(info.getEntry().parentPath(), 10000, null, true, null);
+						FileInfo parentInfo = FileInfoDAO.instance().getFileInfo(parentEntry);
+						
+						
+						startActivity(ReaderActivity.newIntent(MainActivity.this, parentInfo, info.indexInParent));
+					} catch (DropboxException e) {
+						e.printStackTrace();
+					}
+				};
+			}.start();
 		}
 
 	}

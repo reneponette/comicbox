@@ -13,6 +13,7 @@ import android.view.KeyEvent;
 import com.reneponette.comicbox.R;
 import com.reneponette.comicbox.db.FileInfo;
 import com.reneponette.comicbox.ui.fragment.reader.BaseReaderFragment;
+import com.reneponette.comicbox.ui.fragment.reader.DropboxFolderReaderFragment;
 import com.reneponette.comicbox.ui.fragment.reader.FolderReaderFragment;
 import com.reneponette.comicbox.ui.fragment.reader.PdfReaderFragment;
 import com.reneponette.comicbox.ui.fragment.reader.PdfOldReaderFragment;
@@ -71,6 +72,9 @@ public class ReaderActivity extends Activity {
 			switch (info.getMeta().type) {
 			case PDF:
 				f = PdfOldReaderFragment.newInstance(info.getPath());
+				break;
+			case JPG:
+				f = DropboxFolderReaderFragment.newInstance(info.getPath(), 0);
 				break;
 			default:
 				f = ZipStreamReaderFragment.newInstance(info.getPath());
