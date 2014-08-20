@@ -101,7 +101,7 @@ public class FileInfoDAO extends BaseDAO<FileInfo> {
 			entry.path = info.getPath();
 			entry.isDir = true;
 			info.setEntry(entry);
-		} if (info.getLocation() == LocationType.LOCAL) {
+		} else if (info.getLocation() == LocationType.LOCAL) {
 			info.setFile(new File(info.getPath()));
 		} else {
 			//LocationType.UNKNOWN

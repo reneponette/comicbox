@@ -169,7 +169,8 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 							String name = curInfo.getName();
 							if (StringUtils.isBlank(name))
 								name = "/";
-							((MainActivity) getActivity()).onSectionAttached(name);
+							if(getActivity() != null)
+								((MainActivity) getActivity()).onSectionAttached(name);
 
 							for (Entry ent : entry.contents) {
 								FileInfo info = FileInfoDAO.instance().getFileInfo(ent);
