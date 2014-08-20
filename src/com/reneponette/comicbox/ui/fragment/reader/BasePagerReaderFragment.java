@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -38,6 +37,7 @@ import com.reneponette.comicbox.model.PageInfo.PageType;
 import com.reneponette.comicbox.ui.FileSettingsActivity;
 import com.reneponette.comicbox.ui.ReaderActivity;
 import com.reneponette.comicbox.utils.DialogHelper;
+import com.reneponette.comicbox.utils.Logger;
 import com.reneponette.comicbox.view.ExtendedViewPager;
 import com.reneponette.comicbox.view.TouchImageView;
 import com.reneponette.comicbox.view.TouchImageView.OnSideTouchListener;
@@ -59,17 +59,28 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 	Timer previewLoadTimer;
 
 	private boolean use3Fingers;
-	
+
 	int curPageIndex;
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		Logger.i(this, "onSaveInstanceState() - " + this);
+		super.onSaveInstanceState(outState);
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		Logger.i(this, "onCreate(), savedInstanceState = " + savedInstanceState + " - " + this);
+
 		pagerAdapter = new TouchImageAdapter(dataController);
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		Logger.i(this, "onCreateView() - " + this);
+		
 		View rootView = inflater.inflate(R.layout.fragment_reader_zip, container, false);
 
 		viewPager = (ExtendedViewPager) rootView.findViewById(R.id.view_pager);
@@ -125,7 +136,7 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 
 						@Override
 						public void run() {
-							Log.e(this.getClass().getName(), "previewLoadTimer Fired!");
+							Logger.i(this, "previewLoadTimer Fired!");
 							final Bitmap previewBitmap = getPreviewBitmap(previewIv, progress);
 							getActivity().runOnUiThread(new Runnable() {
 
@@ -148,12 +159,13 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+		Logger.i(this, "onViewCreated() - " + this);		
 		viewPager.setOnPageChangeListener(new OnPageChangeListener() {
 
 			@Override
 			public void onPageSelected(int position) {
 				curPageIndex = position;
-				
+
 				seekBar.setProgress(position);
 
 				PageInfo pi = dataController.getPageInfo(position);
@@ -175,14 +187,25 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 			}
 		});
 	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		Logger.i(this, "onResume() - " + this);
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		use3Fingers = settings.getBoolean("viewer_use_3_fingers", false);
+	}
 
 	@Override
 	public void onDestroy() {
+		Logger.e(this, "onDestroy() - " + this);
+
 		dataController.setOnDataBuildListener(null);
 		dataController.stopBuilding();
 
 		int pageCount = dataController.getPageInfoList().size();
-		int curPageNum = dataController.getReadDirection() == ReadDirection.RTL ? pageCount - curPageIndex : curPageIndex+1;
+		int curPageNum = dataController.getReadDirection() == ReadDirection.RTL ? pageCount - curPageIndex
+				: curPageIndex + 1;
 		if (curPageNum == pageCount) {
 			dataController.saveReadState(-1);
 		} else {
@@ -206,8 +229,19 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
+	
+	
 
 	/*---------------------------------------------------------------------------*/
+	
+	@Override
+	public boolean onBackPressed() {
+		if (menuContainer.getVisibility() == View.VISIBLE) {
+			menuContainer.setVisibility(View.GONE);
+			return true;
+		}
+		return false;
+	}
 
 	private void checkEndPage(int position) {
 		boolean isEndPage = false;
@@ -222,8 +256,8 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 	}
 
 	protected void onGoNextFile() {
-		dataController.saveReadState(-1);		
-		
+		dataController.saveReadState(-1);
+
 		// 다음 권으로 넘김
 		DialogHelper.showGoNextComicsDialog(getActivity(), new DialogInterface.OnClickListener() {
 
@@ -234,10 +268,10 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 				if (next != null) {
 					menuContainer.setVisibility(View.GONE);
 					dataController.prepare(next);
-					
-					if(dataController.getFileInfo().getMeta().type == FileType.ZIP)
+
+					if (dataController.getFileInfo().getMeta().type == FileType.ZIP)
 						dataController.build();
-					else if(dataController.getFileInfo().getMeta().type == FileType.PDF)
+					else if (dataController.getFileInfo().getMeta().type == FileType.PDF)
 						dataController.buildPdf();
 				}
 			}
@@ -270,22 +304,6 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 			curIndex = pagerAdapter.getCount() - 1;
 		}
 		viewPager.setCurrentItem(curIndex, false);
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		use3Fingers = settings.getBoolean("viewer_use_3_fingers", false);
-	}
-
-	@Override
-	public boolean onBackPressed() {
-		if (menuContainer.getVisibility() == View.VISIBLE) {
-			menuContainer.setVisibility(View.GONE);
-			return true;
-		}
-		return false;
 	}
 
 	private void showSettingsActivity() {

@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import com.reneponette.comicbox.R;
 import com.reneponette.comicbox.controller.DataController;
 import com.reneponette.comicbox.db.FileInfo;
+import com.reneponette.comicbox.utils.Logger;
 
 public class BaseReaderFragment extends Fragment {
 	public static final String PATH = "path";
@@ -73,8 +74,12 @@ public class BaseReaderFragment extends Fragment {
 	/*-----------------------------------------------------------------------------------*/
 	
 	public void showWaitingDialog() {
+		
+		Logger.e(this, "showWaitingDialog(), getActivity() = " + getActivity());
+		
 		if(mProgressDlg != null)
 			return;
+		
 		mProgressDlg = new ProgressDialog(getActivity(), ProgressDialog.THEME_HOLO_LIGHT);
 		mProgressDlg.setMessage(getResources().getString(R.string.progress_loading));
 		mProgressDlg.setCanceledOnTouchOutside(false);

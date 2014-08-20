@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.KeyEvent;
 
 import com.reneponette.comicbox.R;
@@ -15,10 +16,11 @@ import com.reneponette.comicbox.db.FileInfo;
 import com.reneponette.comicbox.ui.fragment.reader.BaseReaderFragment;
 import com.reneponette.comicbox.ui.fragment.reader.DropboxFolderReaderFragment;
 import com.reneponette.comicbox.ui.fragment.reader.FolderReaderFragment;
-import com.reneponette.comicbox.ui.fragment.reader.PdfReaderFragment;
 import com.reneponette.comicbox.ui.fragment.reader.PdfOldReaderFragment;
+import com.reneponette.comicbox.ui.fragment.reader.PdfReaderFragment;
 import com.reneponette.comicbox.ui.fragment.reader.ZipFileReaderFragment;
 import com.reneponette.comicbox.ui.fragment.reader.ZipStreamReaderFragment;
+import com.reneponette.comicbox.utils.Logger;
 
 public class ReaderActivity extends Activity {
 
@@ -42,14 +44,24 @@ public class ReaderActivity extends Activity {
 
 		return intent;
 	}
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		Logger.i(this, "onSaveInstanceState() - " + this);
+		super.onSaveInstanceState(outState);
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		Log.e(getClass().getName(), "onCreate(), savedInstanceState = " + savedInstanceState + " - " + this);		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_reader);
-
+		
 		getActionBar().hide();
 
+		if(savedInstanceState != null)
+			return;
+		
 		FileInfo info = getIntent().getExtras().getParcelable(FILE_INFO);
 
 		Fragment f;
@@ -88,6 +100,18 @@ public class ReaderActivity extends Activity {
 
 		FragmentManager fragmentManager = getFragmentManager();
 		fragmentManager.beginTransaction().replace(R.id.container, f, TAG_FRAGMENT).commit();
+	}
+	
+	@Override
+	protected void onResume() {
+		Logger.i(this, "onResume() - " + this);
+		super.onResume();
+	}
+	
+	@Override
+	protected void onDestroy() {
+		Logger.e(this, "onDestroy() - " + this);
+		super.onDestroy();
 	}
 
 	@Override

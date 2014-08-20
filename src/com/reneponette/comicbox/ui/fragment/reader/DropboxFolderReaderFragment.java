@@ -2,7 +2,6 @@ package com.reneponette.comicbox.ui.fragment.reader;
 
 import java.io.File;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;

@@ -224,18 +224,12 @@ public class DataController {
 			listener.onStartBuild();
 
 		try {
-			if (zipFile != null) {
-				zipFile.close();
-			}
 			zipFile = new ZipFile(fileInfo.getFile());
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-
-		if (zipFile == null) {
+		} catch (IOException e) {
+			e.printStackTrace();
 			if (listener != null)
 				listener.onFailBuild(GlobalApplication.instance().getString(R.string.cannot_read_file));
-			return;
+			return;			
 		}
 
 		runningThread = new Thread(new Runnable() {
