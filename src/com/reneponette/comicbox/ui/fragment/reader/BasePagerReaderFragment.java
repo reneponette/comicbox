@@ -28,7 +28,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 import com.reneponette.comicbox.R;
-import com.reneponette.comicbox.controller.DataController;
+import com.reneponette.comicbox.controller.PageBuilder;
 import com.reneponette.comicbox.model.FileMeta;
 import com.reneponette.comicbox.model.FileMeta.FileType;
 import com.reneponette.comicbox.model.FileMeta.ReadDirection;
@@ -74,7 +74,7 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 
 		Logger.i(this, "onCreate(), savedInstanceState = " + savedInstanceState + " - " + this);
 
-		pagerAdapter = new TouchImageAdapter(dataController);
+		pagerAdapter = new TouchImageAdapter(pageBuilder);
 	}
 
 	@Override
@@ -122,7 +122,7 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 			@Override
 			public void onProgressChanged(SeekBar seekBar, final int progress, boolean fromUser) {
 				if (fromUser) {
-					DataController controller = dataController;
+					PageBuilder controller = pageBuilder;
 					if (controller.getReadDirection() == ReadDirection.RTL) {
 						previewPageNumTv.setText((controller.pageSize() - progress) + "");
 					} else {
@@ -168,7 +168,7 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 
 				seekBar.setProgress(position);
 
-				PageInfo pi = dataController.getPageInfo(position);
+				PageInfo pi = pageBuilder.getPageInfo(position);
 				filename.setText(pi.getName());
 
 				checkEndPage(position);
@@ -186,6 +186,8 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 
 			}
 		});
+		
+		pageBuilder.build();
 	}
 	
 	@Override
@@ -200,16 +202,16 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 	public void onDestroy() {
 		Logger.e(this, "onDestroy() - " + this);
 
-		dataController.setOnDataBuildListener(null);
-		dataController.stopBuilding();
+		pageBuilder.setOnDataBuildListener(null);
+		pageBuilder.stop();
 
-		int pageCount = dataController.getPageInfoList().size();
-		int curPageNum = dataController.getReadDirection() == ReadDirection.RTL ? pageCount - curPageIndex
+		int pageCount = pageBuilder.getPageInfoList().size();
+		int curPageNum = pageBuilder.getReadDirection() == ReadDirection.RTL ? pageCount - curPageIndex
 				: curPageIndex + 1;
 		if (curPageNum == pageCount) {
-			dataController.saveReadState(-1);
+			pageBuilder.saveReadState(-1);
 		} else {
-			dataController.saveReadState(viewPager.getCurrentItem());
+			pageBuilder.saveReadState(viewPager.getCurrentItem());
 		}
 		super.onDestroy();
 	}
@@ -223,7 +225,7 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 		if (requestCode == REQ_SETTINGS) {
 			getActivity().finish();
 
-			Intent intent = ReaderActivity.newIntent(getActivity(), dataController.getFileInfo());
+			Intent intent = ReaderActivity.newIntent(getActivity(), pageBuilder.getFileInfo());
 			startActivity(intent);
 			return;
 		}
@@ -245,10 +247,10 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 
 	private void checkEndPage(int position) {
 		boolean isEndPage = false;
-		if (dataController.getReadDirection() == ReadDirection.RTL) {
+		if (pageBuilder.getReadDirection() == ReadDirection.RTL) {
 			isEndPage = position == 0;
 		} else {
-			isEndPage = position == dataController.pageSize() - 1;
+			isEndPage = position == pageBuilder.pageSize() - 1;
 		}
 
 		if (isEndPage)
@@ -256,7 +258,7 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 	}
 
 	protected void onGoNextFile() {
-		dataController.saveReadState(-1);
+		pageBuilder.saveReadState(-1);
 
 		// 다음 권으로 넘김
 		DialogHelper.showGoNextComicsDialog(getActivity(), new DialogInterface.OnClickListener() {
@@ -267,12 +269,8 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 				File next = findNextFile();
 				if (next != null) {
 					menuContainer.setVisibility(View.GONE);
-					dataController.prepare(next);
-
-					if (dataController.getFileInfo().getMeta().type == FileType.ZIP)
-						dataController.build();
-					else if (dataController.getFileInfo().getMeta().type == FileType.PDF)
-						dataController.buildPdf();
+					pageBuilder.prepare(next);
+					pageBuilder.build();
 				}
 			}
 		});
@@ -308,16 +306,16 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 
 	private void showSettingsActivity() {
 		// 설정 액티비티 띠우기
-		dataController.saveReadState(viewPager.getCurrentItem());
-		startActivityForResult(FileSettingsActivity.newIntent(getActivity(), dataController.getFileInfo()),
+		pageBuilder.saveReadState(viewPager.getCurrentItem());
+		startActivityForResult(FileSettingsActivity.newIntent(getActivity(), pageBuilder.getFileInfo()),
 				REQ_SETTINGS);
 	}
 
 	protected void initUI() {
-		FileMeta meta = dataController.getFileInfo().getMeta();
-		ReadDirection readDirection = dataController.getReadDirection();
-		int pagesPerScanComputed = dataController.getPagesPerScan();
-		int pageSize = dataController.pageSize();
+		FileMeta meta = pageBuilder.getFileInfo().getMeta();
+		ReadDirection readDirection = pageBuilder.getReadDirection();
+		int pagesPerScanComputed = pageBuilder.getPagesPerScan();
+		int pageSize = pageBuilder.pageSize();
 
 		int startPageIndex = meta.lastReadPageIndex;
 		if (startPageIndex == -1) // 처음 보는 경우
@@ -356,12 +354,12 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 	}
 
 	protected void updateSeekBarLabel() {
-		if (dataController.getReadDirection() == ReadDirection.RTL) {
+		if (pageBuilder.getReadDirection() == ReadDirection.RTL) {
 			((TextView) getView().findViewById(R.id.pageRight)).setText("1");
-			((TextView) getView().findViewById(R.id.pageLeft)).setText(dataController.pageSize() + "");
+			((TextView) getView().findViewById(R.id.pageLeft)).setText(pageBuilder.pageSize() + "");
 		} else {
 			((TextView) getView().findViewById(R.id.pageLeft)).setText("1");
-			((TextView) getView().findViewById(R.id.pageRight)).setText(dataController.pageSize() + "");
+			((TextView) getView().findViewById(R.id.pageRight)).setText(pageBuilder.pageSize() + "");
 		}
 
 	}
@@ -370,9 +368,9 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 
 	private class TouchImageAdapter extends PagerAdapter {
 
-		DataController controller;
+		PageBuilder controller;
 
-		public TouchImageAdapter(DataController controller) {
+		public TouchImageAdapter(PageBuilder controller) {
 			this.controller = controller;
 		}
 

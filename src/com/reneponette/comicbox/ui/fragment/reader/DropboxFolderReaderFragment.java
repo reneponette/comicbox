@@ -10,12 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.reneponette.comicbox.cache.PageBitmapLoader;
-import com.reneponette.comicbox.controller.DataController.OnDataBuildListener;
+import com.reneponette.comicbox.controller.PageBuilder.OnPageBuildListener;
 import com.reneponette.comicbox.model.FileMeta.ReadDirection;
 import com.reneponette.comicbox.model.PageInfo;
 import com.reneponette.comicbox.utils.ImageUtils;
 
-public class DropboxFolderReaderFragment extends BasePagerReaderFragment implements OnDataBuildListener {
+public class DropboxFolderReaderFragment extends BasePagerReaderFragment implements OnPageBuildListener {
 	
 	private static final String START_INDEX = "start_index";	
 
@@ -40,8 +40,8 @@ public class DropboxFolderReaderFragment extends BasePagerReaderFragment impleme
 		super.onCreate(savedInstanceState);
 		curFile = new File(getArguments().getString(PATH));
 		startIndex = getArguments().getInt(START_INDEX, -1);		
-		dataController.setOnDataBuildListener(this);
-		dataController.prepare(curFile);
+		pageBuilder.setOnDataBuildListener(this);
+		pageBuilder.prepare(curFile);
 	}
 
 	@Override
@@ -49,11 +49,6 @@ public class DropboxFolderReaderFragment extends BasePagerReaderFragment impleme
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-		dataController.buildFolder();
-	}
 
 	/*---------------------------------------------------------------------------*/
 
@@ -81,12 +76,12 @@ public class DropboxFolderReaderFragment extends BasePagerReaderFragment impleme
 
 		int startPageIndex;
 		if(startIndex > -1 ) {
-			if(dataController.getReadDirection() == ReadDirection.RTL)
-				startPageIndex = dataController.pageSize() - 1 - startIndex;
+			if(pageBuilder.getReadDirection() == ReadDirection.RTL)
+				startPageIndex = pageBuilder.pageSize() - 1 - startIndex;
 			else
 				startPageIndex = startIndex;
 			viewPager.setCurrentItem(startPageIndex, false);
-			seekBar.setMax(dataController.pageSize());
+			seekBar.setMax(pageBuilder.pageSize());
 			seekBar.setProgress(startPageIndex);
 			updateSeekBarLabel();
 		} else {
@@ -98,13 +93,13 @@ public class DropboxFolderReaderFragment extends BasePagerReaderFragment impleme
 
 	@Override
 	protected Bitmap getPageBitmap(ImageView iv, int position) {
-		PageInfo pi = dataController.getPageInfo(position);
+		PageInfo pi = pageBuilder.getPageInfo(position);
 		return ImageUtils.getBitmap(pi.getFile(), pi.getBuildType(), isAutocrop(), false);
 	}
 
 	@Override
 	protected Bitmap getPreviewBitmap(ImageView iv, int position) {
-		PageInfo pi = dataController.getPageInfo(position);
+		PageInfo pi = pageBuilder.getPageInfo(position);
 		new PageBitmapLoader(pi, iv, isAutocrop(), true).run();
 		return null;
 	}

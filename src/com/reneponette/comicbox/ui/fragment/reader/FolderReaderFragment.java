@@ -2,7 +2,6 @@ package com.reneponette.comicbox.ui.fragment.reader;
 
 import java.io.File;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,12 +10,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.reneponette.comicbox.cache.PageBitmapLoader;
-import com.reneponette.comicbox.controller.DataController.OnDataBuildListener;
+import com.reneponette.comicbox.controller.LocalFolderPageBuilder;
+import com.reneponette.comicbox.controller.PageBuilder;
+import com.reneponette.comicbox.controller.PageBuilder.OnPageBuildListener;
 import com.reneponette.comicbox.model.FileMeta.ReadDirection;
 import com.reneponette.comicbox.model.PageInfo;
 import com.reneponette.comicbox.utils.ImageUtils;
 
-public class FolderReaderFragment extends BasePagerReaderFragment implements OnDataBuildListener {
+public class FolderReaderFragment extends BasePagerReaderFragment implements OnPageBuildListener {
 
 	private static final String START_INDEX = "start_index";
 
@@ -53,8 +54,8 @@ public class FolderReaderFragment extends BasePagerReaderFragment implements OnD
 			curFile = new File(savedInstanceState.getString(PATH));			
 		}
 		
-		dataController.setOnDataBuildListener(this);
-		dataController.prepare(curFile);
+		pageBuilder.setOnDataBuildListener(this);
+		pageBuilder.prepare(curFile);
 	}
 
 	@Override
@@ -62,12 +63,13 @@ public class FolderReaderFragment extends BasePagerReaderFragment implements OnD
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-		dataController.buildFolder();
-	}
 
+	/*---------------------------------------------------------------------------*/
+	@Override
+	protected PageBuilder onCreatePageBuilder() {
+		return new LocalFolderPageBuilder();
+	}
+	
 	/*---------------------------------------------------------------------------*/
 
 	@Override
@@ -94,12 +96,12 @@ public class FolderReaderFragment extends BasePagerReaderFragment implements OnD
 
 		int startPageIndex;
 		if (startIndex > -1) {
-			if (dataController.getReadDirection() == ReadDirection.RTL)
-				startPageIndex = dataController.pageSize() - 1 - startIndex;
+			if (pageBuilder.getReadDirection() == ReadDirection.RTL)
+				startPageIndex = pageBuilder.pageSize() - 1 - startIndex;
 			else
 				startPageIndex = startIndex;
 			viewPager.setCurrentItem(startPageIndex, false);
-			seekBar.setMax(dataController.pageSize());
+			seekBar.setMax(pageBuilder.pageSize());
 			seekBar.setProgress(startPageIndex);
 			updateSeekBarLabel();
 		} else {
@@ -111,13 +113,13 @@ public class FolderReaderFragment extends BasePagerReaderFragment implements OnD
 
 	@Override
 	protected Bitmap getPageBitmap(ImageView iv, int position) {
-		PageInfo pi = dataController.getPageInfo(position);
+		PageInfo pi = pageBuilder.getPageInfo(position);
 		return ImageUtils.getBitmap(pi.getFile(), pi.getBuildType(), isAutocrop(), false);
 	}
 
 	@Override
 	protected Bitmap getPreviewBitmap(ImageView iv, int position) {
-		PageInfo pi = dataController.getPageInfo(position);
+		PageInfo pi = pageBuilder.getPageInfo(position);
 		new PageBitmapLoader(pi, iv, isAutocrop(), true).run();
 		return null;
 	}

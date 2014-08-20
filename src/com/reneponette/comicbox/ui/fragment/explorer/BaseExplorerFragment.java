@@ -255,7 +255,7 @@ public class BaseExplorerFragment extends Fragment {
 	}
 
 	protected FileInfo onGetFileInfo() {
-		return null;
+		throw new RuntimeException("should implement in subclass");
 	}
 
 	protected Bitmap getThumbnailBitmap(FileInfo info, ImageView thumbnailIv) {

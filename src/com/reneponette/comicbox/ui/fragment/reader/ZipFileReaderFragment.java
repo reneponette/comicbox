@@ -9,12 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.reneponette.comicbox.controller.DataController.OnDataBuildListener;
+import com.reneponette.comicbox.controller.LocalZipPageBuilder;
+import com.reneponette.comicbox.controller.PageBuilder;
+import com.reneponette.comicbox.controller.PageBuilder.OnPageBuildListener;
 import com.reneponette.comicbox.model.PageInfo;
 import com.reneponette.comicbox.utils.ImageUtils;
 import com.reneponette.comicbox.utils.MessageUtils;
 
-public class ZipFileReaderFragment extends BasePagerReaderFragment implements OnDataBuildListener {
+public class ZipFileReaderFragment extends BasePagerReaderFragment implements OnPageBuildListener {
 
 	public static ZipFileReaderFragment newInstance(String folderPath) {
 		ZipFileReaderFragment fragment = new ZipFileReaderFragment();
@@ -47,8 +49,8 @@ public class ZipFileReaderFragment extends BasePagerReaderFragment implements On
 			curFile = new File(savedInstanceState.getString(PATH));
 		}
 		
-		dataController.prepare(curFile);		
-		dataController.setOnDataBuildListener(this);
+		pageBuilder.prepare(curFile);		
+		pageBuilder.setOnDataBuildListener(this);
 	}
 
 	@Override
@@ -56,13 +58,17 @@ public class ZipFileReaderFragment extends BasePagerReaderFragment implements On
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 
+	
+	/*---------------------------------------------------------------------------*/
+	
 	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-		dataController.build();
+	protected PageBuilder onCreatePageBuilder() {
+		return new LocalZipPageBuilder();
 	}
+	
 
 	/*---------------------------------------------------------------------------*/
+	
 
 
 	@Override
@@ -94,14 +100,14 @@ public class ZipFileReaderFragment extends BasePagerReaderFragment implements On
 
 	@Override
 	protected Bitmap getPageBitmap(ImageView iv, int position) {
-		PageInfo pi = dataController.getPageInfo(position);
+		PageInfo pi = pageBuilder.getPageInfo(position);
 		return ImageUtils.getBitmap(pi.getZipFile(), pi.getZipEntry(), pi.getBuildType(), isAutocrop(),
 				false);
 	}
 
 	@Override
 	protected Bitmap getPreviewBitmap(ImageView iv, int position) {
-		PageInfo pi = dataController.getPageInfo(position);
+		PageInfo pi = pageBuilder.getPageInfo(position);
 //		new PageBitmapLoader(pi, iv, isAutocrop(), true).run();
 //		return null;
 		

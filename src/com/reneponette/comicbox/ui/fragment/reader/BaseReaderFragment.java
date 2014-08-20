@@ -18,7 +18,7 @@ import android.util.Log;
 import android.view.WindowManager;
 
 import com.reneponette.comicbox.R;
-import com.reneponette.comicbox.controller.DataController;
+import com.reneponette.comicbox.controller.PageBuilder;
 import com.reneponette.comicbox.db.FileInfo;
 import com.reneponette.comicbox.utils.Logger;
 
@@ -27,7 +27,7 @@ public class BaseReaderFragment extends Fragment {
 	public static final int REQ_SETTINGS = 0;
 
 
-	protected DataController dataController;	
+	protected PageBuilder pageBuilder;	
 	private boolean autocrop;
 
 	private ProgressDialog mProgressDlg;
@@ -35,7 +35,7 @@ public class BaseReaderFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		dataController = new DataController();
+		pageBuilder = onCreatePageBuilder();
 		
 		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		autocrop = pref.getBoolean("viewer_use_autocrop", true);
@@ -43,6 +43,10 @@ public class BaseReaderFragment extends Fragment {
 
 	
 	/*-----------------------------------------------------------------------------------*/
+	
+	protected PageBuilder onCreatePageBuilder() {
+		throw new RuntimeException("should implement in subclass");
+	}
 	
 	public boolean isAutocrop() {
 		return autocrop;
@@ -108,7 +112,7 @@ public class BaseReaderFragment extends Fragment {
 	
 	
 	public File findNextFile() {
-		FileInfo info = dataController.getFileInfo();
+		FileInfo info = pageBuilder.getFileInfo();
 		File curFile = info.getFile();
 		boolean curFound = false;
 

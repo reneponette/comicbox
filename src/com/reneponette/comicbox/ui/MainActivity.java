@@ -42,6 +42,7 @@ import com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment.Folder
 import com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment;
 import com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment;
 import com.reneponette.comicbox.utils.DialogHelper;
+import com.reneponette.comicbox.utils.Logger;
 import com.reneponette.comicbox.utils.MessageUtils;
 
 public class MainActivity extends Activity implements NavigationDrawerFragment.NavigationDrawerCallbacks,
@@ -67,6 +68,11 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 		public void handleMessage(Message msg) {
 			closeFlag = false;
 		}
+	};
+	
+	protected void onSaveInstanceState(Bundle outState) {
+		Logger.i(this, "onSaveInstanceState");
+		saveLastDirectory();
 	};
 
 	@Override
@@ -100,6 +106,7 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
+		Logger.e(this, "onNavigationDrawerItemSelected");
 
 		// update the main content by replacing fragments
 		FragmentManager fragmentManager = getFragmentManager();
@@ -113,7 +120,8 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 			break;
 		case 1:
 			fragmentManager.beginTransaction()
-					.replace(R.id.container, DropboxExplorerFragment.newInstance(curEntry.path)).commit();
+					.replace(R.id.container, 
+							DropboxExplorerFragment.newInstance(curEntry.path)).commit();
 			break;
 		case 2:
 			Intent intent = new Intent();
@@ -197,7 +205,7 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 
 	@Override
 	public void onFileClicked(final FileInfo info) {
-
+		Logger.i(this, "onFileClicked = " + info.getPath());
 		if (info.getMeta().type == FileType.DIRECTORY) {
 			curDir = info.getFile();
 			FragmentManager fragmentManager = getFragmentManager();
@@ -221,8 +229,7 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 
 	@Override
 	public void onEntryClicked(final FileInfo info) {
-		Log.e("rene", "onEntryClicked = " + info.getPath());
-
+		Logger.i(this, "onEntryClicked = " + info.getPath());
 		if (info.getMeta().type == FileType.DIRECTORY) {
 			curEntry = info.getEntry();
 			FragmentManager fragmentManager = getFragmentManager();

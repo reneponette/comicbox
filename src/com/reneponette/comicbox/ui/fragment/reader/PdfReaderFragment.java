@@ -2,7 +2,6 @@ package com.reneponette.comicbox.ui.fragment.reader;
 
 import java.io.File;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
@@ -14,13 +13,15 @@ import android.widget.ImageView;
 
 import com.artifex.mupdfdemo.FilePicker;
 import com.reneponette.comicbox.cache.PageBitmapLoader;
-import com.reneponette.comicbox.controller.DataController.OnDataBuildListener;
+import com.reneponette.comicbox.controller.LocalPdfPageBuilder;
+import com.reneponette.comicbox.controller.PageBuilder;
+import com.reneponette.comicbox.controller.PageBuilder.OnPageBuildListener;
 import com.reneponette.comicbox.db.FileInfo;
 import com.reneponette.comicbox.model.PageInfo;
 import com.reneponette.comicbox.utils.ImageUtils;
 
 @SuppressWarnings("deprecation")
-public class PdfReaderFragment extends BasePagerReaderFragment implements OnDataBuildListener,
+public class PdfReaderFragment extends BasePagerReaderFragment implements OnPageBuildListener,
 		FilePicker.FilePickerSupport {
 
 	public static PdfReaderFragment newInstance(String folderPath) {
@@ -56,21 +57,21 @@ public class PdfReaderFragment extends BasePagerReaderFragment implements OnData
 		}
 		
 		
-		dataController.prepare(curFile);		
-		dataController.setOnDataBuildListener(this);
+		pageBuilder.prepare(curFile);		
+		pageBuilder.setOnDataBuildListener(this);
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
-
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-		dataController.buildPdf();
-	}
 	
+	
+	/*---------------------------------------------------------------------------*/
+	@Override
+	protected PageBuilder onCreatePageBuilder() {
+		return new LocalPdfPageBuilder();
+	}
 	
 	/*---------------------------------------------------------------------------*/
 		
@@ -116,14 +117,14 @@ public class PdfReaderFragment extends BasePagerReaderFragment implements OnData
 
 	@Override
 	protected Bitmap getPageBitmap(ImageView iv, int position) {
-		PageInfo pi = dataController.getPageInfo(position);
+		PageInfo pi = pageBuilder.getPageInfo(position);
 		new PageBitmapLoader(pi, iv, isAutocrop(), false).run();
 		return null;
 	}
 
 	@Override
 	protected Bitmap getPreviewBitmap(ImageView iv, int position) {
-		PageInfo pi = dataController.getPageInfo(position);
+		PageInfo pi = pageBuilder.getPageInfo(position);
 //		new PageBitmapLoader(pi, iv, isAutocrop(), true).run();
 //		return null;
 		

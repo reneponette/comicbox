@@ -5,8 +5,6 @@ import java.io.File;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
@@ -14,12 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.BaseAdapter;
 import android.widget.EditText;
-import android.widget.Gallery;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.SeekBar;
@@ -32,12 +25,12 @@ import com.artifex.mupdfdemo.MuPDFPageAdapter;
 import com.artifex.mupdfdemo.MuPDFReaderView;
 import com.artifex.mupdfdemo.OutlineActivityData;
 import com.reneponette.comicbox.R;
-import com.reneponette.comicbox.controller.DataController.OnDataBuildListener;
+import com.reneponette.comicbox.controller.PageBuilder.OnPageBuildListener;
 import com.reneponette.comicbox.db.FileInfo;
 import com.reneponette.comicbox.model.PageInfo;
 
 @SuppressWarnings("deprecation")
-public class PdfOldReaderFragment extends BaseReaderFragment implements OnDataBuildListener,
+public class PdfOldReaderFragment extends BaseReaderFragment implements OnPageBuildListener,
 		FilePicker.FilePickerSupport {
 
 	public static PdfOldReaderFragment newInstance(String folderPath) {
@@ -72,10 +65,10 @@ public class PdfOldReaderFragment extends BaseReaderFragment implements OnDataBu
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		dataController.setOnDataBuildListener(this);
-		dataController.prepare(curFile);
+		pageBuilder.setOnDataBuildListener(this);
+		pageBuilder.prepare(curFile);
 
-		fileInfo = dataController.getFileInfo();
+		fileInfo = pageBuilder.getFileInfo();
 
 		if (core == null) {
 			core = openFile(fileInfo.getPath());
@@ -170,7 +163,7 @@ public class PdfOldReaderFragment extends BaseReaderFragment implements OnDataBu
 
 	@Override
 	public void onDestroy() {
-		dataController.saveReadState(mDocView.getDisplayedViewIndex());
+		pageBuilder.saveReadState(mDocView.getDisplayedViewIndex());
 		super.onDestroy();
 	}
 

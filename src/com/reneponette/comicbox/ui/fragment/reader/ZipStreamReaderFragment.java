@@ -1,8 +1,5 @@
 package com.reneponette.comicbox.ui.fragment.reader;
 
-import java.io.File;
-
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,18 +8,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.DropboxAPI.Entry;
-import com.dropbox.client2.android.AndroidAuthSession;
 import com.reneponette.comicbox.R;
-import com.reneponette.comicbox.application.GlobalApplication;
-import com.reneponette.comicbox.controller.DataController.OnDataBuildListener;
-import com.reneponette.comicbox.manager.DropBoxManager;
+import com.reneponette.comicbox.controller.DropboxZipPageBuilder;
+import com.reneponette.comicbox.controller.PageBuilder;
+import com.reneponette.comicbox.controller.PageBuilder.OnPageBuildListener;
 import com.reneponette.comicbox.model.PageInfo;
 import com.reneponette.comicbox.utils.ImageUtils;
-import com.reneponette.comicbox.utils.StringUtils;
 
-public class ZipStreamReaderFragment extends BasePagerReaderFragment implements OnDataBuildListener {
+public class ZipStreamReaderFragment extends BasePagerReaderFragment implements OnPageBuildListener {
 
 	public static ZipStreamReaderFragment newInstance(String dropboxPath) {
 		ZipStreamReaderFragment fragment = new ZipStreamReaderFragment();
@@ -35,17 +29,11 @@ public class ZipStreamReaderFragment extends BasePagerReaderFragment implements 
 	public ZipStreamReaderFragment() {
 	}
 
-	/*---------------------------------------------------------------------------*/
-	DropboxAPI<AndroidAuthSession> api;
 
-	private Entry curEntry; // dropbox Entry
-	private File cacheDir;
-
-	/*---------------------------------------------------------------------------*/
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
-		outState.putString(PATH, curEntry.path);
+		outState.putString(PATH, pageBuilder.getFileInfo().getPath());
 		super.onSaveInstanceState(outState);
 	}
 	
@@ -53,64 +41,37 @@ public class ZipStreamReaderFragment extends BasePagerReaderFragment implements 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		curEntry = new Entry();
+		Entry entry = new Entry();
 		if(savedInstanceState == null) {
-			curEntry.path = getArguments().getString(PATH);
+			entry.path = getArguments().getString(PATH);
 		} else {
-			curEntry.path = savedInstanceState.getString(PATH);
+			entry.path = savedInstanceState.getString(PATH);
 		}
 		
-		dataController.prepare(curEntry);		
-		dataController.setOnDataBuildListener(this);
-
-		cacheDir = new File(GlobalApplication.instance().getCacheDir(), "comics/"
-				+ StringUtils.getMD5(dataController.getFileInfo().getName()));
-		if (!cacheDir.exists()) {
-			cacheDir.mkdirs();
-		}
-		removeOtherCacheDir();
-
-		// dropbox
-		AndroidAuthSession session = DropBoxManager.INSTANCE.buildSession();
-		api = new DropboxAPI<AndroidAuthSession>(session);
+		pageBuilder.prepare(entry);		
+		pageBuilder.setOnDataBuildListener(this);
 	}
 
-	private void removeOtherCacheDir() {
-		for (File f : cacheDir.getParentFile().listFiles()) {
-			if (f.isHidden())
-				continue;
-			if (f.isFile())
-				continue;
-			if (f.getName().equals(cacheDir.getName()))
-				continue;
-			boolean success = f.delete();
-			if (!success) {
-				for (File imageFile : f.listFiles()) {
-					if (imageFile.isDirectory())
-						continue;
-					success = imageFile.delete();
-				}
-			}
-		}
-	}
+
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-		dataController.build(api, cacheDir);
-	}
 	
 	@Override
 	protected void onGoNextFile() {
 		
-		// do nothing
+		// 드롭박스는 다음권 자동넘김 당장은 지원 안함...
 	}
 
+	/*---------------------------------------------------------------------------*/
+	@Override
+	protected PageBuilder onCreatePageBuilder() {
+		return new DropboxZipPageBuilder();
+	}
+	
 	/*---------------------------------------------------------------------------*/
 
 	@Override
@@ -129,9 +90,9 @@ public class ZipStreamReaderFragment extends BasePagerReaderFragment implements 
 	public void onAddPageInfo(PageInfo pageInfo) {
 		pagerAdapter.notifyDataSetChanged();
 
-		seekBar.setMax(dataController.pageSize() - 1);
+		seekBar.setMax(pageBuilder.pageSize() - 1);
 		((TextView) getView().findViewById(R.id.pageLeft)).setText("1");
-		((TextView) getView().findViewById(R.id.pageRight)).setText(dataController.pageSize() + "");
+		((TextView) getView().findViewById(R.id.pageRight)).setText(pageBuilder.pageSize() + "");
 
 		hideWaitingDialog();
 	}
@@ -144,19 +105,15 @@ public class ZipStreamReaderFragment extends BasePagerReaderFragment implements 
 
 	@Override
 	protected Bitmap getPageBitmap(ImageView iv, int position) {
-		PageInfo pi = dataController.getPageInfo(position);
+		PageInfo pi = pageBuilder.getPageInfo(position);
 		return ImageUtils.getBitmap(pi.getFile(), pi.getBuildType(), isAutocrop(), false);
 	}
 
 	@Override
 	protected Bitmap getPreviewBitmap(ImageView iv, int position) {
-		PageInfo pi = dataController.getPageInfo(position);
-//		new PageBitmapLoader(pi, iv, isAutocrop(), true).run();
-//		return null;
-		
+		PageInfo pi = pageBuilder.getPageInfo(position);
 		if(pi.getFile() == null)
 			return null;
-		
 		return ImageUtils.getBitmap(pi.getFile(), pi.getBuildType(), false, true);		
 	}
 
