@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.artifex.mupdfdemo.PageView;
 import com.reneponette.comicbox.controller.LocalZipPageBuilder;
 import com.reneponette.comicbox.controller.PageBuilder;
 import com.reneponette.comicbox.controller.PageBuilder.OnPageBuildListener;
@@ -16,7 +17,7 @@ import com.reneponette.comicbox.model.PageInfo;
 import com.reneponette.comicbox.utils.ImageUtils;
 import com.reneponette.comicbox.utils.MessageUtils;
 
-public class ZipFileReaderFragment extends BasePagerReaderFragment implements OnPageBuildListener {
+public class ZipFileReaderFragment extends BasePagerReaderFragment {
 
 	public static ZipFileReaderFragment newInstance(String folderPath) {
 		ZipFileReaderFragment fragment = new ZipFileReaderFragment();
@@ -50,7 +51,6 @@ public class ZipFileReaderFragment extends BasePagerReaderFragment implements On
 		}
 		
 		pageBuilder.prepare(curFile);		
-		pageBuilder.setOnDataBuildListener(this);
 	}
 
 	@Override
@@ -63,40 +63,42 @@ public class ZipFileReaderFragment extends BasePagerReaderFragment implements On
 	
 	@Override
 	protected PageBuilder onCreatePageBuilder() {
-		return new LocalZipPageBuilder();
+		PageBuilder builder = new LocalZipPageBuilder(); 
+		builder.setOnDataBuildListener(new OnPageBuildListener() {
+			
+			@Override
+			public void onStartBuild() {
+				showWaitingDialog();
+				viewPager.setAdapter(null);
+			}
+
+			@Override
+			public void onFailBuild(String errStr) {
+				hideWaitingDialog();
+				MessageUtils.toast(getActivity(), errStr);
+				getActivity().finish();
+			}
+
+			@Override
+			public void onAddPageInfo(PageInfo pageInfo) {
+				//
+			}
+
+			@Override
+			public void onFinishBuild() {
+				viewPager.setAdapter(pagerAdapter);
+
+				initUI();
+
+				hideWaitingDialog();
+			}
+		});
+		return builder;
 	}
 	
 
 	/*---------------------------------------------------------------------------*/
-	
 
-
-	@Override
-	public void onStartBuild() {
-		showWaitingDialog();
-		viewPager.setAdapter(null);
-	}
-
-	@Override
-	public void onFailBuild(String errStr) {
-		hideWaitingDialog();
-		MessageUtils.toast(getActivity(), errStr);
-		getActivity().finish();
-	}
-
-	@Override
-	public void onAddPageInfo(PageInfo pageInfo) {
-		//
-	}
-
-	@Override
-	public void onFinishBuild() {
-		viewPager.setAdapter(pagerAdapter);
-
-		initUI();
-
-		hideWaitingDialog();
-	}
 
 	@Override
 	protected Bitmap getPageBitmap(ImageView iv, int position) {

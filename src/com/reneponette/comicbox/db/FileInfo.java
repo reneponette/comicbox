@@ -204,7 +204,8 @@ public class FileInfo implements DatabaseStorable<FileInfo>, Parcelable {
 		dest.writeString(key);
 		dest.writeString(path);
 		dest.writeSerializable(location);
-		dest.writeString(meta.toJSONString());
+		dest.writeParcelable(meta, PARCELABLE_WRITE_RETURN_VALUE);
+		
 
 		dest.writeString(focusName);
 		dest.writeInt(indexInParent);
@@ -217,7 +218,7 @@ public class FileInfo implements DatabaseStorable<FileInfo>, Parcelable {
 			obj.key = source.readString();
 			obj.path = source.readString();
 			obj.location = (LocationType) source.readSerializable();
-			obj.meta = FileMeta.createFromJSONString(source.readString());
+			obj.meta = source.readParcelable(FileMeta.class.getClassLoader());
 
 			obj.focusName = source.readString();
 			obj.indexInParent = source.readInt();
@@ -227,6 +228,7 @@ public class FileInfo implements DatabaseStorable<FileInfo>, Parcelable {
 			} else {
 				Entry entry = new Entry();
 				entry.path = obj.path;
+				entry.isDir = obj.meta.type == FileType.DIRECTORY;
 				obj.setEntry(entry);
 			}
 

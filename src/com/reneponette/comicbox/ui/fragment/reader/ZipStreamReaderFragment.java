@@ -16,7 +16,7 @@ import com.reneponette.comicbox.controller.PageBuilder.OnPageBuildListener;
 import com.reneponette.comicbox.model.PageInfo;
 import com.reneponette.comicbox.utils.ImageUtils;
 
-public class ZipStreamReaderFragment extends BasePagerReaderFragment implements OnPageBuildListener {
+public class ZipStreamReaderFragment extends BasePagerReaderFragment {
 
 	public static ZipStreamReaderFragment newInstance(String dropboxPath) {
 		ZipStreamReaderFragment fragment = new ZipStreamReaderFragment();
@@ -49,7 +49,6 @@ public class ZipStreamReaderFragment extends BasePagerReaderFragment implements 
 		}
 		
 		pageBuilder.prepare(entry);		
-		pageBuilder.setOnDataBuildListener(this);
 	}
 
 
@@ -69,39 +68,44 @@ public class ZipStreamReaderFragment extends BasePagerReaderFragment implements 
 	/*---------------------------------------------------------------------------*/
 	@Override
 	protected PageBuilder onCreatePageBuilder() {
-		return new DropboxZipPageBuilder();
+		PageBuilder builder = new DropboxZipPageBuilder();
+		builder.setOnDataBuildListener(new OnPageBuildListener() {
+			
+			@Override
+			public void onStartBuild() {
+				pagerAdapter.notifyDataSetChanged();
+				showWaitingDialog();
+			}
+
+			@Override
+			public void onFailBuild(String errStr) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onAddPageInfo(PageInfo pageInfo) {
+				pagerAdapter.notifyDataSetChanged();
+
+				seekBar.setMax(pageBuilder.pageSize() - 1);
+				((TextView) getView().findViewById(R.id.pageLeft)).setText("1");
+				((TextView) getView().findViewById(R.id.pageRight)).setText(pageBuilder.pageSize() + "");
+
+				hideWaitingDialog();
+			}
+
+			@Override
+			public void onFinishBuild() {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		return builder;
 	}
 	
 	/*---------------------------------------------------------------------------*/
 
-	@Override
-	public void onStartBuild() {
-		pagerAdapter.notifyDataSetChanged();
-		showWaitingDialog();
-	}
 
-	@Override
-	public void onFailBuild(String errStr) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onAddPageInfo(PageInfo pageInfo) {
-		pagerAdapter.notifyDataSetChanged();
-
-		seekBar.setMax(pageBuilder.pageSize() - 1);
-		((TextView) getView().findViewById(R.id.pageLeft)).setText("1");
-		((TextView) getView().findViewById(R.id.pageRight)).setText(pageBuilder.pageSize() + "");
-
-		hideWaitingDialog();
-	}
-
-	@Override
-	public void onFinishBuild() {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	protected Bitmap getPageBitmap(ImageView iv, int position) {

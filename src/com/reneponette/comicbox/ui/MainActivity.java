@@ -44,6 +44,7 @@ import com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment;
 import com.reneponette.comicbox.utils.DialogHelper;
 import com.reneponette.comicbox.utils.Logger;
 import com.reneponette.comicbox.utils.MessageUtils;
+import com.reneponette.comicbox.utils.StringUtils;
 
 public class MainActivity extends Activity implements NavigationDrawerFragment.NavigationDrawerCallbacks,
 		FolderViewFragmentListener {
@@ -206,6 +207,7 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 	@Override
 	public void onFileClicked(final FileInfo info) {
 		Logger.i(this, "onFileClicked = " + info.getPath());
+		
 		if (info.getMeta().type == FileType.DIRECTORY) {
 			curDir = info.getFile();
 			FragmentManager fragmentManager = getFragmentManager();
@@ -230,6 +232,7 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 	@Override
 	public void onEntryClicked(final FileInfo info) {
 		Logger.i(this, "onEntryClicked = " + info.getPath());
+		
 		if (info.getMeta().type == FileType.DIRECTORY) {
 			curEntry = info.getEntry();
 			FragmentManager fragmentManager = getFragmentManager();
@@ -275,21 +278,12 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 		} else if (info.getMeta().type == FileType.PDF) {
 			downloadAndShow(info);
 		} else if (info.getMeta().type == FileType.JPG) {
-			new Thread() {
-				public void run() {
-					AndroidAuthSession session = DropBoxManager.INSTANCE.buildSession();
-					DropboxAPI<AndroidAuthSession> api = new DropboxAPI<AndroidAuthSession>(session);
-					try {
-						Entry parentEntry = api.metadata(info.getEntry().parentPath(), 10000, null, true, null);
-						FileInfo parentInfo = FileInfoDAO.instance().getFileInfo(parentEntry);
-						
-						
-						startActivity(ReaderActivity.newIntent(MainActivity.this, parentInfo, info.indexInParent));
-					} catch (DropboxException e) {
-						e.printStackTrace();
-					}
-				};
-			}.start();
+			
+			Entry parentEntry = new Entry();
+			parentEntry.path = StringUtils.getParentPath(info.getPath());
+			parentEntry.isDir = true;
+			FileInfo parentInfo = FileInfoDAO.instance().getFileInfo(parentEntry);
+			startActivity(ReaderActivity.newIntent(MainActivity.this, parentInfo, info.indexInParent));			
 		}
 
 	}
@@ -323,7 +317,6 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 
 			@Override
 			public void onCancel(DialogInterface dialog) {
-				Log.d("asdf", "canceled");
 				downloader.stop();
 			}
 		});

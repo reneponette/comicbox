@@ -15,7 +15,7 @@ import com.reneponette.comicbox.R;
 import com.reneponette.comicbox.db.FileInfo;
 import com.reneponette.comicbox.ui.fragment.reader.BaseReaderFragment;
 import com.reneponette.comicbox.ui.fragment.reader.DropboxFolderReaderFragment;
-import com.reneponette.comicbox.ui.fragment.reader.FolderReaderFragment;
+import com.reneponette.comicbox.ui.fragment.reader.LocalFolderReaderFragment;
 import com.reneponette.comicbox.ui.fragment.reader.PdfOldReaderFragment;
 import com.reneponette.comicbox.ui.fragment.reader.PdfReaderFragment;
 import com.reneponette.comicbox.ui.fragment.reader.ZipFileReaderFragment;
@@ -74,9 +74,12 @@ public class ReaderActivity extends Activity {
 			case ZIP:
 				f = ZipFileReaderFragment.newInstance(info.getPath());
 				break;
+			case DIRECTORY:
+				int startIndex = getIntent().getExtras().getInt(INDEX_IN_PARENT, -1);
+				f = LocalFolderReaderFragment.newInstance(info.getPath(), startIndex);
+				break;
 			default:
-				f = FolderReaderFragment.newInstance(info.getPath(), getIntent().getExtras()
-						.getInt(INDEX_IN_PARENT, -1));
+				f = null;
 				break;
 			}
 			break;
@@ -85,8 +88,9 @@ public class ReaderActivity extends Activity {
 			case PDF:
 				f = PdfOldReaderFragment.newInstance(info.getPath());
 				break;
-			case JPG:
-				f = DropboxFolderReaderFragment.newInstance(info.getPath(), 0);
+			case DIRECTORY:
+				int startIndex = getIntent().getExtras().getInt(INDEX_IN_PARENT, -1);
+				f = DropboxFolderReaderFragment.newInstance(info.getPath(), startIndex);
 				break;
 			default:
 				f = ZipStreamReaderFragment.newInstance(info.getPath());
@@ -97,9 +101,27 @@ public class ReaderActivity extends Activity {
 			f = null;
 			break;
 		}
+		
+//		new Thread() {
+//		public void run() {
+//			AndroidAuthSession session = DropBoxManager.INSTANCE.buildSession();
+//			DropboxAPI<AndroidAuthSession> api = new DropboxAPI<AndroidAuthSession>(session);
+//			try {
+//				Entry parentEntry = api.metadata(info.getEntry().parentPath(), 10000, null, true, null);
+//				FileInfo parentInfo = FileInfoDAO.instance().getFileInfo(parentEntry);
+//				
+//				
+//				startActivity(ReaderActivity.newIntent(MainActivity.this, parentInfo, info.indexInParent));
+//			} catch (DropboxException e) {
+//				e.printStackTrace();
+//			}
+//		};
+//	}.start();		
 
-		FragmentManager fragmentManager = getFragmentManager();
-		fragmentManager.beginTransaction().replace(R.id.container, f, TAG_FRAGMENT).commit();
+		if (f != null) {
+			FragmentManager fragmentManager = getFragmentManager();
+			fragmentManager.beginTransaction().replace(R.id.container, f, TAG_FRAGMENT).commit();
+		}
 	}
 	
 	@Override

@@ -17,12 +17,12 @@ import com.reneponette.comicbox.model.FileMeta.ReadDirection;
 import com.reneponette.comicbox.model.PageInfo;
 import com.reneponette.comicbox.utils.ImageUtils;
 
-public class FolderReaderFragment extends BasePagerReaderFragment implements OnPageBuildListener {
+public class LocalFolderReaderFragment extends BasePagerReaderFragment {
 
 	private static final String START_INDEX = "start_index";
 
-	public static FolderReaderFragment newInstance(String path, int startIndex) {
-		FolderReaderFragment fragment = new FolderReaderFragment();
+	public static LocalFolderReaderFragment newInstance(String path, int startIndex) {
+		LocalFolderReaderFragment fragment = new LocalFolderReaderFragment();
 		Bundle args = new Bundle();
 		args.putString(PATH, path);
 		args.putInt(START_INDEX, startIndex);
@@ -30,7 +30,7 @@ public class FolderReaderFragment extends BasePagerReaderFragment implements OnP
 		return fragment;
 	}
 
-	public FolderReaderFragment() {
+	public LocalFolderReaderFragment() {
 	}
 
 	private File curFile;
@@ -54,7 +54,6 @@ public class FolderReaderFragment extends BasePagerReaderFragment implements OnP
 			curFile = new File(savedInstanceState.getString(PATH));			
 		}
 		
-		pageBuilder.setOnDataBuildListener(this);
 		pageBuilder.prepare(curFile);
 	}
 
@@ -67,49 +66,53 @@ public class FolderReaderFragment extends BasePagerReaderFragment implements OnP
 	/*---------------------------------------------------------------------------*/
 	@Override
 	protected PageBuilder onCreatePageBuilder() {
-		return new LocalFolderPageBuilder();
+		PageBuilder builder = new LocalFolderPageBuilder(); 
+		builder.setOnDataBuildListener(new OnPageBuildListener() {
+			
+			@Override
+			public void onStartBuild() {
+				showWaitingDialog();
+
+				viewPager.setAdapter(null);
+			}
+
+			@Override
+			public void onFailBuild(String errStr) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onAddPageInfo(PageInfo pageInfo) {
+
+			}
+
+			@Override
+			public void onFinishBuild() {
+				viewPager.setAdapter(pagerAdapter);
+
+				int startPageIndex;
+				if (startIndex > -1) {
+					if (pageBuilder.getReadDirection() == ReadDirection.RTL)
+						startPageIndex = pageBuilder.pageSize() - 1 - startIndex;
+					else
+						startPageIndex = startIndex;
+					viewPager.setCurrentItem(startPageIndex, false);
+					seekBar.setMax(pageBuilder.pageSize());
+					seekBar.setProgress(startPageIndex);
+					updateSeekBarLabel();
+				} else {
+					initUI();
+				}
+
+				hideWaitingDialog();
+			}
+		});
+		return builder;
 	}
 	
 	/*---------------------------------------------------------------------------*/
 
-	@Override
-	public void onStartBuild() {
-		showWaitingDialog();
-
-		viewPager.setAdapter(null);
-	}
-
-	@Override
-	public void onFailBuild(String errStr) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onAddPageInfo(PageInfo pageInfo) {
-
-	}
-
-	@Override
-	public void onFinishBuild() {
-		viewPager.setAdapter(pagerAdapter);
-
-		int startPageIndex;
-		if (startIndex > -1) {
-			if (pageBuilder.getReadDirection() == ReadDirection.RTL)
-				startPageIndex = pageBuilder.pageSize() - 1 - startIndex;
-			else
-				startPageIndex = startIndex;
-			viewPager.setCurrentItem(startPageIndex, false);
-			seekBar.setMax(pageBuilder.pageSize());
-			seekBar.setProgress(startPageIndex);
-			updateSeekBarLabel();
-		} else {
-			initUI();
-		}
-
-		hideWaitingDialog();
-	}
 
 	@Override
 	protected Bitmap getPageBitmap(ImageView iv, int position) {
