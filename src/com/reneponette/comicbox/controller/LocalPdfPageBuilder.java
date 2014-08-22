@@ -80,7 +80,7 @@ public class LocalPdfPageBuilder extends PageBuilder {
 					}
 				}
 
-				fillFinalPagesAndNotify();
+				addFinalPagesAndNotify();
 			}
 		});
 		runningThread.start();
@@ -106,6 +106,7 @@ public class LocalPdfPageBuilder extends PageBuilder {
 	
 	private void addPageInfo(PageBuildType buildType, int pdfIndex, final boolean prepend) {
 		PageInfo info = new PageInfo(fileInfo.getName(), core, pdfIndex);
-		fillPageInfoAndNotify(info, PageType.IMG_PDF, buildType, prepend);
+		info.setBuildType(buildType);
+		notify(info, prepend);
 	}
 }

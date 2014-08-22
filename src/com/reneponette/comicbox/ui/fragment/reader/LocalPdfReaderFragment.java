@@ -21,17 +21,17 @@ import com.reneponette.comicbox.model.PageInfo;
 import com.reneponette.comicbox.utils.ImageUtils;
 
 @SuppressWarnings("deprecation")
-public class PdfReaderFragment extends BasePagerReaderFragment implements FilePicker.FilePickerSupport {
+public class LocalPdfReaderFragment extends BasePagerReaderFragment implements FilePicker.FilePickerSupport {
 
-	public static PdfReaderFragment newInstance(String folderPath) {
-		PdfReaderFragment fragment = new PdfReaderFragment();
+	public static LocalPdfReaderFragment newInstance(String folderPath) {
+		LocalPdfReaderFragment fragment = new LocalPdfReaderFragment();
 		Bundle args = new Bundle();
 		args.putString(PATH, folderPath);
 		fragment.setArguments(args);
 		return fragment;
 	}
 
-	public PdfReaderFragment() {
+	public LocalPdfReaderFragment() {
 	}
 
 	File curFile;
@@ -58,11 +58,7 @@ public class PdfReaderFragment extends BasePagerReaderFragment implements FilePi
 		pageBuilder.prepare(curFile);
 	}
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return super.onCreateView(inflater, container, savedInstanceState);
-	}
-
+	
 	/*---------------------------------------------------------------------------*/
 	@Override
 	protected PageBuilder onCreatePageBuilder() {

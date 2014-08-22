@@ -2,9 +2,6 @@ package com.reneponette.comicbox.ui.fragment.reader;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,17 +13,17 @@ import com.reneponette.comicbox.controller.PageBuilder.OnPageBuildListener;
 import com.reneponette.comicbox.model.PageInfo;
 import com.reneponette.comicbox.utils.ImageUtils;
 
-public class ZipStreamReaderFragment extends BasePagerReaderFragment {
+public class DropboxZipReaderFragment extends BasePagerReaderFragment {
 
-	public static ZipStreamReaderFragment newInstance(String dropboxPath) {
-		ZipStreamReaderFragment fragment = new ZipStreamReaderFragment();
+	public static DropboxZipReaderFragment newInstance(String dropboxPath) {
+		DropboxZipReaderFragment fragment = new DropboxZipReaderFragment();
 		Bundle args = new Bundle();
 		args.putString(PATH, dropboxPath);
 		fragment.setArguments(args);
 		return fragment;
 	}
 
-	public ZipStreamReaderFragment() {
+	public DropboxZipReaderFragment() {
 	}
 
 
@@ -49,13 +46,6 @@ public class ZipStreamReaderFragment extends BasePagerReaderFragment {
 		}
 		
 		pageBuilder.prepare(entry);		
-	}
-
-
-
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 
 	

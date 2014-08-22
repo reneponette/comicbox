@@ -17,17 +17,17 @@ import com.reneponette.comicbox.model.PageInfo;
 import com.reneponette.comicbox.utils.ImageUtils;
 import com.reneponette.comicbox.utils.MessageUtils;
 
-public class ZipFileReaderFragment extends BasePagerReaderFragment {
+public class LocalZipReaderFragment extends BasePagerReaderFragment {
 
-	public static ZipFileReaderFragment newInstance(String folderPath) {
-		ZipFileReaderFragment fragment = new ZipFileReaderFragment();
+	public static LocalZipReaderFragment newInstance(String folderPath) {
+		LocalZipReaderFragment fragment = new LocalZipReaderFragment();
 		Bundle args = new Bundle();
 		args.putString(PATH, folderPath);
 		fragment.setArguments(args);
 		return fragment;
 	}
 
-	public ZipFileReaderFragment() {
+	public LocalZipReaderFragment() {
 	}
 
 	private File curFile;
@@ -53,12 +53,6 @@ public class ZipFileReaderFragment extends BasePagerReaderFragment {
 		pageBuilder.prepare(curFile);		
 	}
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return super.onCreateView(inflater, container, savedInstanceState);
-	}
-
-	
 	/*---------------------------------------------------------------------------*/
 	
 	@Override

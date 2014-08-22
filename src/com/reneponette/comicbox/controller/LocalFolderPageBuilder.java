@@ -70,7 +70,7 @@ public class LocalFolderPageBuilder extends PageBuilder {
 					}
 				}
 
-				fillFinalPagesAndNotify();
+				addFinalPagesAndNotify();
 			}
 		});
 		runningThread.start();		

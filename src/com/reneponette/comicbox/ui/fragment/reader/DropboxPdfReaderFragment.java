@@ -30,18 +30,18 @@ import com.reneponette.comicbox.db.FileInfo;
 import com.reneponette.comicbox.model.PageInfo;
 
 @SuppressWarnings("deprecation")
-public class PdfOldReaderFragment extends BaseReaderFragment implements OnPageBuildListener,
+public class DropboxPdfReaderFragment extends BaseReaderFragment implements OnPageBuildListener,
 		FilePicker.FilePickerSupport {
 
-	public static PdfOldReaderFragment newInstance(String folderPath) {
-		PdfOldReaderFragment fragment = new PdfOldReaderFragment();
+	public static DropboxPdfReaderFragment newInstance(String folderPath) {
+		DropboxPdfReaderFragment fragment = new DropboxPdfReaderFragment();
 		Bundle args = new Bundle();
 		args.putString(PATH, folderPath);
 		fragment.setArguments(args);
 		return fragment;
 	}
 
-	public PdfOldReaderFragment() {
+	public DropboxPdfReaderFragment() {
 	}
 
 	File curFile;

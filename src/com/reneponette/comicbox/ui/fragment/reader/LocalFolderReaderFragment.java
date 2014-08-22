@@ -57,11 +57,6 @@ public class LocalFolderReaderFragment extends BasePagerReaderFragment {
 		pageBuilder.prepare(curFile);
 	}
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return super.onCreateView(inflater, container, savedInstanceState);
-	}
-
 
 	/*---------------------------------------------------------------------------*/
 	@Override
@@ -72,14 +67,12 @@ public class LocalFolderReaderFragment extends BasePagerReaderFragment {
 			@Override
 			public void onStartBuild() {
 				showWaitingDialog();
-
 				viewPager.setAdapter(null);
 			}
 
 			@Override
 			public void onFailBuild(String errStr) {
 				// TODO Auto-generated method stub
-
 			}
 
 			@Override

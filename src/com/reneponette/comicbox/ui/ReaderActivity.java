@@ -11,31 +11,25 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
 
+import com.dropbox.client2.DropboxAPI.Entry;
 import com.reneponette.comicbox.R;
 import com.reneponette.comicbox.db.FileInfo;
+import com.reneponette.comicbox.db.FileInfoDAO;
 import com.reneponette.comicbox.ui.fragment.reader.BaseReaderFragment;
 import com.reneponette.comicbox.ui.fragment.reader.DropboxFolderReaderFragment;
 import com.reneponette.comicbox.ui.fragment.reader.LocalFolderReaderFragment;
-import com.reneponette.comicbox.ui.fragment.reader.PdfOldReaderFragment;
-import com.reneponette.comicbox.ui.fragment.reader.PdfReaderFragment;
-import com.reneponette.comicbox.ui.fragment.reader.ZipFileReaderFragment;
-import com.reneponette.comicbox.ui.fragment.reader.ZipStreamReaderFragment;
+import com.reneponette.comicbox.ui.fragment.reader.DropboxPdfReaderFragment;
+import com.reneponette.comicbox.ui.fragment.reader.LocalPdfReaderFragment;
+import com.reneponette.comicbox.ui.fragment.reader.LocalZipReaderFragment;
+import com.reneponette.comicbox.ui.fragment.reader.DropboxZipReaderFragment;
 import com.reneponette.comicbox.utils.Logger;
+import com.reneponette.comicbox.utils.StringUtils;
 
 public class ReaderActivity extends Activity {
 
 	private static final String FILE_INFO = "file_info";
-	private static final String INDEX_IN_PARENT = "index_in_parent";
 	private static final String TAG_FRAGMENT = "reader_fragment";
 
-	public static Intent newIntent(Context context, FileInfo info, int indexInParent) {
-		Intent intent = new Intent();
-		intent.setClass(context, ReaderActivity.class);
-		intent.putExtra(FILE_INFO, info);
-		intent.putExtra(INDEX_IN_PARENT, indexInParent);
-
-		return intent;
-	}
 
 	public static Intent newIntent(Context context, FileInfo info) {
 		Intent intent = new Intent();
@@ -69,14 +63,14 @@ public class ReaderActivity extends Activity {
 		case LOCAL:
 			switch (info.getMeta().type) {
 			case PDF:
-				f = PdfReaderFragment.newInstance(info.getPath());
+				f = LocalPdfReaderFragment.newInstance(info.getPath());
 				break;
 			case ZIP:
-				f = ZipFileReaderFragment.newInstance(info.getPath());
+				f = LocalZipReaderFragment.newInstance(info.getPath());
 				break;
-			case DIRECTORY:
-				int startIndex = getIntent().getExtras().getInt(INDEX_IN_PARENT, -1);
-				f = LocalFolderReaderFragment.newInstance(info.getPath(), startIndex);
+			case JPG:
+				String parentPath = StringUtils.getParentPath(info.getPath());
+				f = LocalFolderReaderFragment.newInstance(parentPath, info.indexInParent);
 				break;
 			default:
 				f = null;
@@ -86,14 +80,14 @@ public class ReaderActivity extends Activity {
 		case DROPBOX:
 			switch (info.getMeta().type) {
 			case PDF:
-				f = PdfOldReaderFragment.newInstance(info.getPath());
+				f = DropboxPdfReaderFragment.newInstance(info.getPath());
 				break;
-			case DIRECTORY:
-				int startIndex = getIntent().getExtras().getInt(INDEX_IN_PARENT, -1);
-				f = DropboxFolderReaderFragment.newInstance(info.getPath(), startIndex);
+			case JPG:
+				String parentPath = StringUtils.getParentPath(info.getPath());
+				f = DropboxFolderReaderFragment.newInstance(parentPath, info.indexInParent);
 				break;
 			default:
-				f = ZipStreamReaderFragment.newInstance(info.getPath());
+				f = DropboxZipReaderFragment.newInstance(info.getPath());
 				break;
 			}
 			break;

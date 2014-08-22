@@ -224,8 +224,7 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 		}
 
 		if (info.getMeta().type == FileType.JPG) {
-			FileInfo parentInfo = FileInfoDAO.instance().getFileInfo(info.getFile().getParentFile());
-			startActivity(ReaderActivity.newIntent(this, parentInfo, info.indexInParent));
+			startActivity(ReaderActivity.newIntent(this, info));			
 		}
 	}
 
@@ -278,12 +277,7 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 		} else if (info.getMeta().type == FileType.PDF) {
 			downloadAndShow(info);
 		} else if (info.getMeta().type == FileType.JPG) {
-			
-			Entry parentEntry = new Entry();
-			parentEntry.path = StringUtils.getParentPath(info.getPath());
-			parentEntry.isDir = true;
-			FileInfo parentInfo = FileInfoDAO.instance().getFileInfo(parentEntry);
-			startActivity(ReaderActivity.newIntent(MainActivity.this, parentInfo, info.indexInParent));			
+			startActivity(ReaderActivity.newIntent(MainActivity.this, info));
 		}
 
 	}

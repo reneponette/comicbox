@@ -9,7 +9,7 @@ import com.reneponette.comicbox.utils.StringUtils;
 
 public class PageInfo {
 	public static enum PageType {
-		IMG_ZIP, IMG_PDF, IMG_FILE, END, AD
+		IMG_ZIP, IMG_PDF, IMG_FILE, IMG_REMOTE, END, AD
 	}
 	public static enum PageBuildType {
 		WHOLE, LEFT, RIGHT
@@ -31,9 +31,16 @@ public class PageInfo {
 	MuPDFCore pdfCore;
 	int pdfIndex;
 	
+	//dropbox image file
+	String remotePath;
+	
 	public PageInfo() {
 		
 	}
+	public PageInfo(PageType type) {
+		this.type = type;
+		
+	}	
 	public PageInfo(ZipFile zipFile, ZipEntry zipEntry) {
 		this.type = PageType.IMG_ZIP;
 		this.zipFile = zipFile;
@@ -48,6 +55,10 @@ public class PageInfo {
 	public PageInfo(File file) {
 		this.type = PageType.IMG_FILE;
 		this.file = file;
+	}
+	public PageInfo(String path) {
+		this.type = PageType.IMG_REMOTE;
+		this.remotePath = path;
 	}
 	
 	public String getName() {

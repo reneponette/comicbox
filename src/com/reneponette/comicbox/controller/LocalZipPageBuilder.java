@@ -92,7 +92,7 @@ public class LocalZipPageBuilder extends PageBuilder {
 					}
 				}
 
-				fillFinalPagesAndNotify();
+				addFinalPagesAndNotify();
 			}
 		});
 		runningThread.start();		
@@ -112,7 +112,8 @@ public class LocalZipPageBuilder extends PageBuilder {
 	
 	private void addPageInfo(PageBuildType buildType, ZipEntry ze, final boolean prepend) {
 		PageInfo info = new PageInfo(zipFile, ze);
-		fillPageInfoAndNotify(info, PageType.IMG_ZIP, buildType, prepend);
+		info.setBuildType(buildType);
+		notify(info, prepend);
 	}
 	
 }

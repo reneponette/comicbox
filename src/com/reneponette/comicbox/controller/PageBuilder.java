@@ -1,30 +1,12 @@
 package com.reneponette.comicbox.controller;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
-import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
-import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
-
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.BitmapFactory.Options;
 import android.os.Handler;
-import android.util.Log;
 
-import com.artifex.mupdfdemo.MuPDFCore;
-import com.artifex.mupdfdemo.OutlineActivityData;
-import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.DropboxAPI.Entry;
-import com.dropbox.client2.android.AndroidAuthSession;
-import com.dropbox.client2.exception.DropboxException;
-import com.reneponette.comicbox.R;
 import com.reneponette.comicbox.application.GlobalApplication;
 import com.reneponette.comicbox.db.FileInfo;
 import com.reneponette.comicbox.db.FileInfoDAO;
@@ -33,7 +15,6 @@ import com.reneponette.comicbox.model.FileMeta.ReadDirection;
 import com.reneponette.comicbox.model.PageInfo;
 import com.reneponette.comicbox.model.PageInfo.PageBuildType;
 import com.reneponette.comicbox.model.PageInfo.PageType;
-import com.reneponette.comicbox.utils.StringUtils;
 
 public class PageBuilder {
 	FileInfo fileInfo;
@@ -86,6 +67,9 @@ public class PageBuilder {
 	 */
 	public PageBuilder prepare(Object obj) {
 
+		if (!(obj instanceof File || obj instanceof Entry))
+			throw new RuntimeException("object should be File or Entry");
+
 		fileInfo = FileInfoDAO.instance().getFileInfo(obj);
 		fileMeta = fileInfo.getMeta();
 
@@ -96,7 +80,6 @@ public class PageBuilder {
 	protected void onPrepare() {
 		throw new RuntimeException("should implement in subclass");
 	}
-
 
 	/**
 	 * @param viewingPageIndex
@@ -157,34 +140,23 @@ public class PageBuilder {
 		onBuild();
 	}
 
-
-	/**
-	 * @param api
-	 * @param cacheDir
-	 */
-	public void build(final DropboxAPI<AndroidAuthSession> api, final File cacheDir) {
-
-	}
-
 	protected void addPageInfo(PageBuildType buildType, File file, final boolean prepend) {
 		PageInfo info = new PageInfo(file);
-		fillPageInfoAndNotify(info, PageType.IMG_FILE, buildType, prepend);
+		info.setBuildType(buildType);		
+		notify(info, prepend);
 	}
 
 	protected void addAdPageInfo(boolean prepend) {
-		PageInfo info = new PageInfo();
-		fillPageInfoAndNotify(info, PageType.AD, null, prepend);
+		PageInfo info = new PageInfo(PageType.AD);
+		notify(info, prepend);
 	}
 
 	protected void addEndPageInfo(boolean prepend) {
-		PageInfo info = new PageInfo();
-		fillPageInfoAndNotify(info, PageType.END, null, prepend);
+		PageInfo info = new PageInfo(PageType.END);
+		notify(info, prepend);
 	}
 
-	protected void fillPageInfoAndNotify(final PageInfo info, PageType pageType, PageBuildType buildType,
-			final boolean prepend) {
-		info.setType(pageType);
-		info.setBuildType(buildType);
+	protected void notify(final PageInfo info, final boolean prepend) {
 
 		handler.post(new Runnable() {
 
@@ -202,7 +174,7 @@ public class PageBuilder {
 		});
 	}
 
-	protected void fillFinalPagesAndNotify() {
+	protected void addFinalPagesAndNotify() {
 		// 끝페이지, 광고 페이지 삽입
 		// addAdPageInfo(getReadDirection() == ReadDirection.RTL);
 		addEndPageInfo(getReadDirection() == ReadDirection.RTL);

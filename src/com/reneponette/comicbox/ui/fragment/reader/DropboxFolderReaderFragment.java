@@ -1,21 +1,16 @@
 package com.reneponette.comicbox.ui.fragment.reader;
 
-import java.io.File;
-
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.reneponette.comicbox.cache.PageBitmapLoader;
+import com.dropbox.client2.DropboxAPI.Entry;
 import com.reneponette.comicbox.controller.DropboxFolderPageBuilder;
 import com.reneponette.comicbox.controller.PageBuilder;
 import com.reneponette.comicbox.controller.PageBuilder.OnPageBuildListener;
 import com.reneponette.comicbox.model.FileMeta.ReadDirection;
 import com.reneponette.comicbox.model.PageInfo;
-import com.reneponette.comicbox.utils.ImageUtils;
+import com.reneponette.comicbox.utils.MessageUtils;
 
 public class DropboxFolderReaderFragment extends BasePagerReaderFragment {
 	
@@ -33,24 +28,21 @@ public class DropboxFolderReaderFragment extends BasePagerReaderFragment {
 	public DropboxFolderReaderFragment() {
 	}
 
-	private File curFile;
 	private int startIndex;
 
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		curFile = new File(getArguments().getString(PATH));
-		startIndex = getArguments().getInt(START_INDEX, -1);		
-		pageBuilder.prepare(curFile);
-	}
-
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return super.onCreateView(inflater, container, savedInstanceState);
+		startIndex = getArguments().getInt(START_INDEX, -1);
+		
+		Entry entry = new Entry();
+		entry.path = getArguments().getString(PATH);
+		pageBuilder.prepare(entry);
 	}
 
 
+	
 	/*---------------------------------------------------------------------------*/
 	@Override
 	protected PageBuilder onCreatePageBuilder() {
@@ -66,7 +58,6 @@ public class DropboxFolderReaderFragment extends BasePagerReaderFragment {
 			@Override
 			public void onFailBuild(String errStr) {
 				// TODO Auto-generated method stub
-
 			}
 
 			@Override
@@ -93,6 +84,8 @@ public class DropboxFolderReaderFragment extends BasePagerReaderFragment {
 				}
 				
 				hideWaitingDialog();
+				
+				MessageUtils.toast(getActivity(), "pageCount = " + pageBuilder.pageSize());
 			}
 		});
 		return builder;
@@ -103,13 +96,14 @@ public class DropboxFolderReaderFragment extends BasePagerReaderFragment {
 	@Override
 	protected Bitmap getPageBitmap(ImageView iv, int position) {
 		PageInfo pi = pageBuilder.getPageInfo(position);
-		return ImageUtils.getBitmap(pi.getFile(), pi.getBuildType(), isAutocrop(), false);
+//		return ImageUtils.getBitmap(pi.getFile(), pi.getBuildType(), isAutocrop(), false);
+		return null;
 	}
 
 	@Override
 	protected Bitmap getPreviewBitmap(ImageView iv, int position) {
 		PageInfo pi = pageBuilder.getPageInfo(position);
-		new PageBitmapLoader(pi, iv, isAutocrop(), true).run();
+//		new PageBitmapLoader(pi, iv, isAutocrop(), true).run();
 		return null;
 	}
 
