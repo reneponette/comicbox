@@ -114,4 +114,7 @@ public class PageInfo {
 	public int getPdfIndex() {
 		return pdfIndex;
 	}
+	public String getRemotePath() {
+		return remotePath;
+	}
 }

@@ -397,6 +397,8 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 				container.addView(v);
 				return v;
 			}
+			
+			iv.setImageBitmap(null);
 
 			Bitmap image = getPageBitmap(iv, position);
 

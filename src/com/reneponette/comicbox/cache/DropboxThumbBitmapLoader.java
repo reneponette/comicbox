@@ -11,6 +11,8 @@ import android.widget.ImageView;
 
 import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.DropboxAPI.DropboxInputStream;
+import com.dropbox.client2.DropboxAPI.ThumbFormat;
+import com.dropbox.client2.DropboxAPI.ThumbSize;
 import com.dropbox.client2.android.AndroidAuthSession;
 import com.dropbox.client2.exception.DropboxException;
 import com.reneponette.comicbox.application.GlobalApplication;
@@ -95,6 +97,10 @@ public class DropboxThumbBitmapLoader {
 					case ZIP:
 						DropboxInputStream dis = api.getFileStream(info.getEntry().path, null);
 						bitmap = ImageUtils.extractCoverFromZip(dis, C.COVER_W, C.COVER_H);
+						break;
+					case JPG:
+						if(info.getEntry().thumbExists)
+							bitmap = BitmapFactory.decodeStream(api.getThumbnailStream(info.getPath(), ThumbSize.BESTFIT_320x240, ThumbFormat.JPEG));
 						break;
 					default:
 						bitmap = null;

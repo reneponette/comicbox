@@ -9,20 +9,22 @@ import com.dropbox.client2.exception.DropboxException;
 import com.reneponette.comicbox.application.GlobalApplication;
 import com.reneponette.comicbox.db.FileInfo;
 import com.reneponette.comicbox.db.FileInfoDAO;
-import com.reneponette.comicbox.manager.DropBoxManager;
-import com.reneponette.comicbox.model.PageInfo;
 import com.reneponette.comicbox.model.FileMeta.ReadDirection;
+import com.reneponette.comicbox.model.PageInfo;
 import com.reneponette.comicbox.model.PageInfo.PageBuildType;
-import com.reneponette.comicbox.model.PageInfo.PageType;
-import com.reneponette.comicbox.utils.ImageUtils;
 import com.reneponette.comicbox.utils.StringUtils;
 
 public class DropboxFolderPageBuilder extends PageBuilder {
 	
 	/*---------------------------------------------------------------------------*/
 	DropboxAPI<AndroidAuthSession> api;
-	File cacheDir;
-	/*---------------------------------------------------------------------------*/	
+//	File cacheDir;
+	/*---------------------------------------------------------------------------*/
+	
+	public DropboxFolderPageBuilder(DropboxAPI<AndroidAuthSession> api) {
+		this.api = api;
+	}
+	
 	
 	@Override
 	protected void onPrepare() {
@@ -48,18 +50,6 @@ public class DropboxFolderPageBuilder extends PageBuilder {
 		// 그리고 무조건 스트리밍은 왼->오 로 고정!
 		readDirection = ReadDirection.LTR;
 		scanDirection = computedDirection;
-		
-		//
-		cacheDir = new File(GlobalApplication.instance().getCacheDir(), "comics/"
-				+ StringUtils.getMD5(getFileInfo().getName()));
-		if (!cacheDir.exists()) {
-			cacheDir.mkdirs();
-		}
-		removeOtherCacheDir();
-
-		// dropbox
-		AndroidAuthSession session = DropBoxManager.INSTANCE.buildSession();
-		api = new DropboxAPI<AndroidAuthSession>(session);		
 	}
 
 	@Override
@@ -96,29 +86,11 @@ public class DropboxFolderPageBuilder extends PageBuilder {
 		
 	}
 	
-	private void removeOtherCacheDir() {
-		for (File f : cacheDir.getParentFile().listFiles()) {
-			if (f.isHidden())
-				continue;
-			if (f.isFile())
-				continue;
-			if (f.getName().equals(cacheDir.getName()))
-				continue;
-			boolean success = f.delete();
-			if (!success) {
-				for (File imageFile : f.listFiles()) {
-					if (imageFile.isDirectory())
-						continue;
-					success = imageFile.delete();
-				}
-			}
-		}
-	}
 	
 	private void addPageInfo(PageBuildType buildType, String dropboxPath, final boolean prepend) {
 		PageInfo info = new PageInfo(dropboxPath);
 		info.setBuildType(buildType);
 		notify(info, prepend);
-	}	
+	}
 	
 }

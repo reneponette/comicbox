@@ -19,6 +19,7 @@ import com.reneponette.comicbox.db.FileInfoDAO;
 import com.reneponette.comicbox.manager.DropBoxManager;
 import com.reneponette.comicbox.model.FileMeta.FileType;
 import com.reneponette.comicbox.ui.MainActivity;
+import com.reneponette.comicbox.utils.Logger;
 import com.reneponette.comicbox.utils.MessageUtils;
 import com.reneponette.comicbox.utils.StringUtils;
 

@@ -27,6 +27,8 @@ import android.util.Log;
 import com.artifex.mupdfdemo.MuPDFCore;
 import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.DropboxAPI.Entry;
+import com.dropbox.client2.DropboxAPI.ThumbFormat;
+import com.dropbox.client2.DropboxAPI.ThumbSize;
 import com.dropbox.client2.android.AndroidAuthSession;
 import com.dropbox.client2.exception.DropboxException;
 import com.reneponette.comicbox.application.GlobalApplication;
@@ -498,6 +500,11 @@ public class ImageUtils {
 
 					if (cover == null) {
 						cover = extractCoverFromZip(api.getFileStream(ent.path, null), w, h);
+					}
+				} else if("jpg".equalsIgnoreCase(ext)) {
+					if(ent.thumbExists) {
+						Logger.d("ImageUtils", "dropbox directory jpg");
+						cover = BitmapFactory.decodeStream(api.getThumbnailStream(ent.path, ThumbSize.BESTFIT_320x240, ThumbFormat.JPEG));
 					}
 				} else
 					continue;
