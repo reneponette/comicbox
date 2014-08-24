@@ -246,6 +246,28 @@ public class ImageUtils {
 		Bitmap bitmap = BitmapFactory.decodeFile(src.getAbsolutePath(), opts);
 		return removeMargins(bitmap, 350, 200, 350, 200);
 	}
+	
+	
+	
+	/**
+	 * @param api
+	 * @param path
+	 * @return
+	 */
+	public static Bitmap extractCoverFromJpg(DropboxAPI<AndroidAuthSession> api, String path) {
+		InputStream is;
+		try {
+			is = api.getThumbnailStream(path, ThumbSize.BESTFIT_480x320, ThumbFormat.JPEG);
+			Bitmap bitmap = BitmapFactory.decodeStream(is);
+			is.close();
+			return removeMargins(bitmap, 350, 200, 350, 200);
+		} catch (DropboxException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	/**
 	 * @param c
@@ -429,8 +451,18 @@ public class ImageUtils {
 					cover = extractCoverFromZip(f, w, h);
 				else if ("pdf".equalsIgnoreCase(ext))
 					cover = extractCoverFromPdf(GlobalApplication.instance(), f, w, h);
-				else if ("jpg".equalsIgnoreCase(ext))
+				else if ("jpg".equalsIgnoreCase(ext)) {
 					cover = extractCoverFromJpg(f);
+					if (cover.getWidth() > cover.getHeight()) {
+						cover = cutBitmapInHalf(cover, false);
+					}
+					
+					// 첫번째 파일이 jpg이면 압축안된 폴더라고 가정하고 분할 커버 안만듬
+					if(index == 0) {
+						cover = Bitmap.createScaledBitmap(cover, w, h, false);
+						return cover;
+					}					
+				}
 
 				if (cover != null) {
 					if (resultBitmap == null) {
@@ -504,11 +536,18 @@ public class ImageUtils {
 				} else if("jpg".equalsIgnoreCase(ext)) {
 					if(ent.thumbExists) {
 						Logger.d("ImageUtils", "dropbox directory jpg");
-						cover = BitmapFactory.decodeStream(api.getThumbnailStream(ent.path, ThumbSize.BESTFIT_320x240, ThumbFormat.JPEG));
+						cover = extractCoverFromJpg(api, ent.path);
+						if (cover.getWidth() > cover.getHeight()) {
+							cover = cutBitmapInHalf(cover, false);
+						}
+						// 첫번째 파일이 jpg이면 압축안된 폴더라고 가정하고 분할 커버 안만듬
+						if(index == 0) {
+							cover = Bitmap.createScaledBitmap(cover, w, h, false);
+							return cover;
+						}
 					}
-				} else
-					continue;
-
+				}
+				
 				if (cover != null) {
 					if (resultBitmap == null) {
 						resultBitmap = Bitmap.createBitmap(400, 600, Bitmap.Config.ARGB_8888);
