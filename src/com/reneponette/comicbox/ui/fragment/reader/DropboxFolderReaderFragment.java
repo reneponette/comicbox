@@ -23,7 +23,6 @@ import com.reneponette.comicbox.manager.DropBoxManager;
 import com.reneponette.comicbox.model.FileMeta.ReadDirection;
 import com.reneponette.comicbox.model.PageInfo;
 import com.reneponette.comicbox.utils.Logger;
-import com.reneponette.comicbox.utils.MessageUtils;
 import com.reneponette.comicbox.utils.StringUtils;
 
 public class DropboxFolderReaderFragment extends BasePagerReaderFragment {
@@ -150,7 +149,7 @@ public class DropboxFolderReaderFragment extends BasePagerReaderFragment {
 
 	@Override
 	protected Bitmap getPreviewBitmap(ImageView iv, int position) {
-		loadPageBitmap(iv, position);		
+		loadPageBitmap(iv, position);
 		// PageInfo pi = pageBuilder.getPageInfo(position);
 		// new PageBitmapLoader(pi, iv, isAutocrop(), true).run();
 		return null;
@@ -170,6 +169,8 @@ public class DropboxFolderReaderFragment extends BasePagerReaderFragment {
 				if (cachedFile.exists()) {
 					Logger.d(this, "image from local cache!");
 					bitmap = BitmapFactory.decodeFile(cachedFile.getAbsolutePath());
+					// bitmap = ImageUtils.removeMargins(bitmap, 350, 200, 350,
+					// 200);
 				} else {
 					try {
 						InputStream is = api.getFileStream(pi.getRemotePath(), null);
@@ -183,6 +184,8 @@ public class DropboxFolderReaderFragment extends BasePagerReaderFragment {
 						fos.close();
 
 						bitmap = BitmapFactory.decodeFile(cachedFile.getAbsolutePath());
+						// bitmap = ImageUtils.removeMargins(bitmap, 350, 200,
+						// 350, 200);
 
 					} catch (DropboxException e) {
 						e.printStackTrace();
@@ -194,14 +197,16 @@ public class DropboxFolderReaderFragment extends BasePagerReaderFragment {
 				}
 
 				final Bitmap bm = bitmap;
-				getActivity().runOnUiThread(new Runnable() {
+				if (getActivity() != null) {
+					getActivity().runOnUiThread(new Runnable() {
 
-					@Override
-					public void run() {
-						if (filename.equals(iv.getTag()))
-							iv.setImageBitmap(bm);
-					}
-				});
+						@Override
+						public void run() {
+							if (filename.equals(iv.getTag()))
+								iv.setImageBitmap(bm);
+						}
+					});
+				}
 
 			};
 		}.start();

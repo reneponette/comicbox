@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.dropbox.client2.DropboxAPI;
@@ -81,16 +82,18 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 			mApi.getSession().startOAuth2Authentication(getActivity());
 		}
 	}
+	
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		enumerate();		
+	}
 
 
 	@Override
 	public void onResume() {
-
 		AndroidAuthSession session = mApi.getSession();
-		// The next part must be inserted in the onResume() method of the
-		// activity from which session.startAuthentication() was called, so
-		// that Dropbox authentication completes properly.
-		if (session.authenticationSuccessful()) {
+		if (!mLoggedIn && session.authenticationSuccessful()) {
 			try {
 				// Mandatory call to complete the auth
 				session.finishAuthentication();
@@ -98,14 +101,13 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 				// Store it locally in our app for later use
 				DropBoxManager.INSTANCE.storeAuth(session);
 				setLoggedIn(true);
+				enumerate();				
 
 			} catch (IllegalStateException e) {
 				MessageUtils.toast(getActivity(), "Couldn't authenticate with Dropbox:" + e.getLocalizedMessage());
 				Log.i(TAG, "Error authenticating", e);
 			}
 		}
-
-		enumerate();
 		super.onResume();
 	}
 
@@ -173,10 +175,14 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 							if(getActivity() != null)
 								((MainActivity) getActivity()).onSectionAttached(name);
 
+							int indexInParent = 0;
 							for (Entry ent : entry.contents) {
 								FileInfo info = FileInfoDAO.instance().getFileInfo(ent);
-								if (info.getMeta().type != FileType.UNKNOWN)
+								if (info.getMeta().type != FileType.UNKNOWN) {
+									info.indexInParent = indexInParent;
 									infoList.add(info);
+									indexInParent++;
+								}
 							}
 							gridView.setAdapter(adapter);
 							hideWaitingDialog();

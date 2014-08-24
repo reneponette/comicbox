@@ -1,12 +1,9 @@
 package com.reneponette.comicbox.controller;
 
-import java.io.File;
-
 import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.DropboxAPI.Entry;
 import com.dropbox.client2.android.AndroidAuthSession;
 import com.dropbox.client2.exception.DropboxException;
-import com.reneponette.comicbox.application.GlobalApplication;
 import com.reneponette.comicbox.db.FileInfo;
 import com.reneponette.comicbox.db.FileInfoDAO;
 import com.reneponette.comicbox.model.FileMeta.ReadDirection;
