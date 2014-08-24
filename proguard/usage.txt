@@ -1487,7 +1487,7 @@ com.reneponette.comicbox.R$xml
 com.reneponette.comicbox.cache.BitmapCache:
     45:45:public android.graphics.Bitmap removeBitmapFromMemCache(java.lang.String)
 com.reneponette.comicbox.cache.DropboxThumbBitmapLoader:
-    40:44:public DropboxThumbBitmapLoader(com.reneponette.comicbox.db.FileInfo,com.dropbox.client2.DropboxAPI,com.reneponette.comicbox.cache.DropboxThumbBitmapLoader$OnLoadBitmapListener)
+    42:46:public DropboxThumbBitmapLoader(com.reneponette.comicbox.db.FileInfo,com.dropbox.client2.DropboxAPI,com.reneponette.comicbox.cache.DropboxThumbBitmapLoader$OnLoadBitmapListener)
 com.reneponette.comicbox.cache.LocalThumbBitmapLoader:
     34:37:public LocalThumbBitmapLoader(com.reneponette.comicbox.db.FileInfo,com.reneponette.comicbox.cache.LocalThumbBitmapLoader$OnLoadBitmapListener)
     47:48:public com.reneponette.comicbox.cache.LocalThumbBitmapLoader lookupCacheFirst(boolean)
@@ -1503,12 +1503,13 @@ com.reneponette.comicbox.constant.C:
     public static final int COVER_W
     public static final int COVER_H
     8:8:public C()
-com.reneponette.comicbox.controller.DataController:
+com.reneponette.comicbox.controller.PageBuilder:
     boolean autocrop
-    78:81:public DataController(com.reneponette.comicbox.controller.DataController$OnDataBuildListener)
-    207:207:public boolean isAutocrop()
-    211:212:public void setAutocrop(boolean)
-    509:511:private void addAdPageInfo(boolean)
+    48:51:public PageBuilder(com.reneponette.comicbox.controller.PageBuilder$OnPageBuildListener)
+    108:108:public com.reneponette.comicbox.model.FileMeta getFileMeta()
+    124:124:public boolean isAutocrop()
+    128:129:public void setAutocrop(boolean)
+    150:152:protected void addAdPageInfo(boolean)
 com.reneponette.comicbox.db.BaseDAO:
     public abstract java.lang.Object populateObject(android.database.Cursor)
     44:44:public long insert(com.reneponette.comicbox.db.DatabaseStorable)
@@ -1541,6 +1542,8 @@ com.reneponette.comicbox.manager.DropBoxManager:
 com.reneponette.comicbox.manager.PausableThreadPoolExecutor:
     63:69:public void pause()
     72:79:public void resume()
+com.reneponette.comicbox.model.PageInfo:
+    99:100:public void setType(com.reneponette.comicbox.model.PageInfo$PageType)
 com.reneponette.comicbox.network.DropboxFolderEnumTask
 com.reneponette.comicbox.ui.FileSettingsActivity:
     private static final boolean ALWAYS_SIMPLE_PREFS
@@ -1550,7 +1553,6 @@ com.reneponette.comicbox.ui.MuPDFActivity:
     63:67:public static android.content.Intent newIntent(android.content.Context,java.lang.String)
 com.reneponette.comicbox.ui.ReaderActivity:
     private static final java.lang.String FILE_INFO
-    private static final java.lang.String INDEX_IN_PARENT
     private static final java.lang.String TAG_FRAGMENT
 com.reneponette.comicbox.ui.SettingsActivity:
     private static final boolean ALWAYS_SIMPLE_PREFS
@@ -1563,27 +1565,31 @@ com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment:
 com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment:
     private static final java.lang.String PATH
     private static final java.lang.String TAG
-    219:225:private void logOut()
+    227:233:private void logOut()
 com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment:
     private static final java.lang.String FILE_INFO
 com.reneponette.comicbox.ui.fragment.reader.BaseReaderFragment:
     public static final java.lang.String PATH
     public static final int REQ_SETTINGS
-    51:52:public void setAutocrop(boolean)
-com.reneponette.comicbox.ui.fragment.reader.FolderReaderFragment:
+    56:57:public void setAutocrop(boolean)
+com.reneponette.comicbox.ui.fragment.reader.DropboxFolderReaderFragment:
     private static final java.lang.String START_INDEX
-com.reneponette.comicbox.ui.fragment.reader.PdfReaderFragment:
+com.reneponette.comicbox.ui.fragment.reader.LocalFolderReaderFragment:
+    private static final java.lang.String START_INDEX
+com.reneponette.comicbox.ui.fragment.reader.LocalPdfReaderFragment:
     com.reneponette.comicbox.db.FileInfo fileInfo
 com.reneponette.comicbox.utils.DialogHelper:
     13:13:public DialogHelper()
 com.reneponette.comicbox.utils.FileUtils:
     13:13:public FileUtils()
 com.reneponette.comicbox.utils.ImageUtils:
-    42:42:public ImageUtils()
-    175:186:public static int pagesPerScan(java.util.zip.ZipFile,org.apache.commons.compress.archivers.zip.ZipArchiveEntry)
-    546:580:public static int getAverageColor(android.graphics.Bitmap,int,boolean)
-    584:584:public static int getComplementColor(int,int)
-    754:953:public static android.graphics.Bitmap fastblur(android.graphics.Bitmap,int)
+    44:44:public ImageUtils()
+    177:188:public static int pagesPerScan(java.util.zip.ZipFile,org.apache.commons.compress.archivers.zip.ZipArchiveEntry)
+    592:626:public static int getAverageColor(android.graphics.Bitmap,int,boolean)
+    630:630:public static int getComplementColor(int,int)
+    800:999:public static android.graphics.Bitmap fastblur(android.graphics.Bitmap,int)
+com.reneponette.comicbox.utils.Logger:
+    5:5:public Logger()
 com.reneponette.comicbox.utils.MessageUtils:
     6:6:public MessageUtils()
 com.reneponette.comicbox.utils.MetricUtils:
