@@ -32,30 +32,48 @@ public enum BitmapCache {
 
 
 	public void addBitmapToMemoryCache(String key, Bitmap bitmap) {
+		if(key == null || bitmap == null)
+			return;		
+		
 	    if (getBitmapFromMemCache(key) == null) {
 	        mMemoryCache.put(key, bitmap);
 	    }
 	}
 
 	public Bitmap getBitmapFromMemCache(String key) {
+		if(key == null)
+			return null;		
+		
 	    return mMemoryCache.get(key);
 	}
 	
 	public Bitmap removeBitmapFromMemCache(String key) {
+		if(key == null)
+			return null;
+		
 		return mMemoryCache.remove(key);
 	}
 	
 	public void addBitmapToMemoryCache(FileInfo info, Bitmap bitmap) {
+		if(info == null || info.getKey() == null || bitmap == null)
+			return;
+		
 	    if (getBitmapFromMemCache(info.getKey()) == null) {
 	        mMemoryCache.put(info.getKey(), bitmap);
 	    }
 	}
 
 	public Bitmap getBitmapFromMemCache(FileInfo info) {
+		if(info == null || info.getKey() == null)
+			return null;
+		
 	    return mMemoryCache.get(info.getKey());
 	}
 	
 	public Bitmap removeBitmapFromMemCache(FileInfo info) {
+		if(info == null || info.getKey() == null)
+			return null;
+		
 		return mMemoryCache.remove(info.getKey());
 	}	
 	
