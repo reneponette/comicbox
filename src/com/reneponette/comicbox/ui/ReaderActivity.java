@@ -86,6 +86,9 @@ public class ReaderActivity extends Activity {
 				String parentPath = StringUtils.getParentPath(info.getPath());
 				f = DropboxFolderReaderFragment.newInstance(parentPath, info.indexInParent);
 				break;
+			case DIRECTORY:
+				f = DropboxFolderReaderFragment.newInstance(info.getPath(), info.indexInParent);
+				break;
 			default:
 				f = DropboxZipReaderFragment.newInstance(info.getPath());
 				break;

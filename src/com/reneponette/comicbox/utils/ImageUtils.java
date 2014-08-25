@@ -2,6 +2,8 @@ package com.reneponette.comicbox.utils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
@@ -133,6 +135,59 @@ public class ImageUtils {
 
 		return getProcessedBitmap(bm, buildType, autocrop);
 	}
+	
+	
+	public static Bitmap getBitmap(DropboxAPI<AndroidAuthSession> api, String path, File cachedFile, PageBuildType buildType, boolean autocrop, boolean preview) {
+
+		if (api == null || StringUtils.isBlank(path))
+			return null;
+
+		Bitmap bitmap = null;
+
+		if (cachedFile.exists()) {
+			if (preview) {
+				BitmapFactory.Options opts = new Options();
+				opts.inSampleSize = 4;
+				bitmap = BitmapFactory.decodeFile(cachedFile.getAbsolutePath(), opts);
+			} else {
+				bitmap = BitmapFactory.decodeFile(cachedFile.getAbsolutePath());
+			}			
+		} else {
+			try {
+				InputStream is = api.getFileStream(path, null);
+				FileOutputStream fos = new FileOutputStream(cachedFile);
+
+				byte[] buffer = new byte[1024];
+				int count;
+				while ((count = is.read(buffer)) != -1) {
+					fos.write(buffer, 0, count);
+				}
+				fos.close();
+
+				if (preview) {
+					BitmapFactory.Options opts = new Options();
+					opts.inSampleSize = 4;
+					bitmap = BitmapFactory.decodeFile(cachedFile.getAbsolutePath(), opts);
+				} else {
+					bitmap = BitmapFactory.decodeFile(cachedFile.getAbsolutePath());
+				}
+
+			} catch (DropboxException e) {
+				e.printStackTrace();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if (bitmap == null)
+			return null;
+
+		return getProcessedBitmap(bitmap, buildType, autocrop);
+	}	
+	
+	
 
 	/**
 	 * @param bitmap

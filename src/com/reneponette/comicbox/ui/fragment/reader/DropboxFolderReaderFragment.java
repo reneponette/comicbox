@@ -22,6 +22,8 @@ import com.reneponette.comicbox.controller.PageBuilder.OnPageBuildListener;
 import com.reneponette.comicbox.manager.DropBoxManager;
 import com.reneponette.comicbox.model.FileMeta.ReadDirection;
 import com.reneponette.comicbox.model.PageInfo;
+import com.reneponette.comicbox.model.PageInfo.PageBuildType;
+import com.reneponette.comicbox.utils.ImageUtils;
 import com.reneponette.comicbox.utils.Logger;
 import com.reneponette.comicbox.utils.StringUtils;
 
@@ -58,6 +60,7 @@ public class DropboxFolderReaderFragment extends BasePagerReaderFragment {
 		Entry entry = new Entry();
 		entry.path = getArguments().getString(PATH);
 		pageBuilder.prepare(entry);
+		Logger.d(this, "entry.path = " + entry.path);
 
 		cacheDir = new File(GlobalApplication.instance().getCacheDir(), "comics/"
 				+ StringUtils.getMD5(pageBuilder.getFileInfo().getName()));
@@ -141,7 +144,7 @@ public class DropboxFolderReaderFragment extends BasePagerReaderFragment {
 
 	@Override
 	protected Bitmap getPageBitmap(ImageView iv, int position) {
-		loadPageBitmap(iv, position);
+		loadPageBitmap(iv, position, false);
 		// return ImageUtils.getBitmap(pi.getFile(), pi.getBuildType(),
 		// isAutocrop(), false);
 		return null;
@@ -149,13 +152,13 @@ public class DropboxFolderReaderFragment extends BasePagerReaderFragment {
 
 	@Override
 	protected Bitmap getPreviewBitmap(ImageView iv, int position) {
-		loadPageBitmap(iv, position);
+		loadPageBitmap(iv, position, true);
 		// PageInfo pi = pageBuilder.getPageInfo(position);
 		// new PageBitmapLoader(pi, iv, isAutocrop(), true).run();
 		return null;
 	}
 
-	private void loadPageBitmap(final ImageView iv, int position) {
+	private void loadPageBitmap(final ImageView iv, int position, final boolean preview) {
 		final PageInfo pi = pageBuilder.getPageInfo(position);
 		final String filename = pi.getRemotePath().substring(pi.getRemotePath().lastIndexOf('/') + 1);
 		final File cachedFile = new File(cacheDir, filename);
@@ -164,50 +167,18 @@ public class DropboxFolderReaderFragment extends BasePagerReaderFragment {
 
 		new Thread() {
 			public void run() {
-				Bitmap bitmap = null;
+				final Bitmap bitmap = ImageUtils.getBitmap(api, pi.getRemotePath(), cachedFile, pi.getBuildType(), isAutocrop(), preview);
 
-				if (cachedFile.exists()) {
-					Logger.d(this, "image from local cache!");
-					bitmap = BitmapFactory.decodeFile(cachedFile.getAbsolutePath());
-					// bitmap = ImageUtils.removeMargins(bitmap, 350, 200, 350,
-					// 200);
-				} else {
-					try {
-						InputStream is = api.getFileStream(pi.getRemotePath(), null);
-						FileOutputStream fos = new FileOutputStream(cachedFile);
-
-						byte[] buffer = new byte[1024];
-						int count;
-						while ((count = is.read(buffer)) != -1) {
-							fos.write(buffer, 0, count);
-						}
-						fos.close();
-
-						bitmap = BitmapFactory.decodeFile(cachedFile.getAbsolutePath());
-						// bitmap = ImageUtils.removeMargins(bitmap, 350, 200,
-						// 350, 200);
-
-					} catch (DropboxException e) {
-						e.printStackTrace();
-					} catch (FileNotFoundException e) {
-						e.printStackTrace();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-
-				final Bitmap bm = bitmap;
 				if (getActivity() != null) {
 					getActivity().runOnUiThread(new Runnable() {
 
 						@Override
 						public void run() {
 							if (filename.equals(iv.getTag()))
-								iv.setImageBitmap(bm);
+								iv.setImageBitmap(bitmap);
 						}
 					});
 				}
-
 			};
 		}.start();
 	}

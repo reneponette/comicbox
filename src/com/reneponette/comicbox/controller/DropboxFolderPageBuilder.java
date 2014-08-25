@@ -9,6 +9,7 @@ import com.reneponette.comicbox.db.FileInfoDAO;
 import com.reneponette.comicbox.model.FileMeta.ReadDirection;
 import com.reneponette.comicbox.model.PageInfo;
 import com.reneponette.comicbox.model.PageInfo.PageBuildType;
+import com.reneponette.comicbox.utils.Logger;
 import com.reneponette.comicbox.utils.StringUtils;
 
 public class DropboxFolderPageBuilder extends PageBuilder {
@@ -25,6 +26,8 @@ public class DropboxFolderPageBuilder extends PageBuilder {
 	
 	@Override
 	protected void onPrepare() {
+		
+		Logger.d(this, "fileMeta.pagesPerScan = " + fileMeta.pagesPerScan);
 		// 처음 파일을 보는 경우 자동으로 결정
 		if (fileMeta.pagesPerScan == 0) {
 			fileMeta.pagesPerScan = 1;
@@ -45,7 +48,7 @@ public class DropboxFolderPageBuilder extends PageBuilder {
 			computedDirection = ReadDirection.LTR;
 		}
 		// 그리고 무조건 스트리밍은 왼->오 로 고정!
-		readDirection = ReadDirection.LTR;
+		readDirection = computedDirection;
 		scanDirection = computedDirection;
 	}
 
@@ -64,8 +67,24 @@ public class DropboxFolderPageBuilder extends PageBuilder {
 					Entry resultEntry = api.metadata(getFileInfo().getPath(), 1000, null, true, null);
 					
 					for(Entry entry : resultEntry.contents) {
-						if(entry.path.endsWith(".jpg") || entry.path.endsWith(".JPG"))
-							addPageInfo(PageBuildType.WHOLE, entry.path, false);
+						if(entry.path.endsWith(".jpg") || entry.path.endsWith(".JPG")) {
+							
+							if (getFileInfo().getMeta().pagesPerScan == 2) {
+ 
+								if (getScanDirection() == ReadDirection.RTL) {
+									addPageInfo(PageBuildType.RIGHT, entry.path, true);
+									addPageInfo(PageBuildType.LEFT, entry.path, true);
+								} else {
+									addPageInfo(PageBuildType.LEFT, entry.path, false);
+									addPageInfo(PageBuildType.RIGHT, entry.path, false);
+								}
+							} else {
+								if (getReadDirection() == ReadDirection.RTL)
+									addPageInfo(PageBuildType.WHOLE, entry.path, true);
+								else
+									addPageInfo(PageBuildType.WHOLE, entry.path, false);
+							}
+						}
 					}
 					
 				} catch (DropboxException e) {

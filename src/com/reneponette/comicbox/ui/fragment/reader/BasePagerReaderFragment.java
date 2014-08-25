@@ -29,8 +29,8 @@ import android.widget.TextView;
 
 import com.reneponette.comicbox.R;
 import com.reneponette.comicbox.controller.PageBuilder;
+import com.reneponette.comicbox.db.FileInfo;
 import com.reneponette.comicbox.model.FileMeta;
-import com.reneponette.comicbox.model.FileMeta.FileType;
 import com.reneponette.comicbox.model.FileMeta.ReadDirection;
 import com.reneponette.comicbox.model.PageInfo;
 import com.reneponette.comicbox.model.PageInfo.PageType;
@@ -225,7 +225,8 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 		if (requestCode == REQ_SETTINGS) {
 			getActivity().finish();
 
-			Intent intent = ReaderActivity.newIntent(getActivity(), pageBuilder.getFileInfo());
+			FileInfo info = pageBuilder.getFileInfo();
+			Intent intent = ReaderActivity.newIntent(getActivity(), info);
 			startActivity(intent);
 			return;
 		}
