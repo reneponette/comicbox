@@ -1487,13 +1487,14 @@ com.reneponette.comicbox.R$xml
 com.reneponette.comicbox.cache.BitmapCache:
     45:45:public android.graphics.Bitmap removeBitmapFromMemCache(java.lang.String)
 com.reneponette.comicbox.cache.DropboxThumbBitmapLoader:
-    42:46:public DropboxThumbBitmapLoader(com.reneponette.comicbox.db.FileInfo,com.dropbox.client2.DropboxAPI,com.reneponette.comicbox.cache.DropboxThumbBitmapLoader$OnLoadBitmapListener)
+    45:49:public DropboxThumbBitmapLoader(com.reneponette.comicbox.db.FileInfo,com.dropbox.client2.DropboxAPI,com.reneponette.comicbox.cache.DropboxThumbBitmapLoader$OnLoadBitmapListener)
 com.reneponette.comicbox.cache.LocalThumbBitmapLoader:
     34:37:public LocalThumbBitmapLoader(com.reneponette.comicbox.db.FileInfo,com.reneponette.comicbox.cache.LocalThumbBitmapLoader$OnLoadBitmapListener)
     47:48:public com.reneponette.comicbox.cache.LocalThumbBitmapLoader lookupCacheFirst(boolean)
 com.reneponette.comicbox.cache.PageBitmapLoader:
     27:33:public PageBitmapLoader(com.reneponette.comicbox.model.PageInfo,com.reneponette.comicbox.cache.PageBitmapLoader$OnLoadBitmapListener,boolean,boolean)
 com.reneponette.comicbox.constant.C:
+    public static final boolean DEBUG
     public static final java.lang.String LAST_LOCAL_PATH
     public static final java.lang.String LAST_DROPBOX_PATH
     public static final java.lang.String DEFAULT_NAME
@@ -1565,7 +1566,7 @@ com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment:
 com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment:
     private static final java.lang.String PATH
     private static final java.lang.String TAG
-    227:233:private void logOut()
+    235:241:private void logOut()
 com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment:
     private static final java.lang.String FILE_INFO
 com.reneponette.comicbox.ui.fragment.reader.BaseReaderFragment:
@@ -1583,13 +1584,13 @@ com.reneponette.comicbox.utils.DialogHelper:
 com.reneponette.comicbox.utils.FileUtils:
     13:13:public FileUtils()
 com.reneponette.comicbox.utils.ImageUtils:
-    44:44:public ImageUtils()
-    177:188:public static int pagesPerScan(java.util.zip.ZipFile,org.apache.commons.compress.archivers.zip.ZipArchiveEntry)
-    592:626:public static int getAverageColor(android.graphics.Bitmap,int,boolean)
-    630:630:public static int getComplementColor(int,int)
-    800:999:public static android.graphics.Bitmap fastblur(android.graphics.Bitmap,int)
+    46:46:public ImageUtils()
+    232:243:public static int pagesPerScan(java.util.zip.ZipFile,org.apache.commons.compress.archivers.zip.ZipArchiveEntry)
+    647:681:public static int getAverageColor(android.graphics.Bitmap,int,boolean)
+    685:685:public static int getComplementColor(int,int)
+    855:1054:public static android.graphics.Bitmap fastblur(android.graphics.Bitmap,int)
 com.reneponette.comicbox.utils.Logger:
-    5:5:public Logger()
+    7:7:public Logger()
 com.reneponette.comicbox.utils.MessageUtils:
     6:6:public MessageUtils()
 com.reneponette.comicbox.utils.MetricUtils:

@@ -1,5 +1,7 @@
 package com.reneponette.comicbox.ui.fragment.explorer;
 
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,7 +22,7 @@ import com.reneponette.comicbox.db.FileInfoDAO;
 import com.reneponette.comicbox.manager.DropBoxManager;
 import com.reneponette.comicbox.model.FileMeta.FileType;
 import com.reneponette.comicbox.ui.MainActivity;
-import com.reneponette.comicbox.utils.Logger;
+import com.reneponette.comicbox.utils.DialogHelper;
 import com.reneponette.comicbox.utils.MessageUtils;
 import com.reneponette.comicbox.utils.StringUtils;
 
@@ -54,15 +56,14 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 
 	private boolean mLoggedIn;
 	private Thread runningThread;
-	
+
 	Handler handler;
 
-	
 	@Override
 	protected FileInfo onGetFileInfo() {
 		String dropboxPath = getArguments().getString(PATH);
 		Entry entry = new Entry();
-		entry.path = dropboxPath;		
+		entry.path = dropboxPath;
 		return FileInfoDAO.instance().getFileInfo(entry);
 	}
 
@@ -82,13 +83,12 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 			mApi.getSession().startOAuth2Authentication(getActivity());
 		}
 	}
-	
+
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		enumerate();		
+		enumerate();
 	}
-
 
 	@Override
 	public void onResume() {
@@ -101,7 +101,7 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 				// Store it locally in our app for later use
 				DropBoxManager.INSTANCE.storeAuth(session);
 				setLoggedIn(true);
-				enumerate();				
+				enumerate();
 
 			} catch (IllegalStateException e) {
 				MessageUtils.toast(getActivity(), "Couldn't authenticate with Dropbox:" + e.getLocalizedMessage());
@@ -111,9 +111,8 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 		super.onResume();
 	}
 
-	
 	private boolean goParentDirectory() {
-		
+
 		// 상위 폴더 넣기
 		if (StringUtils.isBlank(curInfo.getEntry().parentPath()) == false) {
 			FileInfo parentInfo;
@@ -122,18 +121,19 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 			parentEntry.path = curInfo.getEntry().parentPath();
 			parentInfo = new FileInfo(LocationType.DROPBOX);
 			parentInfo.setEntry(parentEntry);
-			
+
 			FileInfo info = new FileInfo(LocationType.DROPBOX);
 			info.setEntry(parentEntry);
 			if (getActivity() instanceof FolderViewFragmentListener) {
-				((FolderViewFragmentListener) getActivity()).onEntryClicked(info);;
+				((FolderViewFragmentListener) getActivity()).onEntryClicked(info);
+				;
 			}
-			return true;			
-		}		
-		
+			return true;
+		}
+
 		return false;
 	}
-	
+
 	private void enumerate() {
 
 		if (runningThread != null)
@@ -147,12 +147,12 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 			@Override
 			public void run() {
 				try {
-					
+
 					final Entry entry = mApi.metadata(getCurrentInfo().getPath(), 1000, null, true, null);
 					if (!entry.isDir || entry.contents == null) {
-						
+
 						handler.post(new Runnable() {
-							
+
 							@Override
 							public void run() {
 								Log.e(TAG, "File or empty directory");
@@ -162,9 +162,9 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 
 						return;
 					}
-					
+
 					handler.post(new Runnable() {
-						
+
 						@Override
 						public void run() {
 							curInfo.setEntry(entry);
@@ -172,7 +172,7 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 							String name = curInfo.getName();
 							if (StringUtils.isBlank(name))
 								name = "/";
-							if(getActivity() != null)
+							if (getActivity() != null)
 								((MainActivity) getActivity()).onSectionAttached(name);
 
 							int indexInParent = 0;
@@ -190,38 +190,46 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 					});
 
 				} catch (DropboxException e) {
-					getActivity().runOnUiThread(new Runnable() {
+					if (getActivity() != null) {
+						getActivity().runOnUiThread(new Runnable() {
 
-						@Override
-						public void run() {
-							hideWaitingDialog();
-						}
-					});
+							@Override
+							public void run() {
+								hideWaitingDialog();
+								DialogHelper.showRetryDialog(getActivity(), new OnClickListener() {
+
+									@Override
+									public void onClick(DialogInterface dialog, int which) {
+										DropboxExplorerFragment.this.enumerate();
+									}
+								});
+							}
+						});
+					}
 					e.printStackTrace();
 				}
 				runningThread = null;
 			}
-			
+
 		};
 		runningThread.start();
 
 	}
-	
-	
+
 	@Override
 	public boolean onBackPressed() {
 		if (C.LOCAL_ROOT_PATH.equals(curInfo.getPath())) {
 			return false;
 		}
 		return goParentDirectory();
-	}	
-	
+	}
+
 	@Override
 	protected Bitmap getThumbnailBitmap(FileInfo info, ImageView thumbnailIv) {
 		new DropboxThumbBitmapLoader(info, mApi, thumbnailIv).run();
 		return null;
 	}
-	
+
 	private void logOut() {
 		// Remove credentials from the session
 		mApi.getSession().unlink();
@@ -240,6 +248,5 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 			//
 		}
 	}
-	
-	
+
 }

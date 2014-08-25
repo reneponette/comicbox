@@ -60,4 +60,12 @@ public class DialogHelper {
 		builder.setNegativeButton(android.R.string.cancel, null);
 		builder.create().show();
 	}
+	
+	public static void showRetryDialog(Context context, DialogInterface.OnClickListener listener) {
+		AlertDialog.Builder builder = new Builder(context);
+		builder.setMessage(context.getString(R.string.error_retry));
+		builder.setPositiveButton(android.R.string.ok, listener);
+		builder.setNegativeButton(android.R.string.cancel, null);
+		builder.create().show();
+	}
 }

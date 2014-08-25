@@ -1969,6 +1969,7 @@ com.reneponette.comicbox.R$string: int action_settings
 com.reneponette.comicbox.R$string: int app_name
 com.reneponette.comicbox.R$string: int cannot_read_file
 com.reneponette.comicbox.R$string: int com_crashlytics_android_build_id
+com.reneponette.comicbox.R$string: int error_retry
 com.reneponette.comicbox.R$string: int navigation_drawer_close
 com.reneponette.comicbox.R$string: int navigation_drawer_open
 com.reneponette.comicbox.R$string: int pref_description_dropbox_logout

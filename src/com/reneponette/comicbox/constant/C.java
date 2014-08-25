@@ -6,6 +6,9 @@ import com.reneponette.comicbox.application.GlobalApplication;
 import com.reneponette.comicbox.utils.SimpleCrypto;
 
 public class C {
+	final static public boolean DEBUG = false;
+	
+	
 	final static public String LAST_LOCAL_PATH = "lastLocalPath";
 	final static public String LAST_DROPBOX_PATH = "lastDropboxPath";
 	

@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 
 import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.DropboxAPI.DropboxInputStream;
@@ -15,12 +16,14 @@ import com.dropbox.client2.DropboxAPI.ThumbFormat;
 import com.dropbox.client2.DropboxAPI.ThumbSize;
 import com.dropbox.client2.android.AndroidAuthSession;
 import com.dropbox.client2.exception.DropboxException;
+import com.reneponette.comicbox.R;
 import com.reneponette.comicbox.application.GlobalApplication;
 import com.reneponette.comicbox.constant.C;
 import com.reneponette.comicbox.db.FileInfo;
 import com.reneponette.comicbox.db.FileInfoDAO;
 import com.reneponette.comicbox.manager.PausableThreadPoolExecutor;
 import com.reneponette.comicbox.manager.PausableThreadPoolExecutor.Type;
+import com.reneponette.comicbox.model.FileMeta.FileType;
 import com.reneponette.comicbox.utils.FileUtils;
 import com.reneponette.comicbox.utils.ImageUtils;
 import com.reneponette.comicbox.utils.StringUtils;
@@ -66,8 +69,15 @@ public class DropboxThumbBitmapLoader {
 			return;
 		}
 
-		if (iv != null)
-			iv.setImageBitmap(null);
+		if (iv != null) {
+			//기본 이미지 설정
+			iv.setScaleType(ScaleType.CENTER_INSIDE);
+			if (info.getMeta().type == FileType.DIRECTORY) {
+				iv.setImageResource(R.drawable.ic_folder);
+			} else {
+				iv.setImageResource(R.drawable.ic_comics);
+			}
+		}
 
 		if (requestSet.contains(info))
 			return;
@@ -134,6 +144,7 @@ public class DropboxThumbBitmapLoader {
 				if (listener != null)
 					listener.onLoadBitmap(bitmap, info.getKey());
 				if (iv != null && info.getKey().equals(iv.getTag())) {
+					iv.setScaleType(ScaleType.CENTER_CROP);
 					iv.setImageBitmap(bitmap);
 				}
 			}
