@@ -14,6 +14,7 @@ import com.reneponette.comicbox.controller.LocalZipPageBuilder;
 import com.reneponette.comicbox.controller.PageBuilder;
 import com.reneponette.comicbox.controller.PageBuilder.OnPageBuildListener;
 import com.reneponette.comicbox.model.PageInfo;
+import com.reneponette.comicbox.model.PageInfo.PageBuildType;
 import com.reneponette.comicbox.utils.ImageUtils;
 import com.reneponette.comicbox.utils.MessageUtils;
 
@@ -39,27 +40,27 @@ public class LocalZipReaderFragment extends BasePagerReaderFragment {
 		outState.putString(PATH, curFile.getAbsolutePath());
 		super.onSaveInstanceState(outState);
 	}
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		if(savedInstanceState == null) {
+
+		if (savedInstanceState == null) {
 			curFile = new File(getArguments().getString(PATH));
 		} else {
 			curFile = new File(savedInstanceState.getString(PATH));
 		}
-		
-		pageBuilder.prepare(curFile);		
+
+		pageBuilder.prepare(curFile);
 	}
 
 	/*---------------------------------------------------------------------------*/
-	
+
 	@Override
 	protected PageBuilder onCreatePageBuilder() {
-		PageBuilder builder = new LocalZipPageBuilder(); 
+		PageBuilder builder = new LocalZipPageBuilder();
 		builder.setOnDataBuildListener(new OnPageBuildListener() {
-			
+
 			@Override
 			public void onStartBuild() {
 				showWaitingDialog();
@@ -89,27 +90,28 @@ public class LocalZipReaderFragment extends BasePagerReaderFragment {
 		});
 		return builder;
 	}
-	
 
 	/*---------------------------------------------------------------------------*/
-
 
 	@Override
 	protected Bitmap getPageBitmap(ImageView iv, int position) {
 		PageInfo pi = pageBuilder.getPageInfo(position);
-		return ImageUtils.getBitmap(pi.getZipFile(), pi.getZipEntry(), pi.getBuildType(), isAutocrop(),
-				false);
+
+		if (pi.getZipFile() == null)
+			return null;
+
+		return ImageUtils.getBitmap(pi.getZipFile(), pi.getZipEntry(), pi.getBuildType(), isAutocrop(), false);
 	}
 
 	@Override
 	protected Bitmap getPreviewBitmap(ImageView iv, int position) {
 		PageInfo pi = pageBuilder.getPageInfo(position);
-//		new PageBitmapLoader(pi, iv, isAutocrop(), true).run();
-//		return null;
-		
-		if(pi.getZipFile() == null)
+		// new PageBitmapLoader(pi, iv, isAutocrop(), true).run();
+		// return null;
+
+		if (pi.getZipFile() == null)
 			return null;
-		
+
 		return ImageUtils.getBitmap(pi.getZipFile(), pi.getZipEntry(), pi.getBuildType(), false, true);
 	}
 

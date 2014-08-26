@@ -103,6 +103,12 @@ public class PageBuilder {
 	public PageInfo getPageInfo(int position) {
 		return pageInfoList.get(position);
 	}
+	
+	public void removePageInfo(int position) {
+		if(0 > position || pageInfoList.size() <= position)
+			return;
+		pageInfoList.remove(position);
+	}
 
 	public FileMeta getFileMeta() {
 		return fileMeta;

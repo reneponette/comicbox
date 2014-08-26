@@ -139,9 +139,9 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 		if (runningThread != null)
 			runningThread.interrupt();
 
-		showWaitingDialog();
 		infoList.clear();
-		gridView.setAdapter(null);
+		adapter.notifyDataSetChanged();
+		showWaitingDialog();
 
 		runningThread = new Thread() {
 			@Override
@@ -184,7 +184,7 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 									indexInParent++;
 								}
 							}
-							gridView.setAdapter(adapter);
+							adapter.notifyDataSetChanged();
 							hideWaitingDialog();
 						}
 					});
