@@ -136,7 +136,7 @@ public class ReaderActivity extends Activity {
 	@Override
 	public void onBackPressed() {
 		BaseReaderFragment f = (BaseReaderFragment) getFragmentManager().findFragmentByTag(TAG_FRAGMENT);
-		if (!f.onBackPressed())
+		if (f != null && !f.onBackPressed())
 			super.onBackPressed();
 	}
 

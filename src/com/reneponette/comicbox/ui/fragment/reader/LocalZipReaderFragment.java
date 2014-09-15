@@ -4,17 +4,12 @@ import java.io.File;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.artifex.mupdfdemo.PageView;
 import com.reneponette.comicbox.controller.LocalZipPageBuilder;
 import com.reneponette.comicbox.controller.PageBuilder;
 import com.reneponette.comicbox.controller.PageBuilder.OnPageBuildListener;
 import com.reneponette.comicbox.model.PageInfo;
-import com.reneponette.comicbox.model.PageInfo.PageBuildType;
 import com.reneponette.comicbox.utils.ImageUtils;
 import com.reneponette.comicbox.utils.MessageUtils;
 
