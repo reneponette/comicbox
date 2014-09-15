@@ -1,10 +1,9 @@
 <resources>
 
     <color name="black_overlay">#66000000</color>
-    <color name="actionbar_bg">#ff87c3</color>
     
-    
-    <color name="primary">#1198d4</color>
+<!--     <color name="primary">#1198d4</color> -->
+    <color name="primary">#0081e3</color>
     <color name="primary_dark">#0087c3</color>
     <color name="accent">#0087c3</color>
     

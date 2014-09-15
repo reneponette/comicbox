@@ -1484,8 +1484,6 @@ com.reneponette.comicbox.R$string
 com.reneponette.comicbox.R$style
 com.reneponette.comicbox.R$styleable
 com.reneponette.comicbox.R$xml
-com.reneponette.comicbox.cache.BitmapCache:
-    45:45:public android.graphics.Bitmap removeBitmapFromMemCache(java.lang.String)
 com.reneponette.comicbox.cache.DropboxThumbBitmapLoader:
     45:49:public DropboxThumbBitmapLoader(com.reneponette.comicbox.db.FileInfo,com.dropbox.client2.DropboxAPI,com.reneponette.comicbox.cache.DropboxThumbBitmapLoader$OnLoadBitmapListener)
 com.reneponette.comicbox.cache.LocalThumbBitmapLoader:
@@ -1507,10 +1505,11 @@ com.reneponette.comicbox.constant.C:
 com.reneponette.comicbox.controller.PageBuilder:
     boolean autocrop
     48:51:public PageBuilder(com.reneponette.comicbox.controller.PageBuilder$OnPageBuildListener)
-    108:108:public com.reneponette.comicbox.model.FileMeta getFileMeta()
-    124:124:public boolean isAutocrop()
-    128:129:public void setAutocrop(boolean)
-    150:152:protected void addAdPageInfo(boolean)
+    108:111:public void removePageInfo(int)
+    114:114:public com.reneponette.comicbox.model.FileMeta getFileMeta()
+    130:130:public boolean isAutocrop()
+    134:135:public void setAutocrop(boolean)
+    156:158:protected void addAdPageInfo(boolean)
 com.reneponette.comicbox.db.BaseDAO:
     public abstract java.lang.Object populateObject(android.database.Cursor)
     44:44:public long insert(com.reneponette.comicbox.db.DatabaseStorable)
@@ -1567,6 +1566,9 @@ com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment:
     private static final java.lang.String PATH
     private static final java.lang.String TAG
     235:241:private void logOut()
+com.reneponette.comicbox.ui.fragment.explorer.FtpExplorerFragment
+com.reneponette.comicbox.ui.fragment.explorer.FtpExplorerFragment$1
+com.reneponette.comicbox.ui.fragment.explorer.FtpExplorerFragment$1$1
 com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment:
     private static final java.lang.String FILE_INFO
 com.reneponette.comicbox.ui.fragment.reader.BaseReaderFragment:
@@ -2136,6 +2138,234 @@ org.apache.commons.compress.compressors.z.ZCompressorInputStream:
 org.apache.commons.compress.utils.IOUtils:
     private static final int COPY_BUF_SIZE
     private static final int SKIP_BUF_SIZE
+org.apache.commons.net.MalformedServerReplyException:
+    private static final long serialVersionUID
+org.apache.commons.net.ProtocolCommandEvent:
+    private static final long serialVersionUID
+org.apache.commons.net.ProtocolCommandSupport:
+    private static final long serialVersionUID
+org.apache.commons.net.SocketClient:
+    private static final int DEFAULT_CONNECT_TIMEOUT
+    490:490:protected int getSendBufferSize()
+    510:510:protected int getReceiveBufferSize()
+org.apache.commons.net.bsd.RExecClient:
+    protected static final char NULL_CHAR
+org.apache.commons.net.finger.FingerClient:
+    private static final java.lang.String __LONG_FLAG
+org.apache.commons.net.ftp.FTP:
+    private static final java.lang.String __modes
+org.apache.commons.net.ftp.FTPClient:
+    734:734:protected java.net.Socket _openDataConnection_(int,java.lang.String)
+    1183:1195:boolean reinitialize()
+org.apache.commons.net.ftp.FTPCommand:
+    private static final int LAST
+    153:158:static void checkArray()
+org.apache.commons.net.ftp.FTPConnectionClosedException:
+    private static final long serialVersionUID
+org.apache.commons.net.ftp.FTPFile:
+    private static final long serialVersionUID
+org.apache.commons.net.ftp.FTPHTTPClient:
+    75:75:protected java.net.Socket _openDataConnection_(int,java.lang.String)
+org.apache.commons.net.ftp.FTPSClient:
+    private static final java.lang.String DEFAULT_PROT
+    private static final java.lang.String DEFAULT_PROTOCOL
+    private static final java.lang.String CMD_AUTH
+    private static final java.lang.String CMD_ADAT
+    private static final java.lang.String CMD_PROT
+    private static final java.lang.String CMD_PBSZ
+    private static final java.lang.String CMD_MIC
+    private static final java.lang.String CMD_CONF
+    private static final java.lang.String CMD_ENC
+    private static final java.lang.String CMD_CCC
+    580:580:protected java.net.Socket _openDataConnection_(int,java.lang.String)
+org.apache.commons.net.ftp.parser.DefaultFTPFileEntryParserFactory:
+    private static final java.lang.String JAVA_IDENTIFIER
+    private static final java.lang.String JAVA_QUALIFIED_NAME
+org.apache.commons.net.ftp.parser.EnterpriseUnixFTPEntryParser:
+    private static final java.lang.String MONTHS
+    private static final java.lang.String REGEX
+org.apache.commons.net.ftp.parser.FTPTimestampParserImpl:
+    289:289:boolean isLenientFutureDates()
+    295:296:void setLenientFutureDates(boolean)
+org.apache.commons.net.ftp.parser.MVSFTPEntryParser:
+    static final int UNKNOWN_LIST_TYPE
+    static final int FILE_LIST_TYPE
+    static final int MEMBER_LIST_TYPE
+    static final int UNIX_LIST_TYPE
+    static final int JES_LEVEL_1_LIST_TYPE
+    static final int JES_LEVEL_2_LIST_TYPE
+    static final java.lang.String DEFAULT_DATE_FORMAT
+    static final java.lang.String FILE_LIST_REGEX
+    static final java.lang.String MEMBER_LIST_REGEX
+    static final java.lang.String JES_LEVEL_1_LIST_REGEX
+    static final java.lang.String JES_LEVEL_2_LIST_REGEX
+org.apache.commons.net.ftp.parser.MacOsPeterFTPEntryParser:
+    static final java.lang.String DEFAULT_DATE_FORMAT
+    static final java.lang.String DEFAULT_RECENT_DATE_FORMAT
+    private static final java.lang.String REGEX
+org.apache.commons.net.ftp.parser.NTFTPEntryParser:
+    private static final java.lang.String DEFAULT_DATE_FORMAT
+    private static final java.lang.String DEFAULT_DATE_FORMAT2
+    private static final java.lang.String REGEX
+org.apache.commons.net.ftp.parser.NetwareFTPEntryParser:
+    private static final java.lang.String DEFAULT_DATE_FORMAT
+    private static final java.lang.String DEFAULT_RECENT_DATE_FORMAT
+    private static final java.lang.String REGEX
+org.apache.commons.net.ftp.parser.OS2FTPEntryParser:
+    private static final java.lang.String DEFAULT_DATE_FORMAT
+    private static final java.lang.String REGEX
+org.apache.commons.net.ftp.parser.OS400FTPEntryParser:
+    private static final java.lang.String DEFAULT_DATE_FORMAT
+    private static final java.lang.String REGEX
+org.apache.commons.net.ftp.parser.ParserInitializationException:
+    private static final long serialVersionUID
+org.apache.commons.net.ftp.parser.UnixFTPEntryParser:
+    static final java.lang.String DEFAULT_DATE_FORMAT
+    static final java.lang.String DEFAULT_RECENT_DATE_FORMAT
+    static final java.lang.String NUMERIC_DATE_FORMAT
+    private static final java.lang.String REGEX
+org.apache.commons.net.ftp.parser.VMSFTPEntryParser:
+    private static final java.lang.String DEFAULT_DATE_FORMAT
+    private static final java.lang.String REGEX
+org.apache.commons.net.ftp.parser.VMSVersioningFTPEntryParser:
+    private static final java.lang.String PRE_PARSE_REGEX
+org.apache.commons.net.imap.IMAP:
+    protected static final java.lang.String __DEFAULT_ENCODING
+org.apache.commons.net.imap.IMAPCommand:
+    73:74:private IMAPCommand(java.lang.String,int)
+    77:78:private IMAPCommand(java.lang.String,int,java.lang.String)
+    89:90:private IMAPCommand(java.lang.String,int,java.lang.String,int)
+org.apache.commons.net.imap.IMAPReply:
+    private static final java.lang.String IMAP_OK
+    private static final java.lang.String IMAP_NO
+    private static final java.lang.String IMAP_BAD
+    private static final java.lang.String IMAP_UNTAGGED_PREFIX
+    private static final java.lang.String IMAP_CONTINUATION_PREFIX
+    private static final java.lang.String TAGGED_RESPONSE
+    private static final java.lang.String UNTAGGED_RESPONSE
+org.apache.commons.net.io.CRLFLineReader:
+    private static final char LF
+    private static final char CR
+org.apache.commons.net.io.CopyStreamEvent:
+    private static final long serialVersionUID
+org.apache.commons.net.io.CopyStreamException:
+    private static final long serialVersionUID
+org.apache.commons.net.io.DotTerminatedMessageReader:
+    private static final char LF
+    private static final char CR
+    private static final int DOT
+org.apache.commons.net.io.DotTerminatedMessageWriter:
+    private static final int __NOTHING_SPECIAL_STATE
+    private static final int __LAST_WAS_CR_STATE
+    private static final int __LAST_WAS_NL_STATE
+org.apache.commons.net.io.ToNetASCIIInputStream:
+    private static final int __NOTHING_SPECIAL
+    private static final int __LAST_WAS_CR
+    private static final int __LAST_WAS_NL
+org.apache.commons.net.nntp.NNTP:
+    private static final java.lang.String __DEFAULT_ENCODING
+org.apache.commons.net.nntp.NNTPConnectionClosedException:
+    private static final long serialVersionUID
+org.apache.commons.net.ntp.NtpV3Impl:
+    private static final int MODE_INDEX
+    private static final int MODE_SHIFT
+    private static final int VERSION_INDEX
+    private static final int VERSION_SHIFT
+    private static final int LI_INDEX
+    private static final int LI_SHIFT
+    private static final int STRATUM_INDEX
+    private static final int POLL_INDEX
+    private static final int PRECISION_INDEX
+    private static final int ROOT_DELAY_INDEX
+    private static final int ROOT_DISPERSION_INDEX
+    private static final int REFERENCE_ID_INDEX
+    private static final int REFERENCE_TIMESTAMP_INDEX
+    private static final int ORIGINATE_TIMESTAMP_INDEX
+    private static final int RECEIVE_TIMESTAMP_INDEX
+    private static final int TRANSMIT_TIMESTAMP_INDEX
+org.apache.commons.net.ntp.TimeStamp:
+    private static final long serialVersionUID
+    protected static final long msb0baseTime
+    protected static final long msb1baseTime
+org.apache.commons.net.pop3.POP3:
+    static final java.lang.String _OK
+    static final java.lang.String _OK_INT
+    static final java.lang.String _ERROR
+    static final java.lang.String _DEFAULT_ENCODING
+org.apache.commons.net.pop3.POP3Command:
+    private static final int _NEXT_
+org.apache.commons.net.pop3.POP3SClient:
+    private static final int DEFAULT_POP3S_PORT
+    private static final java.lang.String DEFAULT_PROTOCOL
+org.apache.commons.net.smtp.SMTP:
+    private static final java.lang.String __DEFAULT_ENCODING
+org.apache.commons.net.smtp.SMTPCommand:
+    private static final int _NEXT_
+org.apache.commons.net.smtp.SMTPConnectionClosedException:
+    private static final long serialVersionUID
+org.apache.commons.net.smtp.SMTPSClient:
+    private static final java.lang.String DEFAULT_PROTOCOL
+org.apache.commons.net.telnet.InvalidTelnetOptionException:
+    private static final long serialVersionUID
+org.apache.commons.net.telnet.Telnet:
+    static final boolean debug
+    static final boolean debugoptions
+    static final int _WILL_MASK
+    static final int _DO_MASK
+    static final int _REQUESTED_WILL_MASK
+    static final int _REQUESTED_DO_MASK
+    static final int DEFAULT_PORT
+    protected static final int TERMINAL_TYPE
+    protected static final int TERMINAL_TYPE_SEND
+    protected static final int TERMINAL_TYPE_IS
+org.apache.commons.net.telnet.TelnetCommand:
+    private static final int __FIRST_COMMAND
+    private static final int __LAST_COMMAND
+org.apache.commons.net.telnet.TelnetInputStream:
+    private static final int EOF
+    private static final int WOULD_BLOCK
+    static final int _STATE_DATA
+    static final int _STATE_IAC
+    static final int _STATE_WILL
+    static final int _STATE_WONT
+    static final int _STATE_DO
+    static final int _STATE_DONT
+    static final int _STATE_SB
+    static final int _STATE_SE
+    static final int _STATE_CR
+    static final int _STATE_IAC_SB
+    89:90:TelnetInputStream(java.io.InputStream,org.apache.commons.net.telnet.TelnetClient)
+org.apache.commons.net.telnet.TelnetOption:
+    private static final int __FIRST_OPTION
+    private static final int __LAST_OPTION
+org.apache.commons.net.telnet.TerminalTypeOptionHandler:
+    protected static final int TERMINAL_TYPE
+    protected static final int TERMINAL_TYPE_SEND
+    protected static final int TERMINAL_TYPE_IS
+org.apache.commons.net.telnet.WindowSizeOptionHandler:
+    protected static final int WINDOW_SIZE
+org.apache.commons.net.tftp.TFTP:
+    static final int PACKET_SIZE
+org.apache.commons.net.tftp.TFTPPacket:
+    static final int MIN_PACKET_SIZE
+org.apache.commons.net.tftp.TFTPPacketException:
+    private static final long serialVersionUID
+org.apache.commons.net.util.Base64:
+    private static final int DEFAULT_BUFFER_RESIZE_FACTOR
+    private static final int DEFAULT_BUFFER_SIZE
+    static final int CHUNK_SIZE
+    private static final byte PAD
+    private static final int MASK_6BITS
+    private static final int MASK_8BITS
+    353:353:boolean hasData()
+    1042:1042:int getLineLength()
+    1046:1046:byte[] getLineSeparator()
+org.apache.commons.net.util.ListenerList:
+    private static final long serialVersionUID
+org.apache.commons.net.util.SubnetUtils:
+    private static final java.lang.String IP_ADDRESS
+    private static final java.lang.String SLASH_FORMAT
+    private static final int NBITS
 org.json.simple.ItemList
 org.json.simple.JSONArray:
     private static final long serialVersionUID
