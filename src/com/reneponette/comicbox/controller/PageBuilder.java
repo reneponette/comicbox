@@ -103,9 +103,9 @@ public class PageBuilder {
 	public PageInfo getPageInfo(int position) {
 		return pageInfoList.get(position);
 	}
-	
+
 	public void removePageInfo(int position) {
-		if(0 > position || pageInfoList.size() <= position)
+		if (0 > position || pageInfoList.size() <= position)
 			return;
 		pageInfoList.remove(position);
 	}
@@ -148,7 +148,7 @@ public class PageBuilder {
 
 	protected void addPageInfo(PageBuildType buildType, File file, final boolean prepend) {
 		PageInfo info = new PageInfo(file);
-		info.setBuildType(buildType);		
+		info.setBuildType(buildType);
 		notify(info, prepend);
 	}
 
@@ -182,7 +182,7 @@ public class PageBuilder {
 
 	protected void addFinalPagesAndNotify() {
 		// 끝페이지, 광고 페이지 삽입
-		// addAdPageInfo(getReadDirection() == ReadDirection.RTL);
+		addAdPageInfo(getReadDirection() == ReadDirection.RTL);
 		addEndPageInfo(getReadDirection() == ReadDirection.RTL);
 
 		handler.post(new Runnable() {

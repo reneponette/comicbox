@@ -101,9 +101,6 @@ public class LocalZipReaderFragment extends BasePagerReaderFragment {
 	@Override
 	protected Bitmap getPreviewBitmap(ImageView iv, int position) {
 		PageInfo pi = pageBuilder.getPageInfo(position);
-		// new PageBitmapLoader(pi, iv, isAutocrop(), true).run();
-		// return null;
-
 		if (pi.getZipFile() == null)
 			return null;
 

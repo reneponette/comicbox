@@ -6,9 +6,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.artifex.mupdfdemo.FilePicker;
@@ -120,9 +117,6 @@ public class LocalPdfReaderFragment extends BasePagerReaderFragment implements F
 	@Override
 	protected Bitmap getPreviewBitmap(ImageView iv, int position) {
 		PageInfo pi = pageBuilder.getPageInfo(position);
-		// new PageBitmapLoader(pi, iv, isAutocrop(), true).run();
-		// return null;
-
 		if (pi.getPdfCore() == null)
 			return null;
 

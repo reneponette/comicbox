@@ -1,20 +1,14 @@
 package com.reneponette.comicbox.ui.fragment.reader;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.DropboxAPI.Entry;
 import com.dropbox.client2.android.AndroidAuthSession;
-import com.dropbox.client2.exception.DropboxException;
 import com.reneponette.comicbox.application.GlobalApplication;
 import com.reneponette.comicbox.controller.DropboxFolderPageBuilder;
 import com.reneponette.comicbox.controller.PageBuilder;
@@ -22,7 +16,6 @@ import com.reneponette.comicbox.controller.PageBuilder.OnPageBuildListener;
 import com.reneponette.comicbox.manager.DropBoxManager;
 import com.reneponette.comicbox.model.FileMeta.ReadDirection;
 import com.reneponette.comicbox.model.PageInfo;
-import com.reneponette.comicbox.model.PageInfo.PageBuildType;
 import com.reneponette.comicbox.utils.ImageUtils;
 import com.reneponette.comicbox.utils.Logger;
 import com.reneponette.comicbox.utils.StringUtils;
@@ -145,16 +138,12 @@ public class DropboxFolderReaderFragment extends BasePagerReaderFragment {
 	@Override
 	protected Bitmap getPageBitmap(ImageView iv, int position) {
 		loadPageBitmap(iv, position, false);
-		// return ImageUtils.getBitmap(pi.getFile(), pi.getBuildType(),
-		// isAutocrop(), false);
 		return null;
 	}
 
 	@Override
 	protected Bitmap getPreviewBitmap(ImageView iv, int position) {
 		loadPageBitmap(iv, position, true);
-		// PageInfo pi = pageBuilder.getPageInfo(position);
-		// new PageBitmapLoader(pi, iv, isAutocrop(), true).run();
 		return null;
 	}
 

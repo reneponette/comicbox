@@ -44,11 +44,28 @@ import com.reneponette.comicbox.model.PageInfo.PageBuildType;
  * 
  */
 public class ImageUtils {
+	
+	
+	private static int MAX_IMAGE_SIZE = 1920;
+	private static int MAX_THUMB_SIZE = 640;
+
+	
+	private static void calculateSampleSize(BitmapFactory.Options opts, boolean preview) {
+		int maxSize = Math.max(opts.outWidth, opts.outHeight);
+		if (preview) {
+			if(maxSize > MAX_THUMB_SIZE)
+				opts.inSampleSize = (int) Math.ceil((double)maxSize / MAX_THUMB_SIZE);
+		} else {
+			if(maxSize > MAX_IMAGE_SIZE)
+				opts.inSampleSize = (int) Math.ceil((double)maxSize / MAX_IMAGE_SIZE);
+		}		
+	}
+		
 
 	/*--------------페이지/프리뷰 비트맵 가져오기--------------------------------------------*/
 
 	/**
-	 * 드롭박스 스트리밍시 캐시에서 JPG파일별로 읽어오는 경우 호출됨
+	 * 폴더 이미지 파일, 혹은 드롭박스 스트리밍시 캐시에서 JPG파일별로 읽어오는 경우 호출됨
 	 * 
 	 * @param pageInfo
 	 * @param preview
@@ -60,14 +77,16 @@ public class ImageUtils {
 			return null;
 
 		Bitmap bm = null;
-		if (preview) {
-			BitmapFactory.Options opts = new Options();
-			opts.inSampleSize = 4;
-			bm = BitmapFactory.decodeFile(file.getAbsolutePath(), opts);
-		} else {
-			bm = BitmapFactory.decodeFile(file.getAbsolutePath());
-		}
+		BitmapFactory.Options opts = new Options();
 
+		opts.inJustDecodeBounds = true;
+		BitmapFactory.decodeFile(file.getAbsolutePath(), opts);
+		
+		calculateSampleSize(opts, preview);
+
+		opts.inJustDecodeBounds = false;
+		bm = BitmapFactory.decodeFile(file.getAbsolutePath(), opts);
+		
 		if (bm == null)
 			return null;
 
@@ -87,11 +106,18 @@ public class ImageUtils {
 			boolean preview) {
 		Bitmap bm = null;
 		try {
-			InputStream is = zipFile.getInputStream(entry);
+			InputStream is;
 			BitmapFactory.Options opts = new Options();
-			if (preview) {
-				opts.inSampleSize = 4;
-			}
+			
+			is = zipFile.getInputStream(entry);
+			opts.inJustDecodeBounds = true;
+			BitmapFactory.decodeStream(is, null, opts);
+			is.close();
+
+			calculateSampleSize(opts, preview);
+
+			is = zipFile.getInputStream(entry);
+			opts.inJustDecodeBounds = false;
 			bm = BitmapFactory.decodeStream(is, null, opts);
 			is.close();
 		} catch (IOException e) {
