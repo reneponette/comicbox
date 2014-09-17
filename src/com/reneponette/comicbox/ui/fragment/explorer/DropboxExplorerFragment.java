@@ -23,7 +23,7 @@ import com.reneponette.comicbox.manager.DropBoxManager;
 import com.reneponette.comicbox.model.FileMeta.FileType;
 import com.reneponette.comicbox.ui.MainActivity;
 import com.reneponette.comicbox.utils.DialogHelper;
-import com.reneponette.comicbox.utils.MessageUtils;
+import com.reneponette.comicbox.utils.ToastUtils;
 import com.reneponette.comicbox.utils.StringUtils;
 
 /**
@@ -104,7 +104,7 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 				enumerate();
 
 			} catch (IllegalStateException e) {
-				MessageUtils.toast(getActivity(), "Couldn't authenticate with Dropbox:" + e.getLocalizedMessage());
+				ToastUtils.toast("Couldn't authenticate with Dropbox:" + e.getLocalizedMessage());
 				Log.i(TAG, "Error authenticating", e);
 			}
 		}

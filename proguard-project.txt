@@ -32,6 +32,9 @@
 }
 
 
+################ 아담 ############################
+
+
 -keep class * extends java.util.ListResourceBundle {
  protected Object[][] getContents();
 }
@@ -48,3 +51,5 @@ class *
 -keepnames class * implements android.os.Parcelable {
  public static final ** CREATOR;
 }
+
+##################################################

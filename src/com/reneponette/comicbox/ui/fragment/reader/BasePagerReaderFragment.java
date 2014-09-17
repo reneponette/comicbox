@@ -4,6 +4,10 @@ import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import net.daum.adam.publisher.AdInterstitial;
+import net.daum.adam.publisher.AdView.OnAdFailedListener;
+import net.daum.adam.publisher.AdView.OnAdLoadedListener;
+import net.daum.adam.publisher.impl.AdError;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +17,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,6 +31,7 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.reneponette.comicbox.R;
 import com.reneponette.comicbox.controller.PageBuilder;
@@ -59,6 +65,8 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 	Timer previewLoadTimer;
 
 	private boolean use3Fingers;
+	
+	AdInterstitial mAdInterstitial = null;	
 
 	int curPageIndex;
 
@@ -75,6 +83,23 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 		Logger.i(this, "onCreate(), savedInstanceState = " + savedInstanceState + " - " + this);
 
 		pagerAdapter = new TouchImageAdapter(pageBuilder);
+		
+		// 1. 전면형 광고 객체 생성
+		mAdInterstitial = new AdInterstitial(getActivity());
+//		mAdInterstitial.setClientId("InterstitialTestClientId");
+		mAdInterstitial.setClientId("9c4fZ0GT1488247588d");
+		mAdInterstitial.setOnAdLoadedListener(new OnAdLoadedListener() {
+			@Override
+			public void OnAdLoaded() {
+				Log.i("InterstitialTab", "광고가 로딩되었습니다.");
+			}
+		});
+		mAdInterstitial.setOnAdFailedListener(new OnAdFailedListener() {
+			@Override
+			public void OnAdFailed(AdError error, String errorMessage) {
+				Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
+			}
+		});
 	}
 
 	@Override
@@ -171,7 +196,11 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 				PageInfo pi = pageBuilder.getPageInfo(position);
 				filename.setText(pi.getName());
 
-				checkEndPage(position);
+				
+				if(checkEndPage(position)) {
+					// 6. 전면형 광고를 불러온다.
+					mAdInterstitial.loadAd();
+				}				
 			}
 
 			@Override
@@ -213,6 +242,10 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 		} else {
 			pageBuilder.saveReadState(viewPager.getCurrentItem());
 		}
+		
+		if (mAdInterstitial != null) {
+			mAdInterstitial = null;
+		}		
 		super.onDestroy();
 	}
 
@@ -246,7 +279,7 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 		return false;
 	}
 
-	private void checkEndPage(int position) {
+	private boolean checkEndPage(int position) {
 		boolean isEndPage = false;
 		if (pageBuilder.getReadDirection() == ReadDirection.RTL) {
 			isEndPage = position == 0;
@@ -254,8 +287,11 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 			isEndPage = position == pageBuilder.pageSize() - 1;
 		}
 
-		if (isEndPage)
+		if (isEndPage) {
 			onGoNextFile();
+			return true;
+		}
+		return false;
 	}
 
 	protected void onGoNextFile() {
@@ -379,6 +415,7 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 		public int getCount() {
 			return controller.pageSize();
 		}
+		
 
 		@Override
 		public View instantiateItem(ViewGroup container, int position) {
@@ -431,6 +468,7 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 		public boolean isViewFromObject(View view, Object object) {
 			return view == object;
 		}
+		
 
 		/*------------Adapters-----------------------------------------------*/
 
@@ -440,7 +478,6 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 
 				@Override
 				public void onClick(View v) {
-					int curIndex = viewPager.getCurrentItem();
 					if (menuContainer.getVisibility() == View.GONE) {
 						menuContainer.setVisibility(View.VISIBLE);
 					} else

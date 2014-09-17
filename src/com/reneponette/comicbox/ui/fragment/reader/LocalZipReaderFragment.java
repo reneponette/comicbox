@@ -11,7 +11,7 @@ import com.reneponette.comicbox.controller.PageBuilder;
 import com.reneponette.comicbox.controller.PageBuilder.OnPageBuildListener;
 import com.reneponette.comicbox.model.PageInfo;
 import com.reneponette.comicbox.utils.ImageUtils;
-import com.reneponette.comicbox.utils.MessageUtils;
+import com.reneponette.comicbox.utils.ToastUtils;
 
 public class LocalZipReaderFragment extends BasePagerReaderFragment {
 
@@ -65,7 +65,7 @@ public class LocalZipReaderFragment extends BasePagerReaderFragment {
 			@Override
 			public void onFailBuild(String errStr) {
 				hideWaitingDialog();
-				MessageUtils.toast(getActivity(), errStr);
+				ToastUtils.toast(errStr);
 				getActivity().finish();
 			}
 

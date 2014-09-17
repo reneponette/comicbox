@@ -24,6 +24,8 @@
         <meta-data
             android:name="com.crashlytics.ApiKey"
             android:value="a0f5ea0859ba1f03226a9a1ad7d57ce4467811e0" />
+        <meta-data android:name="com.google.android.gms.version"
+                android:value="@integer/google_play_services_version" />
 
         <activity
             android:name="com.reneponette.comicbox.ui.MainActivity"
@@ -37,10 +39,6 @@
         </activity>
         <activity
             android:name="net.daum.adam.publisher.impl.AdInterstitialActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.reneponette.comicbox.ui.InterstitialActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity

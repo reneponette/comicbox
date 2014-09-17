@@ -182,7 +182,7 @@ public class PageBuilder {
 
 	protected void addFinalPagesAndNotify() {
 		// 끝페이지, 광고 페이지 삽입
-		addAdPageInfo(getReadDirection() == ReadDirection.RTL);
+//		addAdPageInfo(getReadDirection() == ReadDirection.RTL);
 		addEndPageInfo(getReadDirection() == ReadDirection.RTL);
 
 		handler.post(new Runnable() {

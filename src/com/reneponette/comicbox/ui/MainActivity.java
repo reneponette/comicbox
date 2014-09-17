@@ -43,7 +43,7 @@ import com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment;
 import com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment;
 import com.reneponette.comicbox.utils.DialogHelper;
 import com.reneponette.comicbox.utils.Logger;
-import com.reneponette.comicbox.utils.MessageUtils;
+import com.reneponette.comicbox.utils.ToastUtils;
 import com.reneponette.comicbox.utils.StringUtils;
 
 public class MainActivity extends Activity implements NavigationDrawerFragment.NavigationDrawerCallbacks,
@@ -193,7 +193,7 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 		else {
 			if (closeFlag == false) {
 				// 안내 메세지를 토스트로 출력한다.
-				MessageUtils.toast(this, getString(R.string.press_back_key_again));
+				ToastUtils.toast(getString(R.string.press_back_key_again));
 
 				// 상태값 변경
 				closeFlag = true;
