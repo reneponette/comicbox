@@ -23,6 +23,7 @@ import com.reneponette.comicbox.manager.DropBoxManager;
 import com.reneponette.comicbox.model.FileMeta.FileType;
 import com.reneponette.comicbox.ui.MainActivity;
 import com.reneponette.comicbox.utils.DialogHelper;
+import com.reneponette.comicbox.utils.Logger;
 import com.reneponette.comicbox.utils.ToastUtils;
 import com.reneponette.comicbox.utils.StringUtils;
 
@@ -35,7 +36,7 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 	 * The fragment argument representing the section number for this fragment.
 	 */
 	private static final String PATH = "path";
-	private static final String TAG = "DropboxViewFragment";
+	private static final String TAG = "DropboxExplorerFragment";
 
 	/**
 	 * Returns a new instance of this fragment for the given section number.
@@ -155,7 +156,7 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 
 							@Override
 							public void run() {
-								Log.e(TAG, "File or empty directory");
+								Logger.e(DropboxExplorerFragment.this, "File or empty directory");
 								hideWaitingDialog();
 							}
 						});

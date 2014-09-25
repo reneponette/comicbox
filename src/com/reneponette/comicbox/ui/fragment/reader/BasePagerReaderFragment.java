@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import net.daum.adam.publisher.AdInfo;
 import net.daum.adam.publisher.AdInterstitial;
 import net.daum.adam.publisher.AdView.OnAdFailedListener;
 import net.daum.adam.publisher.AdView.OnAdLoadedListener;
@@ -34,6 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.reneponette.comicbox.R;
+import com.reneponette.comicbox.constant.C;
 import com.reneponette.comicbox.controller.PageBuilder;
 import com.reneponette.comicbox.db.FileInfo;
 import com.reneponette.comicbox.model.FileMeta;
@@ -65,8 +67,8 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 	Timer previewLoadTimer;
 
 	private boolean use3Fingers;
-	
-	AdInterstitial mAdInterstitial = null;	
+
+	AdInterstitial mAdInterstitial;
 
 	int curPageIndex;
 
@@ -83,29 +85,14 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 		Logger.i(this, "onCreate(), savedInstanceState = " + savedInstanceState + " - " + this);
 
 		pagerAdapter = new TouchImageAdapter(pageBuilder);
-		
-		// 1. 전면형 광고 객체 생성
-		mAdInterstitial = new AdInterstitial(getActivity());
-//		mAdInterstitial.setClientId("InterstitialTestClientId");
-		mAdInterstitial.setClientId("9c4fZ0GT1488247588d");
-		mAdInterstitial.setOnAdLoadedListener(new OnAdLoadedListener() {
-			@Override
-			public void OnAdLoaded() {
-				Log.i("InterstitialTab", "광고가 로딩되었습니다.");
-			}
-		});
-		mAdInterstitial.setOnAdFailedListener(new OnAdFailedListener() {
-			@Override
-			public void OnAdFailed(AdError error, String errorMessage) {
-				Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
-			}
-		});
+
+		setupAdam();
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		Logger.i(this, "onCreateView() - " + this);
-		
+
 		View rootView = inflater.inflate(R.layout.fragment_reader_zip, container, false);
 
 		viewPager = (ExtendedViewPager) rootView.findViewById(R.id.view_pager);
@@ -184,7 +171,7 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		Logger.i(this, "onViewCreated() - " + this);		
+		Logger.i(this, "onViewCreated() - " + this);
 		viewPager.setOnPageChangeListener(new OnPageChangeListener() {
 
 			@Override
@@ -196,11 +183,8 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 				PageInfo pi = pageBuilder.getPageInfo(position);
 				filename.setText(pi.getName());
 
-				
-				if(checkEndPage(position)) {
-					// 6. 전면형 광고를 불러온다.
+				if (checkEndPage(position) && C.ENABLE_ADAM)
 					mAdInterstitial.loadAd();
-				}				
 			}
 
 			@Override
@@ -215,10 +199,10 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 
 			}
 		});
-		
+
 		pageBuilder.build();
 	}
-	
+
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -242,10 +226,10 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 		} else {
 			pageBuilder.saveReadState(viewPager.getCurrentItem());
 		}
-		
+
 		if (mAdInterstitial != null) {
 			mAdInterstitial = null;
-		}		
+		}
 		super.onDestroy();
 	}
 
@@ -265,11 +249,9 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-	
-	
 
 	/*---------------------------------------------------------------------------*/
-	
+
 	@Override
 	public boolean onBackPressed() {
 		if (menuContainer.getVisibility() == View.VISIBLE) {
@@ -344,8 +326,7 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 	private void showSettingsActivity() {
 		// 설정 액티비티 띠우기
 		pageBuilder.saveReadState(viewPager.getCurrentItem());
-		startActivityForResult(FileSettingsActivity.newIntent(getActivity(), pageBuilder.getFileInfo()),
-				REQ_SETTINGS);
+		startActivityForResult(FileSettingsActivity.newIntent(getActivity(), pageBuilder.getFileInfo()), REQ_SETTINGS);
 	}
 
 	protected void initUI() {
@@ -401,7 +382,30 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 
 	}
 
-	/*------------------------------------------------------------------*/
+	private void setupAdam() {
+
+		if (C.ENABLE_ADAM) {
+			// 1. 전면형 광고 객체 생성
+			mAdInterstitial = new AdInterstitial(getActivity());
+			// mAdInterstitial.setClientId("InterstitialTestClientId");
+			// mAdInterstitial.setAdInfo(new AdInfo());
+			mAdInterstitial.setClientId("9c4fZ0GT1488247588d");
+			mAdInterstitial.setOnAdLoadedListener(new OnAdLoadedListener() {
+				@Override
+				public void OnAdLoaded() {
+					Log.i("InterstitialTab", "광고가 로딩되었습니다.");
+				}
+			});
+			mAdInterstitial.setOnAdFailedListener(new OnAdFailedListener() {
+				@Override
+				public void OnAdFailed(AdError error, String errorMessage) {
+					Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
+				}
+			});
+		}
+	}
+
+	/*------------Adapters-----------------------------------------------*/
 
 	private class TouchImageAdapter extends PagerAdapter {
 
@@ -415,7 +419,6 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 		public int getCount() {
 			return controller.pageSize();
 		}
-		
 
 		@Override
 		public View instantiateItem(ViewGroup container, int position) {
@@ -435,7 +438,7 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 				container.addView(v);
 				return v;
 			}
-			
+
 			iv.setImageBitmap(null);
 
 			Bitmap image = getPageBitmap(iv, position);
@@ -468,9 +471,6 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 		public boolean isViewFromObject(View view, Object object) {
 			return view == object;
 		}
-		
-
-		/*------------Adapters-----------------------------------------------*/
 
 		private void setupImageView(final TouchImageView iv) {
 

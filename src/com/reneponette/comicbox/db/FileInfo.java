@@ -15,7 +15,7 @@ import com.reneponette.comicbox.utils.StringUtils;
 public class FileInfo implements DatabaseStorable<FileInfo>, Parcelable {
 
 	public enum LocationType {
-		UNKNOWN, LOCAL, DROPBOX;
+		UNKNOWN, LOCAL, DROPBOX, GOOGLE;
 	}
 
 	// 디비에 저장되는 정보

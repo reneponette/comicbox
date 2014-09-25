@@ -19,14 +19,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.DropboxAPI.Entry;
 import com.dropbox.client2.android.AndroidAuthSession;
-import com.dropbox.client2.exception.DropboxException;
 import com.reneponette.comicbox.R;
 import com.reneponette.comicbox.cache.DropboxComicsDownloader;
 import com.reneponette.comicbox.cache.DropboxComicsDownloader.OnLoadComicsListener;
@@ -40,11 +38,11 @@ import com.reneponette.comicbox.ui.fragment.NavigationDrawerFragment;
 import com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment;
 import com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment.FolderViewFragmentListener;
 import com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment;
+import com.reneponette.comicbox.ui.fragment.explorer.GoogleDriveExplorerFragment;
 import com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment;
 import com.reneponette.comicbox.utils.DialogHelper;
 import com.reneponette.comicbox.utils.Logger;
 import com.reneponette.comicbox.utils.ToastUtils;
-import com.reneponette.comicbox.utils.StringUtils;
 
 public class MainActivity extends Activity implements NavigationDrawerFragment.NavigationDrawerCallbacks,
 		FolderViewFragmentListener {
@@ -64,13 +62,19 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 	private File curDir;
 	private Entry curEntry;
 
+//	// Request code to use when launching the resolution activity
+//	private static final int REQUEST_RESOLVE_ERROR = 1001;
+//	// Bool to track whether the app is already resolving an error
+//	private boolean mResolvingError = false;
+//	GoogleApiClient mGoogleApiClient;
+
 	private boolean closeFlag = false;
 	private Handler closeHandler = new Handler() {
 		public void handleMessage(Message msg) {
 			closeFlag = false;
 		}
 	};
-	
+
 	protected void onSaveInstanceState(Bundle outState) {
 		Logger.i(this, "onSaveInstanceState");
 		saveLastDirectory();
@@ -91,7 +95,14 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 
 		// Set up the drawer.
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
+
 	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+	}
+
 
 	@Override
 	protected void onStop() {
@@ -121,10 +132,13 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 			break;
 		case 1:
 			fragmentManager.beginTransaction()
-					.replace(R.id.container, 
-							DropboxExplorerFragment.newInstance(curEntry.path)).commit();
+					.replace(R.id.container, DropboxExplorerFragment.newInstance(curEntry.path)).commit();
 			break;
 		case 2:
+			fragmentManager.beginTransaction()
+					.replace(R.id.container, GoogleDriveExplorerFragment.newInstance(curEntry.path)).commit();
+			break;
+		case 3:
 			Intent intent = new Intent();
 			intent.setClass(this, SettingsActivity.class);
 			startActivity(intent);
@@ -207,7 +221,7 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 	@Override
 	public void onFileClicked(final FileInfo info) {
 		Logger.i(this, "onFileClicked = " + info.getPath());
-		
+
 		if (info.getMeta().type == FileType.DIRECTORY) {
 			curDir = info.getFile();
 			FragmentManager fragmentManager = getFragmentManager();
@@ -224,14 +238,14 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 		}
 
 		if (info.getMeta().type == FileType.JPG) {
-			startActivity(ReaderActivity.newIntent(this, info));			
+			startActivity(ReaderActivity.newIntent(this, info));
 		}
 	}
 
 	@Override
 	public void onEntryClicked(final FileInfo info) {
 		Logger.i(this, "onEntryClicked = " + info.getPath());
-		
+
 		if (info.getMeta().type == FileType.DIRECTORY) {
 			curEntry = info.getEntry();
 			FragmentManager fragmentManager = getFragmentManager();

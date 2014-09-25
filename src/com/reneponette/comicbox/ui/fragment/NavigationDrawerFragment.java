@@ -102,6 +102,7 @@ public class NavigationDrawerFragment extends Fragment implements OnClickListene
 
 		view.findViewById(R.id.sdcard).setOnClickListener(this);
 		view.findViewById(R.id.dropbox).setOnClickListener(this);
+		view.findViewById(R.id.google).setOnClickListener(this);
 		view.findViewById(R.id.settings).setOnClickListener(this);
 
 		final BaseAdapter adapter = new BaseAdapter() {
@@ -181,8 +182,11 @@ public class NavigationDrawerFragment extends Fragment implements OnClickListene
 		case R.id.dropbox:
 			selectItem(1);
 			break;
-		case R.id.settings:
+		case R.id.google:
 			selectItem(2);
+			break;
+		case R.id.settings:
+			selectItem(3);
 			break;
 		default:
 			break;
