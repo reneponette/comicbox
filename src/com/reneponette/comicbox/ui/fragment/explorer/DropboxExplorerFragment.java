@@ -1,5 +1,6 @@
 package com.reneponette.comicbox.ui.fragment.explorer;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.graphics.Bitmap;
@@ -24,8 +25,8 @@ import com.reneponette.comicbox.model.FileMeta.FileType;
 import com.reneponette.comicbox.ui.MainActivity;
 import com.reneponette.comicbox.utils.DialogHelper;
 import com.reneponette.comicbox.utils.Logger;
-import com.reneponette.comicbox.utils.ToastUtils;
 import com.reneponette.comicbox.utils.StringUtils;
+import com.reneponette.comicbox.utils.ToastUtils;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -197,13 +198,15 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 							@Override
 							public void run() {
 								hideWaitingDialog();
-								DialogHelper.showRetryDialog(getActivity(), new OnClickListener() {
+								if (mLoggedIn) {
+									DialogHelper.showRetryDialog(getActivity(), new OnClickListener() {
 
-									@Override
-									public void onClick(DialogInterface dialog, int which) {
-										DropboxExplorerFragment.this.enumerate();
-									}
-								});
+										@Override
+										public void onClick(DialogInterface dialog, int which) {
+											DropboxExplorerFragment.this.enumerate();
+										}
+									});
+								}
 							}
 						});
 					}

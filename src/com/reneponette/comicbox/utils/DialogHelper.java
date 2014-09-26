@@ -2,6 +2,7 @@ package com.reneponette.comicbox.utils;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -61,11 +62,14 @@ public class DialogHelper {
 		builder.create().show();
 	}
 	
-	public static void showRetryDialog(Context context, DialogInterface.OnClickListener listener) {
+	public static Dialog showRetryDialog(Context context, DialogInterface.OnClickListener listener) {
 		AlertDialog.Builder builder = new Builder(context);
 		builder.setMessage(context.getString(R.string.error_retry));
 		builder.setPositiveButton(android.R.string.ok, listener);
 		builder.setNegativeButton(android.R.string.cancel, null);
-		builder.create().show();
+		Dialog dialog = builder.create();
+		dialog.show();
+		return dialog;
+		
 	}
 }
