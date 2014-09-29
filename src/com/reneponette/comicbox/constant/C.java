@@ -6,7 +6,7 @@ import com.reneponette.comicbox.application.GlobalApplication;
 import com.reneponette.comicbox.utils.SimpleCrypto;
 
 public class C {
-	final static public boolean DEBUG = false;
+	final static public boolean DEBUG = true;
 	
 	final static public boolean ENABLE_ADAM = false;
 	

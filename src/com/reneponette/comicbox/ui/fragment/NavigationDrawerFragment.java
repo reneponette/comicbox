@@ -27,6 +27,7 @@ import com.reneponette.comicbox.R;
 import com.reneponette.comicbox.db.FileInfo;
 import com.reneponette.comicbox.manager.FavoriteManager;
 import com.reneponette.comicbox.manager.FavoriteManager.OnFavoriteChangedListener;
+import com.reneponette.comicbox.utils.Logger;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation
@@ -71,6 +72,7 @@ public class NavigationDrawerFragment extends Fragment implements OnClickListene
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		Logger.e(this, "onCreate");
 		super.onCreate(savedInstanceState);
 
 		// Read in the flag indicating whether or not the user has demonstrated
@@ -98,7 +100,7 @@ public class NavigationDrawerFragment extends Fragment implements OnClickListene
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_navigation_drawer, null);
+		View view = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
 
 		view.findViewById(R.id.sdcard).setOnClickListener(this);
 		view.findViewById(R.id.dropbox).setOnClickListener(this);

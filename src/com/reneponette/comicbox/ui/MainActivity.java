@@ -78,10 +78,12 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 	protected void onSaveInstanceState(Bundle outState) {
 		Logger.i(this, "onSaveInstanceState");
 		saveLastDirectory();
+		super.onSaveInstanceState(outState);
 	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		Logger.e(this, "onCreate");
 		super.onCreate(savedInstanceState);
 
 		curDir = getStartLocalDirectory();
@@ -95,7 +97,6 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 
 		// Set up the drawer.
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
-
 	}
 
 	@Override
@@ -158,7 +159,7 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 
 	public void onSectionAttached(String name) {
 		mTitle = name;
-		restoreActionBar();
+//		restoreActionBar();
 	}
 
 	public void restoreActionBar() {
