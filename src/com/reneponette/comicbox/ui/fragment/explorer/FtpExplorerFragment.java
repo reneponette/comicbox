@@ -1,11 +1,10 @@
 package com.reneponette.comicbox.ui.fragment.explorer;
 
-import java.io.IOException;
-import java.net.SocketException;
-
-import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPReply;
-import org.apache.commons.net.ftp.FTPSClient;
+import org.apache.commons.vfs2.FileObject;
+import org.apache.commons.vfs2.FileSystemException;
+import org.apache.commons.vfs2.FileSystemOptions;
+import org.apache.commons.vfs2.impl.StandardFileSystemManager;
+import org.apache.commons.vfs2.provider.sftp.SftpFileSystemConfigBuilder;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -49,7 +48,6 @@ public class FtpExplorerFragment extends BaseExplorerFragment {
 
 	private Handler handler;
 	private Thread runningThread;
-	private FTPClient ftpClient;
 	private String host;
 	private int port;
 
@@ -68,7 +66,6 @@ public class FtpExplorerFragment extends BaseExplorerFragment {
 		handler = GlobalApplication.instance().getHandler();
 		port = 22;
 		host = "ross.diskstation.me";
-		ftpClient = new FTPClient();
 	}
 
 	@Override
@@ -79,29 +76,38 @@ public class FtpExplorerFragment extends BaseExplorerFragment {
 
 			@Override
 			public void run() {
-				// ftp 콜
+				StandardFileSystemManager manager = new StandardFileSystemManager();
+				String userId = "rene";
+				String password = "7797";
+				String remoteDirectory = "comics";
+
 				try {
-					ftpClient.setControlEncoding("utf-8");
-					ftpClient.enterLocalPassiveMode();
-					ftpClient.connect(host, port);
-					int reply = ftpClient.getReplyCode();
-					if (!FTPReply.isPositiveCompletion(reply)) {
-						// 정상적이지 않으면 연결을 끊고 종료 합니다
-						ftpClient.disconnect();
-						Logger.e(this, "FTP server refused connection.");
-
-					} else {
-						// 정상적이면 계속 진행 합니다
-						Logger.e(this, "Connect successful");
-						ftpClient.login("rene", "7797");
-						enumerate();
+					// Initializes the file manager
+					manager.init();
+					
+					// Setup our SFTP configuration
+					FileSystemOptions opts = new FileSystemOptions();
+					SftpFileSystemConfigBuilder.getInstance().setStrictHostKeyChecking(opts, "no");
+					SftpFileSystemConfigBuilder.getInstance().setUserDirIsRoot(opts, true);
+					SftpFileSystemConfigBuilder.getInstance().setTimeout(opts, 10000);
+					
+					// Create the SFTP URI using the host name, userid, password,
+					// remote path and file name
+					String sftpUri = "sftp://" + userId + ":" + password + "@" + host + "/" + remoteDirectory;
+					
+					FileObject fo = manager.resolveFile(sftpUri);
+					FileObject[] children = fo.getChildren();
+					
+					for(int i=0 ; i<children.length ; i++) {
+						Logger.e(this, children[i].getName().toString());
 					}
-
-				} catch (SocketException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
+					
+//					enumerate();
+				} catch (FileSystemException e) {
 					e.printStackTrace();
 				}
+
+
 
 			}
 		}).start();
