@@ -188,7 +188,8 @@ public class NavigationDrawerFragment extends Fragment implements OnClickListene
 			selectItem(2);
 			break;
 		case R.id.settings:
-			selectItem(3);
+			if(mCallbacks != null)
+				mCallbacks.onSettingSelected();
 			break;
 		default:
 			break;
@@ -372,8 +373,8 @@ public class NavigationDrawerFragment extends Fragment implements OnClickListene
 		 * Called when an item in the navigation drawer is selected.
 		 */
 		void onNavigationDrawerItemSelected(int position);
-
 		void onFavoriteItemSelected(FileInfo info);
+		void onSettingSelected();
 	}
 
 }

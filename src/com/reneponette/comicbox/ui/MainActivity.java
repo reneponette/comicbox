@@ -62,11 +62,11 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 	private File curDir;
 	private Entry curEntry;
 
-//	// Request code to use when launching the resolution activity
-//	private static final int REQUEST_RESOLVE_ERROR = 1001;
-//	// Bool to track whether the app is already resolving an error
-//	private boolean mResolvingError = false;
-//	GoogleApiClient mGoogleApiClient;
+	// // Request code to use when launching the resolution activity
+	// private static final int REQUEST_RESOLVE_ERROR = 1001;
+	// // Bool to track whether the app is already resolving an error
+	// private boolean mResolvingError = false;
+	// GoogleApiClient mGoogleApiClient;
 
 	private boolean closeFlag = false;
 	private Handler closeHandler = new Handler() {
@@ -104,7 +104,6 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 		super.onStart();
 	}
 
-
 	@Override
 	protected void onStop() {
 		super.onStop();
@@ -139,11 +138,6 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 			fragmentManager.beginTransaction()
 					.replace(R.id.container, GoogleDriveExplorerFragment.newInstance(curEntry.path)).commit();
 			break;
-		case 3:
-			Intent intent = new Intent();
-			intent.setClass(this, SettingsActivity.class);
-			startActivity(intent);
-			break;
 		default:
 			break;
 		}
@@ -156,10 +150,16 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 		else
 			onEntryClicked(info);
 	}
+	
+	@Override
+	public void onSettingSelected() {
+		Intent intent = new Intent();
+		intent.setClass(this, SettingsActivity.class);
+		startActivity(intent);
+	}
 
 	public void onSectionAttached(String name) {
 		mTitle = name;
-//		restoreActionBar();
 	}
 
 	public void restoreActionBar() {
@@ -189,12 +189,10 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 
-		// if (id == R.id.action_settings) {
-		// Intent intent = new Intent();
-		// intent.setClass(this, SettingsActivity.class);
-		// startActivity(intent);
-		// return true;
-		// }
+//		if (id == R.id.action_settings) {
+//
+//			return true;
+//		}
 
 		return super.onOptionsItemSelected(item);
 	}
