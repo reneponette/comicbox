@@ -38,7 +38,7 @@ public class BaseReaderFragment extends Fragment {
 		pageBuilder = onCreatePageBuilder();
 		
 		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		autocrop = pref.getBoolean("viewer_use_autocrop", true);
+		autocrop = pref.getBoolean("viewer_use_autocrop", false);
 	}
 
 	

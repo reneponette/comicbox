@@ -388,19 +388,17 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 		if (C.ENABLE_ADAM) {
 			// 1. 전면형 광고 객체 생성
 			mAdInterstitial = new AdInterstitial(getActivity());
-			// mAdInterstitial.setClientId("InterstitialTestClientId");
-			// mAdInterstitial.setAdInfo(new AdInfo());
 			mAdInterstitial.setClientId("9c4fZ0GT1488247588d");
 			mAdInterstitial.setOnAdLoadedListener(new OnAdLoadedListener() {
 				@Override
 				public void OnAdLoaded() {
-					Log.i("InterstitialTab", "광고가 로딩되었습니다.");
+//					Log.i("InterstitialTab", "광고가 로딩되었습니다.");
 				}
 			});
 			mAdInterstitial.setOnAdFailedListener(new OnAdFailedListener() {
 				@Override
 				public void OnAdFailed(AdError error, String errorMessage) {
-					Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
+//					Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
 				}
 			});
 		}

@@ -116,6 +116,11 @@ public class NavigationDrawerFragment extends Fragment implements OnClickListene
 			v.setVisibility(View.VISIBLE);
 			v.setOnClickListener(this);
 		}
+		if (C.ENABLE_FTP) {
+			View v = view.findViewById(R.id.ftp);
+			v.setVisibility(View.VISIBLE);
+			v.setOnClickListener(this);
+		}
 		
 		view.findViewById(R.id.settings).setOnClickListener(this);
 
@@ -198,6 +203,9 @@ public class NavigationDrawerFragment extends Fragment implements OnClickListene
 			break;
 		case R.id.google:
 			selectItem(2);
+			break;
+		case R.id.ftp:
+			selectItem(3);
 			break;
 		case R.id.settings:
 			if (mCallbacks != null)

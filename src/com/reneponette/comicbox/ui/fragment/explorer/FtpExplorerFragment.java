@@ -1,20 +1,25 @@
 package com.reneponette.comicbox.ui.fragment.explorer;
 
+import java.io.IOException;
+import java.net.SocketException;
+
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPReply;
+import org.apache.commons.net.ftp.FTPSClient;
+
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.DropboxAPI.Entry;
-import com.dropbox.client2.android.AndroidAuthSession;
 import com.reneponette.comicbox.application.GlobalApplication;
-import com.reneponette.comicbox.cache.DropboxThumbBitmapLoader;
 import com.reneponette.comicbox.constant.C;
 import com.reneponette.comicbox.db.FileInfo;
 import com.reneponette.comicbox.db.FileInfo.LocationType;
 import com.reneponette.comicbox.db.FileInfoDAO;
+import com.reneponette.comicbox.utils.Logger;
 import com.reneponette.comicbox.utils.StringUtils;
 
 /**
@@ -26,7 +31,6 @@ public class FtpExplorerFragment extends BaseExplorerFragment {
 	 * The fragment argument representing the section number for this fragment.
 	 */
 	private static final String PATH = "path";
-	private static final String TAG = "DropboxViewFragment";
 
 	/**
 	 * Returns a new instance of this fragment for the given section number.
@@ -43,17 +47,17 @@ public class FtpExplorerFragment extends BaseExplorerFragment {
 		//
 	}
 
-	DropboxAPI<AndroidAuthSession> mApi;
-
+	private Handler handler;
 	private Thread runningThread;
-
-	Handler handler;
+	private FTPClient ftpClient;
+	private String host;
+	private int port;
 
 	@Override
 	protected FileInfo onGetFileInfo() {
-		String dropboxPath = getArguments().getString(PATH);
+		String path = getArguments().getString(PATH);
 		Entry entry = new Entry();
-		entry.path = dropboxPath;
+		entry.path = path;
 		return FileInfoDAO.instance().getFileInfo(entry);
 	}
 
@@ -62,25 +66,55 @@ public class FtpExplorerFragment extends BaseExplorerFragment {
 		super.onCreate(savedInstanceState);
 
 		handler = GlobalApplication.instance().getHandler();
-
-
+		port = 22;
+		host = "ross.diskstation.me";
+		ftpClient = new FTPClient();
 	}
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		enumerate();
+
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				// ftp 콜
+				try {
+					ftpClient.setControlEncoding("utf-8");
+					ftpClient.enterLocalPassiveMode();
+					ftpClient.connect(host, port);
+					int reply = ftpClient.getReplyCode();
+					if (!FTPReply.isPositiveCompletion(reply)) {
+						// 정상적이지 않으면 연결을 끊고 종료 합니다
+						ftpClient.disconnect();
+						Logger.e(this, "FTP server refused connection.");
+
+					} else {
+						// 정상적이면 계속 진행 합니다
+						Logger.e(this, "Connect successful");
+						ftpClient.login("rene", "7797");
+						enumerate();
+					}
+
+				} catch (SocketException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+			}
+		}).start();
+
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		enumerate();
 	}
 
 	private boolean goParentDirectory() {
 
-		// 상위 폴더 넣기
 		if (StringUtils.isBlank(curInfo.getEntry().parentPath()) == false) {
 			FileInfo parentInfo;
 			Entry parentEntry = new Entry();
@@ -113,25 +147,21 @@ public class FtpExplorerFragment extends BaseExplorerFragment {
 		runningThread = new Thread() {
 			@Override
 			public void run() {
-				
-				// ftp 콜
-				
-				if(isInterrupted())
+
+				if (isInterrupted())
 					return;
-				
-				
-				//...
-				
+
+				// ...
+
 				handler.post(new Runnable() {
-					
+
 					@Override
 					public void run() {
 						adapter.notifyDataSetChanged();
 						hideWaitingDialog();
 					}
 				});
-				
-				
+
 				runningThread = null;
 			}
 		};
@@ -149,11 +179,7 @@ public class FtpExplorerFragment extends BaseExplorerFragment {
 
 	@Override
 	protected Bitmap getThumbnailBitmap(FileInfo info, ImageView thumbnailIv) {
-		new DropboxThumbBitmapLoader(info, mApi, thumbnailIv).run();
 		return null;
 	}
-
-
-
 
 }

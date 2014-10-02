@@ -38,6 +38,7 @@ import com.reneponette.comicbox.ui.fragment.NavigationDrawerFragment;
 import com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment;
 import com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment.FolderViewFragmentListener;
 import com.reneponette.comicbox.ui.fragment.explorer.DropboxExplorerFragment;
+import com.reneponette.comicbox.ui.fragment.explorer.FtpExplorerFragment;
 import com.reneponette.comicbox.ui.fragment.explorer.GoogleDriveExplorerFragment;
 import com.reneponette.comicbox.ui.fragment.explorer.LocalExplorerFragment;
 import com.reneponette.comicbox.utils.DialogHelper;
@@ -137,6 +138,10 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 		case 2:
 			fragmentManager.beginTransaction()
 					.replace(R.id.container, GoogleDriveExplorerFragment.newInstance(curEntry.path)).commit();
+			break;
+		case 3:
+			fragmentManager.beginTransaction()
+			.replace(R.id.container, FtpExplorerFragment.newInstance("/comics")).commit();
 			break;
 		default:
 			break;
