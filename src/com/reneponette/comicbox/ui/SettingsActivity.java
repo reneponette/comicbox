@@ -66,11 +66,11 @@ public class SettingsActivity extends PreferenceActivity {
 		addPreferencesFromResource(R.xml.pref_viewer);
 		
 		
-		fakeHeader = new PreferenceCategory(this);		
-		fakeHeader.setTitle(R.string.pref_header_explorer);
-		getPreferenceScreen().addPreference(fakeHeader);		
-		addPreferencesFromResource(R.xml.pref_explorer);
-		pref = getPreferenceScreen().findPreference("explorer_num_of_column");
+//		fakeHeader = new PreferenceCategory(this);		
+//		fakeHeader.setTitle(R.string.pref_header_explorer);
+//		getPreferenceScreen().addPreference(fakeHeader);		
+//		addPreferencesFromResource(R.xml.pref_explorer);
+//		pref = getPreferenceScreen().findPreference("explorer_num_of_column");
 		
 		
 		fakeHeader = new PreferenceCategory(this);		

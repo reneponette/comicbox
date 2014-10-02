@@ -34,6 +34,7 @@ import android.widget.TextView;
 import com.reneponette.comicbox.R;
 import com.reneponette.comicbox.application.GlobalApplication;
 import com.reneponette.comicbox.cache.BitmapCache;
+import com.reneponette.comicbox.constant.C;
 import com.reneponette.comicbox.db.FileInfo;
 import com.reneponette.comicbox.db.FileInfo.LocationType;
 import com.reneponette.comicbox.db.FileInfoDAO;
@@ -44,6 +45,7 @@ import com.reneponette.comicbox.model.FileMeta.ReadDirection;
 import com.reneponette.comicbox.ui.MainActivity;
 import com.reneponette.comicbox.utils.DialogHelper;
 import com.reneponette.comicbox.utils.ImageUtils;
+import com.reneponette.comicbox.utils.MetricUtils;
 import com.reneponette.comicbox.view.ProgressTextView;
 
 public class BaseExplorerFragment extends Fragment {
@@ -120,13 +122,8 @@ public class BaseExplorerFragment extends Fragment {
 
 		((MainActivity) getActivity()).onSectionAttached(curInfo.getName());
 
-		numOfColumn = 2;
-		try {
-			numOfColumn = PreferenceManager.getDefaultSharedPreferences(getActivity()).getInt("explorer_num_of_column",
-					2);
-		} catch (NumberFormatException e) {
-
-		}
+		
+		numOfColumn = MetricUtils.getDisplayWidth() / C.COVER_W;
 		gridView.setNumColumns(numOfColumn);
 	}
 

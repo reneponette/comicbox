@@ -23,7 +23,6 @@ public class GlobalApplication extends Application {
 		super.onCreate();
 		instance = this;
 		
-		
 		DBOpenHelper.getInstance();
 		Crashlytics.start(this);
 	}

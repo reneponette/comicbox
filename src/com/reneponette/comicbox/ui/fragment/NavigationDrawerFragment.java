@@ -24,6 +24,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.reneponette.comicbox.R;
+import com.reneponette.comicbox.constant.C;
 import com.reneponette.comicbox.db.FileInfo;
 import com.reneponette.comicbox.manager.FavoriteManager;
 import com.reneponette.comicbox.manager.FavoriteManager.OnFavoriteChangedListener;
@@ -103,8 +104,19 @@ public class NavigationDrawerFragment extends Fragment implements OnClickListene
 		View view = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
 
 		view.findViewById(R.id.sdcard).setOnClickListener(this);
-		view.findViewById(R.id.dropbox).setOnClickListener(this);
-		view.findViewById(R.id.google).setOnClickListener(this);
+
+		if (C.ENABLE_DROPBOX) {
+			View v = view.findViewById(R.id.dropbox);
+			v.setVisibility(View.VISIBLE);
+			v.setOnClickListener(this);
+		}
+
+		if (C.ENABLE_GOOGLE_DRIVE) {
+			View v = view.findViewById(R.id.google);
+			v.setVisibility(View.VISIBLE);
+			v.setOnClickListener(this);
+		}
+		
 		view.findViewById(R.id.settings).setOnClickListener(this);
 
 		final BaseAdapter adapter = new BaseAdapter() {
@@ -188,7 +200,7 @@ public class NavigationDrawerFragment extends Fragment implements OnClickListene
 			selectItem(2);
 			break;
 		case R.id.settings:
-			if(mCallbacks != null)
+			if (mCallbacks != null)
 				mCallbacks.onSettingSelected();
 			break;
 		default:
@@ -373,7 +385,9 @@ public class NavigationDrawerFragment extends Fragment implements OnClickListene
 		 * Called when an item in the navigation drawer is selected.
 		 */
 		void onNavigationDrawerItemSelected(int position);
+
 		void onFavoriteItemSelected(FileInfo info);
+
 		void onSettingSelected();
 	}
 

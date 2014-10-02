@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import net.daum.adam.publisher.AdInfo;
 import net.daum.adam.publisher.AdInterstitial;
 import net.daum.adam.publisher.AdView.OnAdFailedListener;
 import net.daum.adam.publisher.AdView.OnAdLoadedListener;
@@ -13,6 +12,7 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -46,6 +46,7 @@ import com.reneponette.comicbox.ui.FileSettingsActivity;
 import com.reneponette.comicbox.ui.ReaderActivity;
 import com.reneponette.comicbox.utils.DialogHelper;
 import com.reneponette.comicbox.utils.Logger;
+import com.reneponette.comicbox.utils.MetricUtils;
 import com.reneponette.comicbox.view.ExtendedViewPager;
 import com.reneponette.comicbox.view.TouchImageView;
 import com.reneponette.comicbox.view.TouchImageView.OnSideTouchListener;
@@ -449,12 +450,18 @@ public class BasePagerReaderFragment extends BaseReaderFragment {
 				float scale = (float) viewH / imageH;
 				if (image.getWidth() > image.getHeight()) {
 					// 두장 스캔본
-					scale = 2.0f;
+					if (MetricUtils.getOrientation() == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+						scale = 2.0f;
+						iv.setZoom(scale, 0, 0);
+					} else {
+						scale = 1.0f;
+						iv.setZoom(scale, 0.5f, 0);
+					}
 				} else {
 					// 한장 스캔본
 					scale = 1.0f;
+					iv.setZoom(scale, 0, 0);
 				}
-				iv.setZoom(scale, 0, 0.5f);
 				iv.setImageBitmap(image);
 			}
 
