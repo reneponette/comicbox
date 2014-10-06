@@ -11,17 +11,16 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
 
-import com.dropbox.client2.DropboxAPI.Entry;
 import com.reneponette.comicbox.R;
 import com.reneponette.comicbox.db.FileInfo;
-import com.reneponette.comicbox.db.FileInfoDAO;
+import com.reneponette.comicbox.model.FileLocation;
 import com.reneponette.comicbox.ui.fragment.reader.BaseReaderFragment;
 import com.reneponette.comicbox.ui.fragment.reader.DropboxFolderReaderFragment;
-import com.reneponette.comicbox.ui.fragment.reader.LocalFolderReaderFragment;
 import com.reneponette.comicbox.ui.fragment.reader.DropboxPdfReaderFragment;
+import com.reneponette.comicbox.ui.fragment.reader.DropboxZipReaderFragment;
+import com.reneponette.comicbox.ui.fragment.reader.LocalFolderReaderFragment;
 import com.reneponette.comicbox.ui.fragment.reader.LocalPdfReaderFragment;
 import com.reneponette.comicbox.ui.fragment.reader.LocalZipReaderFragment;
-import com.reneponette.comicbox.ui.fragment.reader.DropboxZipReaderFragment;
 import com.reneponette.comicbox.utils.Logger;
 import com.reneponette.comicbox.utils.StringUtils;
 
@@ -59,8 +58,8 @@ public class ReaderActivity extends Activity {
 		FileInfo info = getIntent().getExtras().getParcelable(FILE_INFO);
 
 		Fragment f;
-		switch (info.getLocation()) {
-		case LOCAL:
+		
+		if(info.getLocation() == FileLocation.LOCAL) {
 			switch (info.getMeta().type) {
 			case PDF:
 				f = LocalPdfReaderFragment.newInstance(info.getPath());
@@ -76,8 +75,7 @@ public class ReaderActivity extends Activity {
 				f = null;
 				break;
 			}
-			break;
-		case DROPBOX:
+		} else if(info.getLocation() == FileLocation.DROPBOX) {
 			switch (info.getMeta().type) {
 			case PDF:
 				f = DropboxPdfReaderFragment.newInstance(info.getPath());
@@ -93,28 +91,10 @@ public class ReaderActivity extends Activity {
 				f = DropboxZipReaderFragment.newInstance(info.getPath());
 				break;
 			}
-			break;
-		default:
+		} else {
 			f = null;
-			break;
 		}
 		
-//		new Thread() {
-//		public void run() {
-//			AndroidAuthSession session = DropBoxManager.INSTANCE.buildSession();
-//			DropboxAPI<AndroidAuthSession> api = new DropboxAPI<AndroidAuthSession>(session);
-//			try {
-//				Entry parentEntry = api.metadata(info.getEntry().parentPath(), 10000, null, true, null);
-//				FileInfo parentInfo = FileInfoDAO.instance().getFileInfo(parentEntry);
-//				
-//				
-//				startActivity(ReaderActivity.newIntent(MainActivity.this, parentInfo, info.indexInParent));
-//			} catch (DropboxException e) {
-//				e.printStackTrace();
-//			}
-//		};
-//	}.start();		
-
 		if (f != null) {
 			FragmentManager fragmentManager = getFragmentManager();
 			fragmentManager.beginTransaction().replace(R.id.container, f, TAG_FRAGMENT).commit();

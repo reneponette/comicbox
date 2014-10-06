@@ -16,7 +16,6 @@ import android.preference.PreferenceManager;
 import com.dropbox.client2.DropboxAPI.Entry;
 import com.reneponette.comicbox.application.GlobalApplication;
 import com.reneponette.comicbox.db.FileInfo;
-import com.reneponette.comicbox.db.FileInfo.LocationType;
 import com.reneponette.comicbox.db.FileInfoDAO;
 
 public enum FavoriteManager {

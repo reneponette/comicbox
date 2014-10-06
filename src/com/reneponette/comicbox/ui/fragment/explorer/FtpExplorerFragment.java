@@ -16,8 +16,9 @@ import com.dropbox.client2.DropboxAPI.Entry;
 import com.reneponette.comicbox.application.GlobalApplication;
 import com.reneponette.comicbox.constant.C;
 import com.reneponette.comicbox.db.FileInfo;
-import com.reneponette.comicbox.db.FileInfo.LocationType;
 import com.reneponette.comicbox.db.FileInfoDAO;
+import com.reneponette.comicbox.model.FileLocation;
+import com.reneponette.comicbox.model.FileMeta.FileType;
 import com.reneponette.comicbox.utils.Logger;
 import com.reneponette.comicbox.utils.StringUtils;
 
@@ -48,8 +49,12 @@ public class FtpExplorerFragment extends BaseExplorerFragment {
 
 	private Handler handler;
 	private Thread runningThread;
+
+	StandardFileSystemManager manager;
 	private String host;
 	private int port;
+	String userId;
+	String password;
 
 	@Override
 	protected FileInfo onGetFileInfo() {
@@ -64,53 +69,25 @@ public class FtpExplorerFragment extends BaseExplorerFragment {
 		super.onCreate(savedInstanceState);
 
 		handler = GlobalApplication.instance().getHandler();
+
+		manager = new StandardFileSystemManager();
 		port = 22;
 		host = "ross.diskstation.me";
+		userId = "rene";
+		password = "7797";
 	}
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
-		new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				StandardFileSystemManager manager = new StandardFileSystemManager();
-				String userId = "rene";
-				String password = "7797";
-				String remoteDirectory = "comics";
-
-				try {
-					// Initializes the file manager
-					manager.init();
-					
-					// Setup our SFTP configuration
-					FileSystemOptions opts = new FileSystemOptions();
-					SftpFileSystemConfigBuilder.getInstance().setStrictHostKeyChecking(opts, "no");
-					SftpFileSystemConfigBuilder.getInstance().setUserDirIsRoot(opts, true);
-					SftpFileSystemConfigBuilder.getInstance().setTimeout(opts, 10000);
-					
-					// Create the SFTP URI using the host name, userid, password,
-					// remote path and file name
-					String sftpUri = "sftp://" + userId + ":" + password + "@" + host + "/" + remoteDirectory;
-					
-					FileObject fo = manager.resolveFile(sftpUri);
-					FileObject[] children = fo.getChildren();
-					
-					for(int i=0 ; i<children.length ; i++) {
-						Logger.e(this, children[i].getName().toString());
-					}
-					
-//					enumerate();
-				} catch (FileSystemException e) {
-					e.printStackTrace();
-				}
-
-
-
-			}
-		}).start();
+		try {
+			// Initializes the file manager
+			manager.init();
+			enumerate();
+		} catch (FileSystemException e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -126,10 +103,10 @@ public class FtpExplorerFragment extends BaseExplorerFragment {
 			Entry parentEntry = new Entry();
 			parentEntry.isDir = true;
 			parentEntry.path = curInfo.getEntry().parentPath();
-			parentInfo = new FileInfo(LocationType.DROPBOX);
+			parentInfo = new FileInfo(FileLocation.DROPBOX);
 			parentInfo.setEntry(parentEntry);
 
-			FileInfo info = new FileInfo(LocationType.DROPBOX);
+			FileInfo info = new FileInfo(FileLocation.DROPBOX);
 			info.setEntry(parentEntry);
 			if (getActivity() instanceof FolderViewFragmentListener) {
 				((FolderViewFragmentListener) getActivity()).onEntryClicked(info);
@@ -153,11 +130,38 @@ public class FtpExplorerFragment extends BaseExplorerFragment {
 		runningThread = new Thread() {
 			@Override
 			public void run() {
-
+				
 				if (isInterrupted())
 					return;
 
-				// ...
+				
+				FileSystemOptions opts = new FileSystemOptions();
+				try {
+					SftpFileSystemConfigBuilder.getInstance().setStrictHostKeyChecking(opts, "no");
+					SftpFileSystemConfigBuilder.getInstance().setUserDirIsRoot(opts, true);
+					SftpFileSystemConfigBuilder.getInstance().setTimeout(opts, 10000);
+					
+					String sftpUri = "sftp://" + userId + ":" + password + "@" + host;
+					FileObject fo = manager.resolveFile(sftpUri, opts);
+					if (fo.isReadable()) {
+						FileObject[] children = fo.getChildren();
+						for (int i = 0; i < children.length; i++) {
+							Logger.e(this, children[i].getName().getRootURI());
+							Logger.e(this, children[i].getName().getPath());
+							
+							FileInfo info = FileInfoDAO.instance().getFileInfo(fo);
+							if(info.getMeta().type != FileType.UNKNOWN) {
+								infoList.add(info);
+							}
+						}						
+					}
+					fo.close();
+					
+					
+				} catch (FileSystemException e) {
+					e.printStackTrace();
+				}
+
 
 				handler.post(new Runnable() {
 

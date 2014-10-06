@@ -17,9 +17,9 @@ import com.reneponette.comicbox.application.GlobalApplication;
 import com.reneponette.comicbox.cache.DropboxThumbBitmapLoader;
 import com.reneponette.comicbox.constant.C;
 import com.reneponette.comicbox.db.FileInfo;
-import com.reneponette.comicbox.db.FileInfo.LocationType;
 import com.reneponette.comicbox.db.FileInfoDAO;
 import com.reneponette.comicbox.manager.DropBoxManager;
+import com.reneponette.comicbox.model.FileLocation;
 import com.reneponette.comicbox.model.FileMeta.FileType;
 import com.reneponette.comicbox.ui.MainActivity;
 import com.reneponette.comicbox.utils.DialogHelper;
@@ -120,10 +120,10 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 			Entry parentEntry = new Entry();
 			parentEntry.isDir = true;
 			parentEntry.path = curInfo.getEntry().parentPath();
-			parentInfo = new FileInfo(LocationType.DROPBOX);
+			parentInfo = new FileInfo(FileLocation.DROPBOX);
 			parentInfo.setEntry(parentEntry);
 
-			FileInfo info = new FileInfo(LocationType.DROPBOX);
+			FileInfo info = new FileInfo(FileLocation.DROPBOX);
 			info.setEntry(parentEntry);
 			if (getActivity() instanceof FolderViewFragmentListener) {
 				((FolderViewFragmentListener) getActivity()).onEntryClicked(info);

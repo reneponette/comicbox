@@ -1,14 +1,13 @@
 package com.reneponette.comicbox.db;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+
+import org.apache.commons.vfs2.FileObject;
 
 import android.database.Cursor;
-import android.util.Log;
 
 import com.dropbox.client2.DropboxAPI.Entry;
-import com.reneponette.comicbox.db.FileInfo.LocationType;
+import com.reneponette.comicbox.model.FileLocation;
 import com.reneponette.comicbox.model.FileMeta;
 
 public class FileInfoDAO extends BaseDAO<FileInfo> {
@@ -39,8 +38,8 @@ public class FileInfoDAO extends BaseDAO<FileInfo> {
 
 	@Override
 	public FileInfo populateObject(Cursor cursor) {
-		FileInfo info = new FileInfo(
-				LocationType.valueOf(cursor.getString(cursor.getColumnIndex(FileInfo.COL_LOCATION))));
+		FileInfo info = new FileInfo(FileLocation.toFileLocation(cursor.getString(cursor
+				.getColumnIndex(FileInfo.COL_LOCATION))));
 		info.setKey(cursor.getString(cursor.getColumnIndex(FileInfo.COL_KEY)));
 		info.setPath(cursor.getString(cursor.getColumnIndex(FileInfo.COL_PATH)));
 		info.setMeta(FileMeta.createFromJSONString(cursor.getString(cursor.getColumnIndex(FileInfo.COL_META))));
@@ -48,7 +47,7 @@ public class FileInfoDAO extends BaseDAO<FileInfo> {
 	}
 
 	public FileInfo mergeObject(Cursor cursor, FileInfo info) {
-		info.setLocation(LocationType.valueOf(cursor.getString(cursor.getColumnIndex(FileInfo.COL_LOCATION))));
+		info.setLocation(FileLocation.toFileLocation(cursor.getString(cursor.getColumnIndex(FileInfo.COL_LOCATION))));
 		info.setKey(cursor.getString(cursor.getColumnIndex(FileInfo.COL_KEY)));
 		info.setPath(cursor.getString(cursor.getColumnIndex(FileInfo.COL_PATH)));
 		info.setMeta(FileMeta.createFromJSONString(cursor.getString(cursor.getColumnIndex(FileInfo.COL_META))));
@@ -61,13 +60,17 @@ public class FileInfoDAO extends BaseDAO<FileInfo> {
 		FileInfo info;
 
 		if (obj instanceof File) {
-			info = new FileInfo(LocationType.LOCAL);
+			info = new FileInfo(FileLocation.LOCAL);
 			info.setFile((File) obj);
 		} else if (obj instanceof Entry) {
-			info = new FileInfo(LocationType.DROPBOX);
+			info = new FileInfo(FileLocation.DROPBOX);
 			info.setEntry((Entry) obj);
+		} else if (obj instanceof FileObject) {
+			FileObject fo = (FileObject) obj;
+			info = new FileInfo(new FileLocation(fo.getName().getRootURI()));
+			info.setFileObject(fo);
 		} else {
-			info = new FileInfo(LocationType.UNKNOWN);
+			info = new FileInfo(FileLocation.UNKNOWN);
 		}
 
 		return info;
@@ -75,7 +78,8 @@ public class FileInfoDAO extends BaseDAO<FileInfo> {
 
 	public FileInfo getFileInfo(String key) {
 
-		Cursor cursor = getDB().query(tableName, null, getPrimaryColumnName() + "=\"" + key + "\"", null, null, null, null);
+		Cursor cursor = getDB().query(tableName, null, getPrimaryColumnName() + "=\"" + key + "\"", null, null, null,
+				null);
 		if (cursor == null) {
 			// 기본 객체 반환
 			return null;
@@ -91,20 +95,22 @@ public class FileInfoDAO extends BaseDAO<FileInfo> {
 		}
 
 		FileInfo info = populateObject(cursor);
-		
+
 		if (!cursor.isClosed()) {
 			cursor.close();
-		}		
+		}
 
-		if (info.getLocation() == LocationType.DROPBOX) {
+		if (info.getLocation() == FileLocation.DROPBOX) {
 			Entry entry = new Entry();
 			entry.path = info.getPath();
 			entry.isDir = true;
 			info.setEntry(entry);
-		} else if (info.getLocation() == LocationType.LOCAL) {
+		} else if (info.getLocation() == FileLocation.LOCAL) {
 			info.setFile(new File(info.getPath()));
+		} else if (FileLocation.isCustomLocation(info.getLocation().toString())) {
+			// 
 		} else {
-			//LocationType.UNKNOWN
+			// LocationType.UNKNOWN
 			return null;
 		}
 

@@ -30,9 +30,9 @@ import com.reneponette.comicbox.cache.DropboxComicsDownloader;
 import com.reneponette.comicbox.cache.DropboxComicsDownloader.OnLoadComicsListener;
 import com.reneponette.comicbox.constant.C;
 import com.reneponette.comicbox.db.FileInfo;
-import com.reneponette.comicbox.db.FileInfo.LocationType;
 import com.reneponette.comicbox.db.FileInfoDAO;
 import com.reneponette.comicbox.manager.DropBoxManager;
+import com.reneponette.comicbox.model.FileLocation;
 import com.reneponette.comicbox.model.FileMeta.FileType;
 import com.reneponette.comicbox.ui.fragment.NavigationDrawerFragment;
 import com.reneponette.comicbox.ui.fragment.explorer.BaseExplorerFragment;
@@ -150,7 +150,7 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 
 	@Override
 	public void onFavoriteItemSelected(FileInfo info) {
-		if (info.getLocation() == LocationType.LOCAL)
+		if (info.getLocation() == FileLocation.LOCAL)
 			onFileClicked(info);
 		else
 			onEntryClicked(info);

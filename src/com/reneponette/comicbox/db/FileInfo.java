@@ -2,35 +2,36 @@ package com.reneponette.comicbox.db;
 
 import java.io.File;
 
+import org.apache.commons.vfs2.FileObject;
+import org.apache.commons.vfs2.FileSystemException;
+
 import android.content.ContentValues;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.dropbox.client2.DropboxAPI.Entry;
 import com.reneponette.comicbox.constant.C;
+import com.reneponette.comicbox.model.FileLocation;
 import com.reneponette.comicbox.model.FileMeta;
 import com.reneponette.comicbox.model.FileMeta.FileType;
 import com.reneponette.comicbox.utils.StringUtils;
 
 public class FileInfo implements DatabaseStorable<FileInfo>, Parcelable {
 
-	public enum LocationType {
-		UNKNOWN, LOCAL, DROPBOX, GOOGLE;
-	}
-
 	// 디비에 저장되는 정보
 	private String key;
+	private FileLocation location;
 	private String path;
-	private LocationType location;
 	private FileMeta meta = new FileMeta();
 
 	// 디비에 저장되지 않는정보
 	private File file;
 	private Entry entry;
+	private FileObject fileObj; //for ftp (VFS)
 	public String focusName;
 	public int indexInParent;
 
-	public FileInfo(LocationType location) {
+	public FileInfo(FileLocation location) {
 		this.location = location;
 	}
 
@@ -53,7 +54,7 @@ public class FileInfo implements DatabaseStorable<FileInfo>, Parcelable {
 	public ContentValues toContentValues() {
 		ContentValues contentValues = new ContentValues();
 		contentValues.put(COL_KEY, getKey());
-		contentValues.put(COL_LOCATION, getLocation().name());
+		contentValues.put(COL_LOCATION, getLocation().toString());
 		contentValues.put(COL_PATH, getPath());
 		if (getMeta() != null)
 			contentValues.put(COL_META, getMeta().toJSONString());
@@ -70,16 +71,12 @@ public class FileInfo implements DatabaseStorable<FileInfo>, Parcelable {
 
 	public String getName() {
 		String name = "";
-		switch (location) {
-		case LOCAL:
+		
+		if(location == FileLocation.LOCAL)
 			name = file == null ? "" : file.getName();
-			break;
-		case DROPBOX:
+		else if(location == FileLocation.DROPBOX)
 			name = entry == null ? "" : entry.fileName();
-			break;
-		default:
-			break;
-		}
+
 		return name;
 	}
 
@@ -105,7 +102,7 @@ public class FileInfo implements DatabaseStorable<FileInfo>, Parcelable {
 
 	public boolean setFile(File file) {
 		this.file = file;
-		this.location = LocationType.LOCAL;
+		this.location = FileLocation.LOCAL;
 		this.path = file.getAbsolutePath();
 		this.key = toKey();
 
@@ -123,7 +120,7 @@ public class FileInfo implements DatabaseStorable<FileInfo>, Parcelable {
 
 	public boolean setEntry(Entry entry) {
 		this.entry = entry;
-		this.location = LocationType.DROPBOX;
+		this.location = FileLocation.DROPBOX;
 		this.path = entry.path;
 		this.key = toKey();
 
@@ -134,6 +131,29 @@ public class FileInfo implements DatabaseStorable<FileInfo>, Parcelable {
 			return setMetaTypeFromFilename(entry.fileName(), true);
 		}
 
+	}
+	
+	public FileObject getFileObject() {
+		return fileObj;
+	}
+	
+	public boolean setFileObject(FileObject fileObj) {
+		this.fileObj = fileObj;
+		this.location = new FileLocation(fileObj.getName().getRootURI());
+		this.path = fileObj.getName().getPath();
+		this.key = toKey();
+		
+		try {
+			if(fileObj.getType() == org.apache.commons.vfs2.FileType.FOLDER) {
+				meta.type = FileType.DIRECTORY;
+				return true;
+			}
+		} catch (FileSystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return setMetaTypeFromFilename(fileObj.getName().getBaseName(), true);		
 	}
 
 	private boolean setMetaTypeFromFilename(String filename, boolean isStreaming) {
@@ -164,11 +184,11 @@ public class FileInfo implements DatabaseStorable<FileInfo>, Parcelable {
 		return new File(getCacheDir(), getName());
 	}
 
-	public LocationType getLocation() {
+	public FileLocation getLocation() {
 		return location;
 	}
 
-	public void setLocation(LocationType type) {
+	public void setLocation(FileLocation type) {
 		this.location = type;
 	}
 
@@ -181,11 +201,11 @@ public class FileInfo implements DatabaseStorable<FileInfo>, Parcelable {
 	}
 
 	public int getChildCount() {
-		if (location == LocationType.LOCAL && file != null) {
+		if (location == FileLocation.LOCAL && file != null) {
 			if (file.list() != null)
 				return file.list().length;
 		}
-		if (location == LocationType.DROPBOX && entry != null) {
+		if (location == FileLocation.DROPBOX && entry != null) {
 			if (entry.contents != null)
 				return entry.contents.size();
 		}
@@ -203,7 +223,7 @@ public class FileInfo implements DatabaseStorable<FileInfo>, Parcelable {
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(key);
 		dest.writeString(path);
-		dest.writeSerializable(location);
+		dest.writeString(location.toString());
 		dest.writeParcelable(meta, PARCELABLE_WRITE_RETURN_VALUE);
 		
 
@@ -217,13 +237,13 @@ public class FileInfo implements DatabaseStorable<FileInfo>, Parcelable {
 			FileInfo obj = new FileInfo();
 			obj.key = source.readString();
 			obj.path = source.readString();
-			obj.location = (LocationType) source.readSerializable();
+			obj.location = FileLocation.toFileLocation(source.readString());
 			obj.meta = source.readParcelable(FileMeta.class.getClassLoader());
 
 			obj.focusName = source.readString();
 			obj.indexInParent = source.readInt();
 
-			if (obj.location == LocationType.LOCAL) {
+			if (obj.location == FileLocation.LOCAL) {
 				obj.setFile(new File(obj.path));
 			} else {
 				Entry entry = new Entry();

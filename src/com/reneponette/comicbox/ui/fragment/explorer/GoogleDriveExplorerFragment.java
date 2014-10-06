@@ -19,8 +19,8 @@ import com.google.android.gms.drive.Drive;
 import com.reneponette.comicbox.application.GlobalApplication;
 import com.reneponette.comicbox.constant.C;
 import com.reneponette.comicbox.db.FileInfo;
-import com.reneponette.comicbox.db.FileInfo.LocationType;
 import com.reneponette.comicbox.db.FileInfoDAO;
+import com.reneponette.comicbox.model.FileLocation;
 import com.reneponette.comicbox.utils.StringUtils;
 import com.reneponette.comicbox.utils.ToastUtils;
 
@@ -95,10 +95,10 @@ public class GoogleDriveExplorerFragment extends BaseExplorerFragment implements
 			Entry parentEntry = new Entry();
 			parentEntry.isDir = true;
 			parentEntry.path = curInfo.getEntry().parentPath();
-			parentInfo = new FileInfo(LocationType.GOOGLE);
+			parentInfo = new FileInfo(FileLocation.GOOGLE);
 			parentInfo.setEntry(parentEntry);
 
-			FileInfo info = new FileInfo(LocationType.GOOGLE);
+			FileInfo info = new FileInfo(FileLocation.GOOGLE);
 			info.setEntry(parentEntry);
 			if (getActivity() instanceof FolderViewFragmentListener) {
 				((FolderViewFragmentListener) getActivity()).onEntryClicked(info);

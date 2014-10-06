@@ -12,8 +12,8 @@ import android.widget.ImageView;
 import com.reneponette.comicbox.cache.LocalThumbBitmapLoader;
 import com.reneponette.comicbox.constant.C;
 import com.reneponette.comicbox.db.FileInfo;
-import com.reneponette.comicbox.db.FileInfo.LocationType;
 import com.reneponette.comicbox.db.FileInfoDAO;
+import com.reneponette.comicbox.model.FileLocation;
 import com.reneponette.comicbox.model.FileMeta.FileType;
 
 /**
@@ -70,7 +70,7 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 	private boolean goParentDirectory() {
 		File parentFile = curInfo.getFile().getParentFile();
 		if (parentFile != null) {
-			FileInfo info = new FileInfo(LocationType.LOCAL);
+			FileInfo info = new FileInfo(FileLocation.LOCAL);
 			info.setFile(parentFile);
 			info.focusName = curInfo.getName();
 			if (getActivity() instanceof FolderViewFragmentListener) {

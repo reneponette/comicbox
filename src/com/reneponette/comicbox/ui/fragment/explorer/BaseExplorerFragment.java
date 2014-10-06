@@ -36,9 +36,9 @@ import com.reneponette.comicbox.application.GlobalApplication;
 import com.reneponette.comicbox.cache.BitmapCache;
 import com.reneponette.comicbox.constant.C;
 import com.reneponette.comicbox.db.FileInfo;
-import com.reneponette.comicbox.db.FileInfo.LocationType;
 import com.reneponette.comicbox.db.FileInfoDAO;
 import com.reneponette.comicbox.manager.FavoriteManager;
+import com.reneponette.comicbox.model.FileLocation;
 import com.reneponette.comicbox.model.FileMeta;
 import com.reneponette.comicbox.model.FileMeta.FileType;
 import com.reneponette.comicbox.model.FileMeta.ReadDirection;
@@ -99,7 +99,7 @@ public class BaseExplorerFragment extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				if (getActivity() instanceof FolderViewFragmentListener) {
 					FileInfo info = (FileInfo) parent.getItemAtPosition(position);
-					if (info.getLocation() == LocationType.LOCAL)
+					if (info.getLocation() == FileLocation.LOCAL)
 						((FolderViewFragmentListener) getActivity()).onFileClicked(info);
 					else
 						((FolderViewFragmentListener) getActivity()).onEntryClicked(info);
