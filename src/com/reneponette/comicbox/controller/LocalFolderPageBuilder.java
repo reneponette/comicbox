@@ -13,9 +13,11 @@ public class LocalFolderPageBuilder extends PageBuilder {
 
 	@Override
 	protected void onPrepare() {
+		File file = new File(fileInfo.getPath());
+		
 		// 처음 파일을 보는 경우 자동으로 결정
 		if (fileMeta.pagesPerScan == 0) {
-			fileMeta.pagesPerScan = ImageUtils.pagesPerScan(fileInfo.getFile());
+			fileMeta.pagesPerScan = ImageUtils.pagesPerScan(file);
 		}
 		pagesPerScan = fileMeta.pagesPerScan;
 
@@ -23,7 +25,7 @@ public class LocalFolderPageBuilder extends PageBuilder {
 		ReadDirection computedDirection = fileMeta.readDirection;
 		if (computedDirection == ReadDirection.NOTSET) {
 			// 읽는 방향이 설정되어있지 않음 폴더 설정을 따름
-			FileInfo parentInfo = FileInfoDAO.instance().getFileInfo(fileInfo.getFile().getParentFile());
+			FileInfo parentInfo = FileInfoDAO.instance().getFileInfo(file.getParentFile());
 			computedDirection = parentInfo.getMeta().readDirection;
 		}
 		if (computedDirection == ReadDirection.NOTSET) {
@@ -40,7 +42,7 @@ public class LocalFolderPageBuilder extends PageBuilder {
 		if (listener != null)
 			listener.onStartBuild();
 
-		final File folder = fileInfo.getFile();
+		final File folder = new File(fileInfo.getPath());
 
 		runningThread = new Thread(new Runnable() {
 

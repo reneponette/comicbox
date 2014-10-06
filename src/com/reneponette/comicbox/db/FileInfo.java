@@ -25,9 +25,6 @@ public class FileInfo implements DatabaseStorable<FileInfo>, Parcelable {
 	private FileMeta meta = new FileMeta();
 
 	// 디비에 저장되지 않는정보
-	private File file;
-	private Entry entry;
-	private FileObject fileObj; //for ftp (VFS)
 	public String focusName;
 	public int indexInParent;
 
@@ -70,14 +67,7 @@ public class FileInfo implements DatabaseStorable<FileInfo>, Parcelable {
 	// ///////////////////////////////////////////////////////
 
 	public String getName() {
-		String name = "";
-		
-		if(location == FileLocation.LOCAL)
-			name = file == null ? "" : file.getName();
-		else if(location == FileLocation.DROPBOX)
-			name = entry == null ? "" : entry.fileName();
-
-		return name;
+		return StringUtils.getName(path);
 	}
 
 	public String getPath() {
@@ -96,36 +86,28 @@ public class FileInfo implements DatabaseStorable<FileInfo>, Parcelable {
 		this.key = key;
 	}
 
-	public File getFile() {
-		return file;
-	}
-
 	public boolean setFile(File file) {
-		this.file = file;
 		this.location = FileLocation.LOCAL;
 		this.path = file.getAbsolutePath();
 		this.key = toKey();
 
 		if (file.isDirectory()) {
 			meta.type = FileType.DIRECTORY;
+			meta.childCount = file.list() != null ? file.list().length : 0;
 			return true;
 		} else {
 			return setMetaTypeFromFilename(file.getName(), false);
 		}
 	}
 
-	public Entry getEntry() {
-		return entry;
-	}
-
 	public boolean setEntry(Entry entry) {
-		this.entry = entry;
 		this.location = FileLocation.DROPBOX;
 		this.path = entry.path;
 		this.key = toKey();
 
 		if (entry.isDir) {
 			meta.type = FileType.DIRECTORY;
+			meta.childCount = entry.contents != null ? entry.contents.size() : 0;
 			return true;
 		} else {
 			return setMetaTypeFromFilename(entry.fileName(), true);
@@ -133,12 +115,8 @@ public class FileInfo implements DatabaseStorable<FileInfo>, Parcelable {
 
 	}
 	
-	public FileObject getFileObject() {
-		return fileObj;
-	}
 	
 	public boolean setFileObject(FileObject fileObj) {
-		this.fileObj = fileObj;
 		this.location = new FileLocation(fileObj.getName().getRootURI());
 		this.path = fileObj.getName().getPath();
 		this.key = toKey();
@@ -146,6 +124,7 @@ public class FileInfo implements DatabaseStorable<FileInfo>, Parcelable {
 		try {
 			if(fileObj.getType() == org.apache.commons.vfs2.FileType.FOLDER) {
 				meta.type = FileType.DIRECTORY;
+				meta.childCount = fileObj.getChildren() != null ? fileObj.getChildren().length : 0;
 				return true;
 			}
 		} catch (FileSystemException e) {
@@ -200,17 +179,6 @@ public class FileInfo implements DatabaseStorable<FileInfo>, Parcelable {
 		this.meta = meta;
 	}
 
-	public int getChildCount() {
-		if (location == FileLocation.LOCAL && file != null) {
-			if (file.list() != null)
-				return file.list().length;
-		}
-		if (location == FileLocation.DROPBOX && entry != null) {
-			if (entry.contents != null)
-				return entry.contents.size();
-		}
-		return 0;
-	}
 
 	// //////////////////////////////////////////////////////////////
 

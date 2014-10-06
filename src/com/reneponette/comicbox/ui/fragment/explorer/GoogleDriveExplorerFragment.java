@@ -89,22 +89,22 @@ public class GoogleDriveExplorerFragment extends BaseExplorerFragment implements
 
 	private boolean goParentDirectory() {
 
-		// 상위 폴더 넣기
-		if (StringUtils.isBlank(curInfo.getEntry().parentPath()) == false) {
-			FileInfo parentInfo;
-			Entry parentEntry = new Entry();
-			parentEntry.isDir = true;
-			parentEntry.path = curInfo.getEntry().parentPath();
-			parentInfo = new FileInfo(FileLocation.GOOGLE);
-			parentInfo.setEntry(parentEntry);
-
-			FileInfo info = new FileInfo(FileLocation.GOOGLE);
-			info.setEntry(parentEntry);
-			if (getActivity() instanceof FolderViewFragmentListener) {
-				((FolderViewFragmentListener) getActivity()).onEntryClicked(info);
-			}
-			return true;
-		}
+//		// 상위 폴더 넣기
+//		if (StringUtils.isBlank(curInfo.getEntry().parentPath()) == false) {
+//			FileInfo parentInfo;
+//			Entry parentEntry = new Entry();
+//			parentEntry.isDir = true;
+//			parentEntry.path = curInfo.getEntry().parentPath();
+//			parentInfo = new FileInfo(FileLocation.GOOGLE);
+//			parentInfo.setEntry(parentEntry);
+//
+//			FileInfo info = new FileInfo(FileLocation.GOOGLE);
+//			info.setEntry(parentEntry);
+//			if (getActivity() instanceof FolderViewFragmentListener) {
+//				((FolderViewFragmentListener) getActivity()).onEntryClicked(info);
+//			}
+//			return true;
+//		}
 
 		return false;
 	}

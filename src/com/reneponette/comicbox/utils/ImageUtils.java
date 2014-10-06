@@ -37,6 +37,7 @@ import com.reneponette.comicbox.application.GlobalApplication;
 import com.reneponette.comicbox.cache.BitmapCache;
 import com.reneponette.comicbox.db.FileInfo;
 import com.reneponette.comicbox.db.FileInfoDAO;
+import com.reneponette.comicbox.model.FileMeta.FileType;
 import com.reneponette.comicbox.model.PageInfo.PageBuildType;
 
 /**
@@ -577,15 +578,15 @@ public class ImageUtils {
 		}
 	}
 
-	public static Bitmap extractCoverFromFolder(DropboxAPI<AndroidAuthSession> api, Entry entry, int w, int h) {
+	public static Bitmap extractCoverFromFolder(DropboxAPI<AndroidAuthSession> api, FileInfo fileInfo, int w, int h) {
 
-		if (entry.isDir == false)
+		if (fileInfo.getMeta().type != FileType.DIRECTORY)
 			return null;
 
 		Bitmap resultBitmap = null;
 		Canvas comboCanvas = null;
 		try {
-			entry = api.metadata(entry.path, 1000, null, true, null);
+			Entry entry = api.metadata(fileInfo.getPath(), 1000, null, true, null);
 
 			int index = 0;
 			int jump = entry.contents.size() / 4;

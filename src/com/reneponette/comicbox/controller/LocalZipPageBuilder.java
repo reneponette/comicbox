@@ -1,5 +1,6 @@
 package com.reneponette.comicbox.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.zip.ZipEntry;
@@ -22,9 +23,11 @@ public class LocalZipPageBuilder extends PageBuilder {
 	
 	@Override
 	protected void onPrepare() {
+		File file = new File(fileInfo.getPath());
+		
 		// 처음 파일을 보는 경우 자동으로 결정
 		if (fileMeta.pagesPerScan == 0) {
-			fileMeta.pagesPerScan = ImageUtils.pagesPerScan(fileInfo.getFile());
+			fileMeta.pagesPerScan = ImageUtils.pagesPerScan(file);
 		}
 		pagesPerScan = fileMeta.pagesPerScan;
 
@@ -32,7 +35,7 @@ public class LocalZipPageBuilder extends PageBuilder {
 		ReadDirection computedDirection = fileMeta.readDirection;
 		if (computedDirection == ReadDirection.NOTSET) {
 			// 읽는 방향이 설정되어있지 않음 폴더 설정을 따름
-			FileInfo parentInfo = FileInfoDAO.instance().getFileInfo(fileInfo.getFile().getParentFile());
+			FileInfo parentInfo = FileInfoDAO.instance().getFileInfo(file.getParentFile());
 			computedDirection = parentInfo.getMeta().readDirection;
 		}
 		if (computedDirection == ReadDirection.NOTSET) {
@@ -52,7 +55,7 @@ public class LocalZipPageBuilder extends PageBuilder {
 		try {
 			if(zipFile != null)
 				zipFile.close();
-			zipFile = new ZipFile(fileInfo.getFile());
+			zipFile = new ZipFile(new File(fileInfo.getPath()));
 		} catch (IOException e) {
 			e.printStackTrace();
 			if (listener != null)

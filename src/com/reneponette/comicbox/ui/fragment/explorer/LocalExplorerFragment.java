@@ -68,7 +68,7 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 	
 
 	private boolean goParentDirectory() {
-		File parentFile = curInfo.getFile().getParentFile();
+		File parentFile = new File(curInfo.getPath()).getParentFile();
 		if (parentFile != null) {
 			FileInfo info = new FileInfo(FileLocation.LOCAL);
 			info.setFile(parentFile);
@@ -90,7 +90,7 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 		int indexInParent = 0;
 		int indexOfFocus = 0;
 
-		List<File> childFileList = Arrays.asList(curInfo.getFile().listFiles());
+		List<File> childFileList = Arrays.asList(new File(curInfo.getPath()).listFiles());
 		Collections.sort(childFileList);
 
 		for (File f : childFileList) {

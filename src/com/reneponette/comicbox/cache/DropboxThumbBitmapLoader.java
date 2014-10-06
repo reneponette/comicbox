@@ -102,15 +102,14 @@ public class DropboxThumbBitmapLoader {
 					// 비트맵 처음 생성일 경우
 					switch (info.getMeta().type) {
 					case DIRECTORY:
-						bitmap = ImageUtils.extractCoverFromFolder(api, info.getEntry(), C.COVER_W, C.COVER_H);
+						bitmap = ImageUtils.extractCoverFromFolder(api, info, C.COVER_W, C.COVER_H);
 						break;
 					case ZIP:
-						DropboxInputStream dis = api.getFileStream(info.getEntry().path, null);
+						DropboxInputStream dis = api.getFileStream(info.getPath(), null);
 						bitmap = ImageUtils.extractCoverFromZip(dis, C.COVER_W, C.COVER_H);
 						break;
 					case JPG:
-						if(info.getEntry().thumbExists)
-							bitmap = BitmapFactory.decodeStream(api.getThumbnailStream(info.getPath(), ThumbSize.BESTFIT_320x240, ThumbFormat.JPEG));
+						bitmap = BitmapFactory.decodeStream(api.getThumbnailStream(info.getPath(), ThumbSize.BESTFIT_320x240, ThumbFormat.JPEG));
 						break;
 					default:
 						bitmap = null;

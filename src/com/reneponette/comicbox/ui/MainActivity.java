@@ -227,7 +227,7 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 		Logger.i(this, "onFileClicked = " + info.getPath());
 
 		if (info.getMeta().type == FileType.DIRECTORY) {
-			curDir = info.getFile();
+			curDir = new File(info.getPath());
 			FragmentManager fragmentManager = getFragmentManager();
 			fragmentManager.beginTransaction().replace(R.id.container, LocalExplorerFragment.newInstance(info))
 					.commit();
@@ -251,7 +251,8 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 		Logger.i(this, "onEntryClicked = " + info.getPath());
 
 		if (info.getMeta().type == FileType.DIRECTORY) {
-			curEntry = info.getEntry();
+			curEntry = new Entry();
+			curEntry.path = info.getPath();
 			FragmentManager fragmentManager = getFragmentManager();
 			fragmentManager.beginTransaction()
 					.replace(R.id.container, DropboxExplorerFragment.newInstance(info.getPath())).commit();

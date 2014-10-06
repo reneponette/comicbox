@@ -98,22 +98,22 @@ public class FtpExplorerFragment extends BaseExplorerFragment {
 
 	private boolean goParentDirectory() {
 
-		if (StringUtils.isBlank(curInfo.getEntry().parentPath()) == false) {
-			FileInfo parentInfo;
-			Entry parentEntry = new Entry();
-			parentEntry.isDir = true;
-			parentEntry.path = curInfo.getEntry().parentPath();
-			parentInfo = new FileInfo(FileLocation.DROPBOX);
-			parentInfo.setEntry(parentEntry);
-
-			FileInfo info = new FileInfo(FileLocation.DROPBOX);
-			info.setEntry(parentEntry);
-			if (getActivity() instanceof FolderViewFragmentListener) {
-				((FolderViewFragmentListener) getActivity()).onEntryClicked(info);
-				;
-			}
-			return true;
-		}
+//		if (StringUtils.isBlank(curInfo.getEntry().parentPath()) == false) {
+//			FileInfo parentInfo;
+//			Entry parentEntry = new Entry();
+//			parentEntry.isDir = true;
+//			parentEntry.path = curInfo.getEntry().parentPath();
+//			parentInfo = new FileInfo(FileLocation.DROPBOX);
+//			parentInfo.setEntry(parentEntry);
+//
+//			FileInfo info = new FileInfo(FileLocation.DROPBOX);
+//			info.setEntry(parentEntry);
+//			if (getActivity() instanceof FolderViewFragmentListener) {
+//				((FolderViewFragmentListener) getActivity()).onEntryClicked(info);
+//				;
+//			}
+//			return true;
+//		}
 
 		return false;
 	}

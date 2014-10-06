@@ -113,7 +113,7 @@ public class BaseReaderFragment extends Fragment {
 	
 	public File findNextFile() {
 		FileInfo info = pageBuilder.getFileInfo();
-		File curFile = info.getFile();
+		File curFile = new File(info.getPath());
 		boolean curFound = false;
 
 		// 정렬 해야함

@@ -11,6 +11,17 @@ public class StringUtils {
 		return extension;
 	}
 
+	public static String getName(String path) {
+		if(isBlank(path))
+			return "";
+		
+		int lastIndex = path.lastIndexOf('/');
+		if (lastIndex == -1)
+			return "";
+		
+		return path.substring(lastIndex+1);
+	}
+
 	public static boolean isBlank(String str) {
 		if (str == null || str.isEmpty())
 			return true;
@@ -45,17 +56,17 @@ public class StringUtils {
 	public static String getParentPath(String path) {
 		if (isBlank(path))
 			return null;
-		
-		//끝이 /로 끝나면 제거
+
+		// 끝이 /로 끝나면 제거
 		if (path.lastIndexOf('/') == path.length() - 1) {
 			path = path.substring(0, path.length() - 1);
-		}		
+		}
 
 		int lastIndex = path.lastIndexOf('/');
 		if (lastIndex != -1) {
 			path = path.substring(0, lastIndex);
 		}
-		
+
 		return path;
 	}
 }

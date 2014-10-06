@@ -29,6 +29,7 @@ public class FileMeta implements Parcelable {
 	public ReadDirection lastReadDirection = ReadDirection.NOTSET;
 	public ReadDirection readDirection = ReadDirection.NOTSET;
 	public boolean autocrop;
+	public int childCount;
 
 	public static FileMeta createFromJSONString(String jsonString) {
 		if (StringUtils.isBlank(jsonString))
@@ -62,6 +63,7 @@ public class FileMeta implements Parcelable {
 				.valueOf(obj.optString("lastReadDirection", ReadDirection.NOTSET.name()));
 		result.readDirection = ReadDirection.valueOf(obj.optString("readDirection", ReadDirection.NOTSET.name()));
 		result.autocrop = obj.optBoolean("autocrop");
+		result.childCount = obj.optInt("childCount");
 
 		return result;
 	}
@@ -82,6 +84,7 @@ public class FileMeta implements Parcelable {
 			obj.put("lastReadDirection", lastReadDirection.name());
 			obj.put("readDirection", readDirection.name());
 			obj.put("autocrop", autocrop);
+			obj.put("childCount", childCount);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -108,6 +111,7 @@ public class FileMeta implements Parcelable {
 		dest.writeString(lastReadDirection.name());
 		dest.writeString(readDirection.name());
 		dest.writeString(Boolean.toString(autocrop));
+		dest.writeInt(childCount);
 	}
 
 	public static final Parcelable.Creator<FileMeta> CREATOR = new Parcelable.Creator<FileMeta>() {
@@ -123,6 +127,7 @@ public class FileMeta implements Parcelable {
 			obj.lastReadDirection = ReadDirection.valueOf(source.readString());
 			obj.readDirection = ReadDirection.valueOf(source.readString());
 			obj.autocrop = Boolean.parseBoolean(source.readString());
+			obj.childCount = source.readInt();
 			return obj;
 		}
 

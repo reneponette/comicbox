@@ -115,11 +115,13 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 	private boolean goParentDirectory() {
 
 		// 상위 폴더 넣기
-		if (StringUtils.isBlank(curInfo.getEntry().parentPath()) == false) {
+		
+		String parentPath = StringUtils.getParentPath(curInfo.getPath());
+		if (StringUtils.isBlank(parentPath) == false) {
 			FileInfo parentInfo;
 			Entry parentEntry = new Entry();
 			parentEntry.isDir = true;
-			parentEntry.path = curInfo.getEntry().parentPath();
+			parentEntry.path = parentPath;
 			parentInfo = new FileInfo(FileLocation.DROPBOX);
 			parentInfo.setEntry(parentEntry);
 

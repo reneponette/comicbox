@@ -13,7 +13,6 @@ import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -300,7 +299,7 @@ public class BaseExplorerFragment extends Fragment {
 				holder.itemImage.setImageBitmap(thumbnail);
 
 			// child count
-			int itemCount = info.getChildCount();
+			int itemCount = meta.childCount;
 			holder.itemCount.setText(itemCount == 0 ? "" : itemCount + "");
 
 			if (meta.type != FileType.DIRECTORY) {

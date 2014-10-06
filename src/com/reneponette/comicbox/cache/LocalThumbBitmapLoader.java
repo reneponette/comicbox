@@ -87,18 +87,19 @@ public class LocalThumbBitmapLoader {
 				}
 
 				// 비트맵 처음 생성일 경우
+				File file = new File(info.getPath());
 				switch (info.getMeta().type) {
 				case DIRECTORY:
-					bitmap = ImageUtils.extractCoverFromFolder(info.getFile(), C.COVER_W, C.COVER_H, true);
+					bitmap = ImageUtils.extractCoverFromFolder(file, C.COVER_W, C.COVER_H, true);
 					break;
 				case ZIP:
-					bitmap = ImageUtils.extractCoverFromZip(info.getFile(), C.COVER_W, C.COVER_H);
+					bitmap = ImageUtils.extractCoverFromZip(file, C.COVER_W, C.COVER_H);
 					break;
 				case PDF:
-					bitmap = ImageUtils.extractCoverFromPdf(GlobalApplication.instance(), info.getFile(),  C.COVER_W, C.COVER_H);
+					bitmap = ImageUtils.extractCoverFromPdf(GlobalApplication.instance(), file,  C.COVER_W, C.COVER_H);
 					break;
 				case JPG:
-					bitmap = ImageUtils.extractCoverFromJpg(info.getFile());
+					bitmap = ImageUtils.extractCoverFromJpg(file);
 					break;
 				default:
 					bitmap = null;
