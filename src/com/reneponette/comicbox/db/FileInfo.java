@@ -86,7 +86,7 @@ public class FileInfo implements DatabaseStorable<FileInfo>, Parcelable {
 		this.key = key;
 	}
 
-	public boolean setFile(File file) {
+	public boolean fill(File file) {
 		this.location = FileLocation.LOCAL;
 		this.path = file.getAbsolutePath();
 		this.key = toKey();
@@ -100,7 +100,7 @@ public class FileInfo implements DatabaseStorable<FileInfo>, Parcelable {
 		}
 	}
 
-	public boolean setEntry(Entry entry) {
+	public boolean fill(Entry entry) {
 		this.location = FileLocation.DROPBOX;
 		this.path = entry.path;
 		this.key = toKey();
@@ -116,7 +116,7 @@ public class FileInfo implements DatabaseStorable<FileInfo>, Parcelable {
 	}
 	
 	
-	public boolean setFileObject(FileObject fileObj) {
+	public boolean fill(FileObject fileObj) {
 		this.location = new FileLocation(fileObj.getName().getRootURI());
 		this.path = fileObj.getName().getPath();
 		this.key = toKey();
@@ -212,12 +212,12 @@ public class FileInfo implements DatabaseStorable<FileInfo>, Parcelable {
 			obj.indexInParent = source.readInt();
 
 			if (obj.location == FileLocation.LOCAL) {
-				obj.setFile(new File(obj.path));
+				obj.fill(new File(obj.path));
 			} else {
 				Entry entry = new Entry();
 				entry.path = obj.path;
 				entry.isDir = obj.meta.type == FileType.DIRECTORY;
-				obj.setEntry(entry);
+				obj.fill(entry);
 			}
 
 			return obj;

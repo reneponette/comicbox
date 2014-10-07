@@ -132,16 +132,19 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 							LocalExplorerFragment.newInstance(FileInfoDAO.instance().getFileInfo(curDir))).commit();
 			break;
 		case 1:
-			fragmentManager.beginTransaction()
-					.replace(R.id.container, DropboxExplorerFragment.newInstance(curEntry.path)).commit();
+			fragmentManager
+					.beginTransaction()
+					.replace(R.id.container,
+							DropboxExplorerFragment.newInstance(FileInfoDAO.instance().getFileInfo(curEntry))).commit();
 			break;
 		case 2:
 			fragmentManager.beginTransaction()
 					.replace(R.id.container, GoogleDriveExplorerFragment.newInstance(curEntry.path)).commit();
 			break;
 		case 3:
-			fragmentManager.beginTransaction()
-			.replace(R.id.container, FtpExplorerFragment.newInstance("/comics")).commit();
+			FileInfo info = new FileInfo(new FileLocation("sftp://rene:7797@ross.diskstation.me"));
+			info.setPath("/");
+			fragmentManager.beginTransaction().replace(R.id.container, FtpExplorerFragment.newInstance(info)).commit();
 			break;
 		default:
 			break;
@@ -150,12 +153,9 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 
 	@Override
 	public void onFavoriteItemSelected(FileInfo info) {
-		if (info.getLocation() == FileLocation.LOCAL)
-			onFileClicked(info);
-		else
-			onEntryClicked(info);
+		onFileInfoClicked(info);
 	}
-	
+
 	@Override
 	public void onSettingSelected() {
 		Intent intent = new Intent();
@@ -194,10 +194,10 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 
-//		if (id == R.id.action_settings) {
-//
-//			return true;
-//		}
+		// if (id == R.id.action_settings) {
+		//
+		// return true;
+		// }
 
 		return super.onOptionsItemSelected(item);
 	}
@@ -223,55 +223,53 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 	}
 
 	@Override
-	public void onFileClicked(final FileInfo info) {
-		Logger.i(this, "onFileClicked = " + info.getPath());
-
-		if (info.getMeta().type == FileType.DIRECTORY) {
-			curDir = new File(info.getPath());
-			FragmentManager fragmentManager = getFragmentManager();
-			fragmentManager.beginTransaction().replace(R.id.container, LocalExplorerFragment.newInstance(info))
-					.commit();
-		}
-
-		if (info.getMeta().type == FileType.ZIP) {
-			startActivity(ReaderActivity.newIntent(this, info));
-		}
-
-		if (info.getMeta().type == FileType.PDF) {
-			startActivity(ReaderActivity.newIntent(this, info));
-		}
-
-		if (info.getMeta().type == FileType.JPG) {
-			startActivity(ReaderActivity.newIntent(this, info));
-		}
-	}
-
-	@Override
-	public void onEntryClicked(final FileInfo info) {
-		Logger.i(this, "onEntryClicked = " + info.getPath());
-
-		if (info.getMeta().type == FileType.DIRECTORY) {
-			curEntry = new Entry();
-			curEntry.path = info.getPath();
-			FragmentManager fragmentManager = getFragmentManager();
-			fragmentManager.beginTransaction()
-					.replace(R.id.container, DropboxExplorerFragment.newInstance(info.getPath())).commit();
-		} else {
-
-			ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-			State wifi = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
-
-			if (wifi == State.CONNECTED) {
-				viewDropboxFile(info);
-			} else {
-				DialogHelper.showDataDownloadWarningDialog(this, new OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						viewDropboxFile(info);
-					}
-				});
+	public void onFileInfoClicked(final FileInfo info) {
+		if (info.getLocation() == FileLocation.LOCAL) {
+			if (info.getMeta().type == FileType.DIRECTORY) {
+				curDir = new File(info.getPath());
+				FragmentManager fragmentManager = getFragmentManager();
+				fragmentManager.beginTransaction().replace(R.id.container, LocalExplorerFragment.newInstance(info))
+						.commit();
 			}
+
+			if (info.getMeta().type == FileType.ZIP) {
+				startActivity(ReaderActivity.newIntent(this, info));
+			}
+
+			if (info.getMeta().type == FileType.PDF) {
+				startActivity(ReaderActivity.newIntent(this, info));
+			}
+
+			if (info.getMeta().type == FileType.JPG) {
+				startActivity(ReaderActivity.newIntent(this, info));
+			}
+		} else if (info.getLocation() == FileLocation.DROPBOX) {
+			if (info.getMeta().type == FileType.DIRECTORY) {
+				curEntry = new Entry();
+				curEntry.path = info.getPath();
+				FragmentManager fragmentManager = getFragmentManager();
+				fragmentManager.beginTransaction().replace(R.id.container, DropboxExplorerFragment.newInstance(info))
+						.commit();
+			} else {
+
+				ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+				State wifi = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
+
+				if (wifi == State.CONNECTED) {
+					viewDropboxFile(info);
+				} else {
+					DialogHelper.showDataDownloadWarningDialog(this, new OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							viewDropboxFile(info);
+						}
+					});
+				}
+			}
+		} else if (FileLocation.isCustomLocation(info.getLocation().toString())) {
+			FragmentManager fragmentManager = getFragmentManager();
+			fragmentManager.beginTransaction().replace(R.id.container, FtpExplorerFragment.newInstance(info)).commit();
 		}
 
 	}
@@ -321,7 +319,7 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 			@Override
 			public void onLoadComics(File comics) {
 				dialog.dismiss();
-				info.setFile(comics);
+				info.fill(comics);
 				startActivity(ReaderActivity.newIntent(MainActivity.this, info));
 			}
 		});

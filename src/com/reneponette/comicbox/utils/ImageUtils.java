@@ -602,6 +602,7 @@ public class ImageUtils {
 
 				String ext = StringUtils.getExtension(ent.fileName());
 				if ("zip".equalsIgnoreCase(ext)) {
+					
 					FileInfo info = FileInfoDAO.instance().getFileInfo(ent);
 
 					// 일단 캐쉬에서 꺼내봄

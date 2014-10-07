@@ -71,10 +71,10 @@ public class LocalExplorerFragment extends BaseExplorerFragment {
 		File parentFile = new File(curInfo.getPath()).getParentFile();
 		if (parentFile != null) {
 			FileInfo info = new FileInfo(FileLocation.LOCAL);
-			info.setFile(parentFile);
+			info.fill(parentFile);
 			info.focusName = curInfo.getName();
 			if (getActivity() instanceof FolderViewFragmentListener) {
-				((FolderViewFragmentListener) getActivity()).onFileClicked(info);
+				((FolderViewFragmentListener) getActivity()).onFileInfoClicked(info);
 			}
 			return true;
 		}

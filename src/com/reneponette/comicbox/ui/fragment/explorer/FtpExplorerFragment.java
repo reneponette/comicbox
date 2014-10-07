@@ -12,15 +12,12 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.dropbox.client2.DropboxAPI.Entry;
 import com.reneponette.comicbox.application.GlobalApplication;
 import com.reneponette.comicbox.constant.C;
 import com.reneponette.comicbox.db.FileInfo;
 import com.reneponette.comicbox.db.FileInfoDAO;
-import com.reneponette.comicbox.model.FileLocation;
 import com.reneponette.comicbox.model.FileMeta.FileType;
 import com.reneponette.comicbox.utils.Logger;
-import com.reneponette.comicbox.utils.StringUtils;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -30,15 +27,15 @@ public class FtpExplorerFragment extends BaseExplorerFragment {
 	/**
 	 * The fragment argument representing the section number for this fragment.
 	 */
-	private static final String PATH = "path";
+	private static final String FILE_INFO = "file_info";
 
 	/**
 	 * Returns a new instance of this fragment for the given section number.
 	 */
-	public static FtpExplorerFragment newInstance(String dropboxPath) {
+	public static FtpExplorerFragment newInstance(FileInfo fileInfo) {
 		FtpExplorerFragment fragment = new FtpExplorerFragment();
 		Bundle args = new Bundle();
-		args.putString(PATH, dropboxPath);
+		args.putParcelable(FILE_INFO, fileInfo);
 		fragment.setArguments(args);
 		return fragment;
 	}
@@ -50,18 +47,15 @@ public class FtpExplorerFragment extends BaseExplorerFragment {
 	private Handler handler;
 	private Thread runningThread;
 
-	StandardFileSystemManager manager;
+	private StandardFileSystemManager manager;
 	private String host;
 	private int port;
-	String userId;
-	String password;
+	private String userId;
+	private String password;
 
 	@Override
 	protected FileInfo onGetFileInfo() {
-		String path = getArguments().getString(PATH);
-		Entry entry = new Entry();
-		entry.path = path;
-		return FileInfoDAO.instance().getFileInfo(entry);
+		return getArguments().getParcelable(FILE_INFO);
 	}
 
 	@Override
@@ -141,15 +135,17 @@ public class FtpExplorerFragment extends BaseExplorerFragment {
 					SftpFileSystemConfigBuilder.getInstance().setUserDirIsRoot(opts, true);
 					SftpFileSystemConfigBuilder.getInstance().setTimeout(opts, 10000);
 					
-					String sftpUri = "sftp://" + userId + ":" + password + "@" + host;
+//					String sftpUri = "sftp://" + userId + ":" + password + "@" + host;
+					String sftpUri = curInfo.getLocation() + curInfo.getPath();
 					FileObject fo = manager.resolveFile(sftpUri, opts);
 					if (fo.isReadable()) {
-						FileObject[] children = fo.getChildren();
-						for (int i = 0; i < children.length; i++) {
-							Logger.e(this, children[i].getName().getRootURI());
-							Logger.e(this, children[i].getName().getPath());
+						for (int i = 0; i < fo.getChildren().length ; i++) {
+							FileObject child = fo.getChildren()[i];
 							
-							FileInfo info = FileInfoDAO.instance().getFileInfo(fo);
+							Logger.e(this, child.getName().getRootURI());
+							Logger.e(this, child.getName().getPath());
+							
+							FileInfo info = FileInfoDAO.instance().getFileInfo(child);
 							if(info.getMeta().type != FileType.UNKNOWN) {
 								infoList.add(info);
 							}

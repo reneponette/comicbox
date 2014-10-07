@@ -8,10 +8,9 @@ import com.reneponette.comicbox.R;
 import com.reneponette.comicbox.application.GlobalApplication;
 import com.reneponette.comicbox.db.FileInfo;
 import com.reneponette.comicbox.db.FileInfoDAO;
-import com.reneponette.comicbox.model.PageInfo;
 import com.reneponette.comicbox.model.FileMeta.ReadDirection;
+import com.reneponette.comicbox.model.PageInfo;
 import com.reneponette.comicbox.model.PageInfo.PageBuildType;
-import com.reneponette.comicbox.model.PageInfo.PageType;
 import com.reneponette.comicbox.utils.ImageUtils;
 
 public class LocalPdfPageBuilder extends PageBuilder {

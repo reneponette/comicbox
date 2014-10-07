@@ -49,9 +49,7 @@ import com.reneponette.comicbox.view.ProgressTextView;
 
 public class BaseExplorerFragment extends Fragment {
 	public interface FolderViewFragmentListener {
-		public void onFileClicked(FileInfo info);
-
-		public void onEntryClicked(FileInfo info);
+		public void onFileInfoClicked(FileInfo info);
 	}
 
 	FileInfo curInfo;
@@ -98,10 +96,7 @@ public class BaseExplorerFragment extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				if (getActivity() instanceof FolderViewFragmentListener) {
 					FileInfo info = (FileInfo) parent.getItemAtPosition(position);
-					if (info.getLocation() == FileLocation.LOCAL)
-						((FolderViewFragmentListener) getActivity()).onFileClicked(info);
-					else
-						((FolderViewFragmentListener) getActivity()).onEntryClicked(info);
+					((FolderViewFragmentListener) getActivity()).onFileInfoClicked(info);
 				}
 			}
 		});

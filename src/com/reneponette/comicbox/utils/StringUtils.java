@@ -15,6 +15,9 @@ public class StringUtils {
 		if(isBlank(path))
 			return "";
 		
+		if("/".equals(path))
+			return path;
+		
 		int lastIndex = path.lastIndexOf('/');
 		if (lastIndex == -1)
 			return "";

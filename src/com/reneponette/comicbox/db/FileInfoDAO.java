@@ -61,14 +61,14 @@ public class FileInfoDAO extends BaseDAO<FileInfo> {
 
 		if (obj instanceof File) {
 			info = new FileInfo(FileLocation.LOCAL);
-			info.setFile((File) obj);
+			info.fill((File) obj);
 		} else if (obj instanceof Entry) {
 			info = new FileInfo(FileLocation.DROPBOX);
-			info.setEntry((Entry) obj);
+			info.fill((Entry) obj);
 		} else if (obj instanceof FileObject) {
 			FileObject fo = (FileObject) obj;
 			info = new FileInfo(new FileLocation(fo.getName().getRootURI()));
-			info.setFileObject(fo);
+			info.fill(fo);
 		} else {
 			info = new FileInfo(FileLocation.UNKNOWN);
 		}
@@ -104,9 +104,9 @@ public class FileInfoDAO extends BaseDAO<FileInfo> {
 			Entry entry = new Entry();
 			entry.path = info.getPath();
 			entry.isDir = true;
-			info.setEntry(entry);
+			info.fill(entry);
 		} else if (info.getLocation() == FileLocation.LOCAL) {
-			info.setFile(new File(info.getPath()));
+			info.fill(new File(info.getPath()));
 		} else if (FileLocation.isCustomLocation(info.getLocation().toString())) {
 			// 
 		} else {
@@ -118,6 +118,7 @@ public class FileInfoDAO extends BaseDAO<FileInfo> {
 	}
 
 	public FileInfo getFileInfo(Object obj) {
+		
 		FileInfo info = newFileInfo(obj);
 
 		Cursor cursor = getDB().query(tableName, null, getPrimaryCondition(info), null, null, null, null);

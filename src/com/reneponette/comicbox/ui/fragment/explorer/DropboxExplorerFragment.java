@@ -5,7 +5,6 @@ import android.content.DialogInterface.OnClickListener;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -35,16 +34,15 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 	/**
 	 * The fragment argument representing the section number for this fragment.
 	 */
-	private static final String PATH = "path";
-	private static final String TAG = "DropboxExplorerFragment";
+	private static final String FILE_INFO = "file_info";
 
 	/**
 	 * Returns a new instance of this fragment for the given section number.
 	 */
-	public static DropboxExplorerFragment newInstance(String dropboxPath) {
+	public static DropboxExplorerFragment newInstance(FileInfo fileInfo) {
 		DropboxExplorerFragment fragment = new DropboxExplorerFragment();
 		Bundle args = new Bundle();
-		args.putString(PATH, dropboxPath);
+		args.putParcelable(FILE_INFO, fileInfo);
 		fragment.setArguments(args);
 		return fragment;
 	}
@@ -62,10 +60,7 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 
 	@Override
 	protected FileInfo onGetFileInfo() {
-		String dropboxPath = getArguments().getString(PATH);
-		Entry entry = new Entry();
-		entry.path = dropboxPath;
-		return FileInfoDAO.instance().getFileInfo(entry);
+		return getArguments().getParcelable(FILE_INFO);
 	}
 
 	@Override
@@ -106,7 +101,6 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 
 			} catch (IllegalStateException e) {
 				ToastUtils.toast("Couldn't authenticate with Dropbox:" + e.getLocalizedMessage());
-				Log.i(TAG, "Error authenticating", e);
 			}
 		}
 		super.onResume();
@@ -118,17 +112,17 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 		
 		String parentPath = StringUtils.getParentPath(curInfo.getPath());
 		if (StringUtils.isBlank(parentPath) == false) {
-			FileInfo parentInfo;
+			
 			Entry parentEntry = new Entry();
 			parentEntry.isDir = true;
 			parentEntry.path = parentPath;
+			
+			FileInfo parentInfo;
 			parentInfo = new FileInfo(FileLocation.DROPBOX);
-			parentInfo.setEntry(parentEntry);
+			parentInfo.fill(parentEntry);
 
-			FileInfo info = new FileInfo(FileLocation.DROPBOX);
-			info.setEntry(parentEntry);
 			if (getActivity() instanceof FolderViewFragmentListener) {
-				((FolderViewFragmentListener) getActivity()).onEntryClicked(info);
+				((FolderViewFragmentListener) getActivity()).onFileInfoClicked(parentInfo);
 				;
 			}
 			return true;
@@ -170,7 +164,7 @@ public class DropboxExplorerFragment extends BaseExplorerFragment {
 
 						@Override
 						public void run() {
-							curInfo.setEntry(entry);
+							curInfo.fill(entry);
 
 							String name = curInfo.getName();
 							if (StringUtils.isBlank(name))

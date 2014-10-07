@@ -18,7 +18,7 @@ public class FileMeta implements Parcelable {
 		LTR, RTL, NOTSET;
 	}
 	
-	public FileType type;
+	public FileType type = FileType.UNKNOWN;
 	public int pagesPerScan = 0; //0은 한번도 읽은적 없는 경우
 	public int lastPagesPerScan = 0;
 	public String cachePath;
