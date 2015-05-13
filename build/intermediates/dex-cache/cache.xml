@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/rene/Documents/workspace/android-studio/ComicBox/app/libs/AdamPublisherSDK-2.3.4.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="27b6a1cbbd1a0ca222816c8505013d7afa938dc1">
+        <dex dex="/Users/rene/Documents/workspace/android-studio/ComicBox/app/build/intermediates/pre-dexed/release/AdamPublisherSDK-2.3.4-b4b062a00ddba00874cbe7af2530cd72fab4c7f8.jar" />
+    </item>
+    <item
+        jar="/Users/rene/Documents/workspace/android-studio/ComicBox/app/libs/json_simple-1.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="5e303a03d04e6788dddfa3655272580ae0fc13bb">
+        <dex dex="/Users/rene/Documents/workspace/android-studio/ComicBox/app/build/intermediates/pre-dexed/release/json_simple-1.1-b065c55763025c22576689eb15ad1e1869d1d3f8.jar" />
+    </item>
+    <item
+        jar="/Users/rene/Documents/workspace/android-studio/ComicBox/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.0.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
+        <dex dex="/Users/rene/Documents/workspace/android-studio/ComicBox/app/build/intermediates/pre-dexed/release/classes-ae27b69f8c0ecd923040407d7f1bec878a68995c.jar" />
+    </item>
+    <item
+        jar="/Users/rene/Documents/workspace/android-studio/ComicBox/app/libs/mupdf.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="1ac7d3f83ee7e03d74818f1e0bad5886e1878226">
+        <dex dex="/Users/rene/Documents/workspace/android-studio/ComicBox/app/build/intermediates/pre-dexed/release/mupdf-35c0b80544cb04784fcae5b30eb6e41028389280.jar" />
+    </item>
+    <item
+        jar="/Users/rene/Documents/Development/android-sdks/extras/android/m2repository/com/android/support/support-annotations/22.0.0/support-annotations-22.0.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="685d0b2c590447e85284ed84712cb363ba04eff8">
+        <dex dex="/Users/rene/Documents/workspace/android-studio/ComicBox/app/build/intermediates/pre-dexed/release/support-annotations-22.0.0-d8269d8c2c9b215ab1ec468094011cd659290c05.jar" />
+    </item>
+    <item
+        jar="/Users/rene/.gradle/caches/modules-2/files-2.1/com.crashlytics.android/crashlytics/1.1.13/e821eafa1bf489a26bdb71f95078c26785b37a1/crashlytics-1.1.13.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="0e821eafa1bf489a26bdb71f95078c26785b37a1">
+        <dex dex="/Users/rene/Documents/workspace/android-studio/ComicBox/app/build/intermediates/pre-dexed/release/crashlytics-1.1.13-d583101eecdc6ea1e86f8b5392869ea1bfb4141c.jar" />
+    </item>
+    <item
+        jar="/Users/rene/Documents/workspace/android-studio/ComicBox/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.3.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="f2f7ec211ce4d244ee97a57523eeb4526dc3cf8a">
+        <dex dex="/Users/rene/Documents/workspace/android-studio/ComicBox/app/build/intermediates/pre-dexed/release/classes-78c3215669bc01fd3af69483fe61f5ccf71d0314.jar" />
+    </item>
+    <item
+        jar="/Users/rene/Documents/workspace/android-studio/ComicBox/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.0.0/libs/internal_impl-22.0.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
+        <dex dex="/Users/rene/Documents/workspace/android-studio/ComicBox/app/build/intermediates/pre-dexed/release/internal_impl-22.0.0-90f9de0c7c4659380d92d9038d295d19365c04f0.jar" />
+    </item>
+    <item
+        jar="/Users/rene/Documents/workspace/android-studio/ComicBox/app/libs/jsch-0.1.51.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="21761cb18a9d6e22712d1429a50f255833cd7177">
+        <dex dex="/Users/rene/Documents/workspace/android-studio/ComicBox/app/build/intermediates/pre-dexed/release/jsch-0.1.51-148b226dd4b52eff976e34d4c935069960037dce.jar" />
+    </item>
+    <item
+        jar="/Users/rene/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-compress/1.9/cc18955ff1e36d5abd39a14bfe82b19154330a34/commons-compress-1.9.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="cc18955ff1e36d5abd39a14bfe82b19154330a34">
+        <dex dex="/Users/rene/Documents/workspace/android-studio/ComicBox/app/build/intermediates/pre-dexed/release/commons-compress-1.9-51af381e7337de91518fa17da0959dbf6926b51e.jar" />
+    </item>
+    <item
+        jar="/Users/rene/Documents/workspace/android-studio/ComicBox/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/7.3.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="a0ce76dfaccbfbd6c551ed2174280aaabe60fe47">
+        <dex dex="/Users/rene/Documents/workspace/android-studio/ComicBox/app/build/intermediates/pre-dexed/release/classes-e16c7365101d867683d88a027609c02d2eed3713.jar" />
+    </item>
+    <item
+        jar="/Users/rene/Documents/workspace/android-studio/ComicBox/app/libs/dropbox-android-sdk-1.6.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="4811e0fdb7909dc3c386acbb4594a53a26e84956">
+        <dex dex="/Users/rene/Documents/workspace/android-studio/ComicBox/app/build/intermediates/pre-dexed/release/dropbox-android-sdk-1.6.1-3f050bcba72a91b0b7f68d6066bdafa850d7c13c.jar" />
+    </item>
+
+</items>

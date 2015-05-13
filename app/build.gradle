@@ -1,0 +1,46 @@
+apply plugin: 'com.android.application'
+android {
+    signingConfigs {
+        market {
+            keyAlias 'reneponette'
+            keyPassword 'zgmfx10A'
+            storeFile file('/Users/rene/Documents/Development/reneponette.keystore')
+            storePassword 'zgmfx10A'
+        }
+    }
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+    defaultConfig {
+        applicationId "com.reneponette.comicbox"
+        minSdkVersion 14
+        targetSdkVersion 22
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            signingConfig signingConfigs.market
+        }
+        debug {
+            debuggable true
+        }
+    }
+    productFlavors {
+    }
+    dexOptions {
+    }
+}
+dependencies {
+    compile 'com.crashlytics.android:crashlytics:1.+'
+    compile 'com.google.android.gms:play-services-base:6.5.87'
+    compile 'com.google.android.gms:play-services-drive:7.3.0'
+    compile 'org.apache.commons:commons-compress:1.9'
+    compile files('libs/AdamPublisherSDK-2.3.4.jar')
+    compile files('libs/dropbox-android-sdk-1.6.1.jar')
+    compile files('libs/json_simple-1.1.jar')
+    compile files('libs/mupdf.jar')
+}
+
+repositories {
+    maven { url 'http://download.crashlytics.com/maven' }
+}
